@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User 
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
-
+from core.form import CrearUsuario
 
 carrito={
     'nombre':'',
@@ -49,27 +49,20 @@ def asignar_permisos_administrador(usuario):
     # Asignar el permiso al usuario
     usuario.user_permissions.add(permisos_objetos)
 
-def registro(request):
-    data = {
-        'form': CrearCuentaUsuario
+def registro (request):
+    data ={
+        'form':CrearUsuario
     }
-    if request.method == 'POST':
-        formulario = CrearCuentaUsuario(data=request.POST)
-        if formulario.is_valid():
-            print(formulario.cleaned_data["nom_usuario"])
+    if request.method =='POST':
+        formulario = CrearUsuario(data= request.POST)
+        if formulario.is_valid:
             formulario.save()
-            tipo_user = Usuario.objects.get(nom_usuario=formulario.cleaned_data["nom_usuario"])
-            tipo_user.tipo_usr = Tipo_usuario.objects.get(id=3)
-            tipo_user.save()
-            messages.success(request, "Te has registrado correctamente")
-            usuario = User
-            usuario = User.objects.create_user(username=formulario.cleaned_data["nom_usuario"], password=formulario.cleaned_data["password"],first_name=formulario.cleaned_data["nombres"],last_name=formulario.cleaned_data["apellidos"],email=formulario.cleaned_data["correo"])
-            user = authenticate(
-                username=formulario.cleaned_data["nom_usuario"], password=formulario.cleaned_data["password"])
-            login(request, user)
-            return redirect(to="inicio")
+            messages.success(request,"Te has registrado correctamente")
+            user = authenticate(username=formulario.cleaned_data["username"], password=formulario.cleaned_data["password1"])
+            login(request,user)
+            return redirect(to="index_home")
         data["form"] = formulario
-    return render(request, 'registration/registro.html', data)
+    return render(request, 'registration/registro.html',data)
 
 def agregar_colaborador(request):
     data = {

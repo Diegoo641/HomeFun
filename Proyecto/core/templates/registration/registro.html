@@ -87,14 +87,7 @@
                         
                         <div class="formulario">
                             <form action="" method="post">
-                                {% csrf_token %}
-                                {{ form.nombres|as_crispy_field|safe }}
-                                {{ form.apellidos|as_crispy_field|safe }}
-                                {{ form.nom_usuario|as_crispy_field|safe }}
-                                {{ form.password|as_crispy_field|safe }}
-                                {{ form.correo|as_crispy_field|safe }}
-                                {{ form.direccion|as_crispy_field|safe }}
-                                {{ form.fecha_nac|as_crispy_field|safe }}
+                                {{ form | crispy }}
                                 <input type="submit" value="Registrar" class="btn btn-success btn-block">
                             </form>
                         </div>
