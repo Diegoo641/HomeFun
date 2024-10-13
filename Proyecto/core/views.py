@@ -52,28 +52,7 @@ def registro (request):
         data["form"] = formulario
     return render(request, 'registration/registro.html',data)
 
-def agregar_colaborador(request):
-    data = {
-        'form': CrearCuentaUsuario
-    }
-    if request.method == 'POST':
-        formulario = CrearCuentaUsuario(data=request.POST)
-        if formulario.is_valid():
-            print(formulario.cleaned_data["nom_usuario"])
-            formulario.save()
-            tipo_user = Usuario.objects.get(nom_usuario=formulario.cleaned_data["nom_usuario"])
-            tipo_user.tipo_usr = Tipo_usuario.objects.get(id=2)
-            tipo_user.save()
-            messages.success(request, "Te has registrado correctamente")
-            usuario = User
-            usuario = User.objects.create_user(username=formulario.cleaned_data["nom_usuario"], password=formulario.cleaned_data["password"],first_name=formulario.cleaned_data["nombres"],last_name=formulario.cleaned_data["apellidos"],email=formulario.cleaned_data["correo"],is_staff=1,is_superuser=0)
-            asignar_permisos_colaborador(usuario)
-            user = authenticate(
-                username=formulario.cleaned_data["nom_usuario"], password=formulario.cleaned_data["password"])
-            login(request, user)
-            return redirect(to="inicio")
-        data["form"] = formulario
-    return render(request, 'core/agregar_colaborador.html', data)
+
 
 def agregar_administrador(request):
     data = {
