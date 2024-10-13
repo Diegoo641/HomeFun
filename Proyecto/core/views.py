@@ -7,18 +7,6 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
 from core.form import CrearUsuario
 
-carrito={
-    'nombre':'',
-    'total':0
-}
-total=0
-productosCarrito=[]
-
-cantAnwo=0
-CantBod=0
-cantidad =[]
-cant_pro = {}
-# Create your views here.
 
 def home(request):
     return render(request, 'core/home.html')
