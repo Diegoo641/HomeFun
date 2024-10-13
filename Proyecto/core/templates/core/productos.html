@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Productos</title>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+
+    {% block content %}
+    {% include 'nav_bar.html'%}
+    <style>
+        /* Estilo de fondo con la imagen */
+        body {
+            background-image: url("{% static 'core/img/fondo4.jpg'%}");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+    <br>
+    <br><br>
+
+
+    <style>
+        .card:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 20px rgba(18, 159, 211, 0.5);
+        }
+
+        .container {
+            width: 100%;
+        }
+
+        @media screen and (max-width: 767px) {
+
+            /* Pantallas más pequeñas que 767px */
+            .col-4 {
+                order: 2;
+                /* Coloca el carrito al final del contenedor */
+            }
+        }
+        #h1{
+
+            color: aliceblue;
+            text-align: center;
+            font-family: monospace;
+            font-size: 60px;;
+        }
+    </style>
+</head>
+
+<!-- Button trigger modal -->
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <h1 id="h1">Productos</h1>
+            <div class="col-md-8 col-12">
+                <div class="content-fluid">
+                    <div class="container-fluid">
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                            {% for pr in producto %}
+                            <div class="col">
+                                <div class="card mb-3" style="max-width: 350px;">
+                                    <div class="row g-0">
+                                        <div class="col-md-6">
+                                            <br>
+                                            <h4 class="card-title" style="text-align: center;">{{pr.nombre}}</h4>
+                                            <br>
+                                            <center>
+                                                <img src="{{pr.imagen.url}}" alt="{{pr.nombreProducto}} " width="150"
+                                                    height="150" class="img-fluid">
+
+                                            </center>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card-body">
+                                                <p class="card-text mb-1">{{pr.descripcion}}</p>
+                                                <p class="card-text mb-1"> Stock : {{pr.stock}}</p>
+                                                <p class="card-text mb-1"> Categoria : {{pr.categoria}}</p>
+                                                <p class="card-text mb-1"> Precio : {{pr.precio}}</p>
+                                                <center>
+                                                <div class="card-footer" >
+                                                    <a href=" http://127.0.0.1:8000/agregar_producto_carr/{{pr.id}} "
+                                                        class="btn btn-success btn-sm" style="margin-bottom: 5px;">
+                                                        Agregar a Carrito</a>
+                                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                        data-bs-target="#staticBackdrop{{pr.id}}">
+                                                        Ver detalle
+                                                    </button>
+
+                                                </div>
+                                            </center>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="staticBackdrop{{pr.id}}" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                aria-hidden="true">
+                                <!-- Modal -->
+
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">{{pr.nombre}}</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="col">
+
+                                                <center>
+                                                    <img src="{{pr.imagen.url}}" alt="{{pr.nombreProducto}} "
+                                                        width="250" height="250" class="img-fluid">
+
+                                                </center>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card-body">
+                                                    <p class="card-text mb-1">{{pr.descripcion}}</p>
+                                                    <p class="card-text mb-1"> Stock : {{pr.stock}}</p>
+                                                    <p class="card-text mb-1"> Categoria : {{pr.categoria}}</p>
+                                                    <p class="card-text mb-1"> Precio : {{pr.precio}}</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            &nbsp;
+                                            <a href=" http://127.0.0.1:8000/agregar_producto_carr/{{pr.id}} "
+                                                class="btn btn-primary">
+                                                Agregar a Carrito</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 order-md-last">
+                {% include 'carrito.html'%}
+                {% endblock %}
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+<footer>
+    <div>
+        <br><br><br><br><br>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-X8TZRa0FSGLAtvBlTsQ05mC6h54gXP+2i2+kl3DVoQeTQuu/dxU0Fjlzv8QqXdQ4"
+    crossorigin="anonymous"></script>
+
+
+
+</html>

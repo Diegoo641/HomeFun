@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Pagina de Inicio</title>
+  
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {% if messages %}
+    {% for m in messages %}
+    <script>
+        Swal.fire({
+            "title": "Felicitaciones",
+            "text": "{{m}}",
+            "icon": "success"
+        })
+
+    </script>
+    {% endfor %}
+    {% endif %}
+    <title>Registro de colaborador</title>
+</head>
+<header>
+    {%block content %}
+    <div>
+        {% include "nav_bar.html " %}
+    </div>
+    {%endblock%}
+
+</header>
+<style>
+        /* Estilo de fondo con la imagen */
+        body {
+            background-image: url("{% static 'core/img/fondo4.jpg'%}");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    .formulario form {
+        width: 100%;
+        max-width: 400px; /* Ajusta según sea necesario */
+        margin: auto; /* Centra el formulario horizontalmente */
+        text-align: center;
+    }
+
+    .formulario input[type="text"],
+    .formulario input[type="email"],
+    .formulario input[type="password"],
+    .formulario input[type="date"],
+    .formulario select {
+        width: 100%;
+        box-sizing: border-box; /* Asegura que el ancho incluya el relleno y el borde */
+        margin-bottom: 10px; /* Ajusta según sea necesario */
+        padding: 8px; /* Ajusta el relleno según sea necesario */
+    }
+
+    .formulario input[type="submit"] {
+        width: 100%;
+        box-sizing: border-box;   
+        padding: 10px; /* Ajusta el relleno según sea necesario */
+        border-radius: 5px; /* Redondea las esquinas */
+        border: none; /* Elimina el borde para el botón */
+        background-color: #28a745; /* Color de fondo del botón */
+        color: white; /* Color del texto del botón */
+        cursor: pointer; /* Cambia el cursor al pasar el ratón */
+    }
+</style>
+<body>
+
+    {% load crispy_forms_tags %}
+    <div class="container">
+        <br><br><br><br>
+        <div class="row">
+            <div class="col-6">
+
+                <div class="col-12 ">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 style="text-align: center;">Registro de colaborador</h2>
+                        <hr>
+                        
+                        <div class="formulario">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                {{ form.nombres|as_crispy_field|safe }}
+                                {{ form.apellidos|as_crispy_field|safe }}
+                                {{ form.nom_usuario|as_crispy_field|safe }}
+                                {{ form.password|as_crispy_field|safe }}
+                                {{ form.correo|as_crispy_field|safe }}
+                                {{ form.direccion|as_crispy_field|safe }}
+                                {{ form.fecha_nac|as_crispy_field|safe }}
+                                <input type="submit" value="Registrar" class="btn btn-success btn-block">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="col-6" style="float: right;">
+
+                <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img src="{% static 'core/img/Proyectos.jpg'%}" alt="" width="750px" height="500px" class="img-fluid"
+                        style="border-radius: 10%;">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="{% static 'core/img/reparacion.jpeg'%}" alt="" width="750px" height="500px" class="img-fluid"
+                        style="border-radius: 10%;">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="{% static 'core/img/mantenimiento.jpeg'%}" alt="" width="750px" height="500px" class="img-fluid"
+                            style="border-radius: 10%;">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </div>
+
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+                    <div class="carousel-indicators">
+                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+     
+            
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </div>
+            </div>
+    </div>
+
+</div>
+
+ 
+    <br><br><br>
+    <footer>
+
+    </footer>
+</body>
+
+</html>
