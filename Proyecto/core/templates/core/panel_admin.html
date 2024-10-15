@@ -29,6 +29,7 @@
                 width: 100%;
             }
     
+            
         </style>
     </head>
 
@@ -87,23 +88,25 @@
             </div>
         </div>
     
-        <!-- Modal de ayuda -->
-        <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+       <!-- Modal de ayuda -->
+<div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="helpModalLabel">Fun Ayuda</h5>
+                    <div class="modal-header bg-primary"> <!-- Cambia bg-primary por el color que desees -->
+                        <h5 class="modal-title text-center" id="helpModalLabel">
+                            <i class="fa-solid fa-users-gear me-2"></i> Fun Ayuda
+                        </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Hola
+                        Aquí puedes agregar el contenido de ayuda que desees proporcionar a los usuarios.
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
             </div>
-        </div>
+
     
         <!-- Script para el gráfico de barras -->
         <script>
