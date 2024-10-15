@@ -12,6 +12,8 @@ def home(request):
     return render(request, 'core/home.html')
 def inicio(request):
     return render(request, 'core/inicio.html')
+def panel_admin(request):
+    return render(request, 'core/panel_admin.html')
 
 
 def asignar_permisos_colaborador(usuario):

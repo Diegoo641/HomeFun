@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tarjetas y Gráfico Responsivo con Modal de Ayuda</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <!-- Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <!-- FontAwesome para el ícono de ayuda -->
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <style>
+            body {
+                padding-top: 70px; /* Ajusta este valor según la altura de tu navbar */
+            }
+    
+            /* Estilo para asegurar que el contenedor del gráfico sea fluido */
+            .chart-container {
+                position: relative;
+                height: 50vh; /* Puedes ajustar la altura a tus necesidades */
+                width: 100%;
+            }
+    
+        </style>
+    </head>
+
+<!-- NAV -->
+{% block content %}
+{% include 'nav_bar.html'%}
+{% endblock %}
+<!-- FIN NAV -->
+    <body>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-end">  <!-- Este div alinea el contenido a la derecha -->
+                    <i class="fas fa-question-circle" style="color: red; font-size: 28px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#helpModal"></i>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="container mt-3">
+            <!-- Fila con dos tarjetas con espacio entre ellas -->
+            <div class="row">
+                <!-- Primera tarjeta con col-md-4 -->
+                <div class="col-md-4 offset-md-1">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Tarjeta 1</h5>
+                            <p class="card-text">Contenido de la tarjeta 1.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Espacio de 4 columnas entre las tarjetas -->
+                <div class="col-md-4 offset-md-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Tarjeta 2</h5>
+                            <p class="card-text">Contenido de la tarjeta 2.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <!-- Contenedor para el gráfico de barras, con clase responsiva -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="chart-container">
+                        <h3 class="text-center">Gráfico de Barras - Espacios comunes más utilizados 
+                            {% comment %} <i class="fas fa-question-circle help-icon" data-bs-toggle="modal" data-bs-target="#helpModal"></i> {% endcomment %}
+                        </h3>
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Modal de ayuda -->
+        <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="helpModalLabel">Fun Ayuda</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Hola
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Script para el gráfico de barras -->
+        <script>
+            const ctx = document.getElementById('barChart').getContext('2d');
+            const barChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Dato 1', 'Dato 2', 'Dato 3', 'Dato 4', 'Dato 5', 'Dato 6', 'Dato 7', 'Dato 8', 'Dato 9', 'Dato 10'],
+                    datasets: [{
+                        label: 'Datos de la gráfica',
+                        data: [12, 19, 3, 5, 2, 3, 7, 8, 14, 10],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,  // Hacemos el gráfico responsivo
+                    maintainAspectRatio: false,  // Evita que se mantenga el aspecto fijo
+                    plugins: {
+                        title: {
+                            display: false, // Ocultar el título del gráfico ya que se muestra arriba
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+    
+        <!-- Bootstrap JS (Opcional para interactividad adicional) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </html>
+    
+
+
+
+{% comment %} <!-- NAV -->
+{% block content %}
+{% include 'nav_bar.html'%}
+{% endblock %}
+<!-- FIN NAV --> {% endcomment %}

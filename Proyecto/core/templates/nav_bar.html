@@ -10,11 +10,11 @@
 <style>
 .navbar{
       background: linear-gradient(to right, rgb(0, 0, 0), rgb(8, 47, 201),rgb(0, 0, 0)); 
-    color: white; /* Color del texto */
-    overflow: hidden; /* Asegura que el contenido respete los bordes redondos */
+    color: white;
+    overflow: hidden;
 }
 .navbar-brand {
-    margin: 0 auto; /* Centra el texto horizontalmente */
+    margin: 0 auto;
 font-size: 25px;}
 
 #inicio_secion:hover {
@@ -53,7 +53,7 @@ font-size: 25px;}
                   <a class="nav-link active" aria-current="page" href="#">Productos</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Ventas</a>
+                  <a class="nav-link" href="{% url 'panel_admin' %}">Dashboard</a>
                 </li>
                 {% if user.is_superuser %}
                 
