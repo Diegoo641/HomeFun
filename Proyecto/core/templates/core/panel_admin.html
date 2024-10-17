@@ -11,7 +11,15 @@
         <title>Tarjetas y Gráfico Responsivo con Modal de Ayuda</title>
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
+        <!--DATATABLE RESPONSIVE CSS-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
+        <!-- DataTable -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+        <!-- DATATABLE BUTTONS CSS     -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/select/1.5.0/css/select.dataTables.min.css">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
         <!-- Chart.js -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -49,6 +57,99 @@
         </div>
 
         <hr class="my-4">
+               
+
+        <div>
+            <div class="modal fade " id="Activos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog modal-xl">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Residentes Activos
+                        
+                      </h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered table-striped" id="data-table1">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                                    <th>Deuda</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Agregar más de 10 filas para mostrar la paginación -->
+                                <tr><td>1</td><td>Juan Pérez</td><td>$500</td></tr>
+                                <tr><td>2</td><td>María Gómez</td><td>$300</td></tr>
+                                <tr><td>3</td><td>Pedro Martínez</td><td>$450</td></tr>
+                                <tr><td>4</td><td>Ana López</td><td>$600</td></tr>
+                                <tr><td>5</td><td>Carlos Ruiz</td><td>$350</td></tr>
+                                <tr><td>6</td><td>Laura Sánchez</td><td>$700</td></tr>
+                                <tr><td>7</td><td>Oscar Díaz</td><td>$200</td></tr>
+                                <tr><td>8</td><td>Camila Torres</td><td>$400</td></tr>
+                                <tr><td>9</td><td>Martín Reyes</td><td>$500</td></tr>
+                                <tr><td>10</td><td>Sofía Núñez</td><td>$600</td></tr>
+                                <tr><td>11</td><td>Raúl Castro</td><td>$550</td></tr>
+                            </tbody>
+                        </table>
+                        <!-- Botones para exportar -->
+                        <button class="btn btn-success" onclick="exportExcel()">Exportar a Excel</button>
+                        <button class="btn btn-danger" onclick="exportPDF()">Exportar a PDF</button>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                      {% comment %} <button type="button" class="btn btn-primary">Understood</button> {% endcomment %}
+                    </div>
+                  </div>
+                </div>
+              </div>  
+            <div class="modal fade " id="Morosos"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Residentes Morosos
+                            
+                        </h1>
+                        {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-bordered table-striped" id="data-table2">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Deuda</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Agregar más de 10 filas para mostrar la paginación -->
+                                    <tr><td>1</td><td>Juan Pérez</td><td>$500</td></tr>
+                                    <tr><td>2</td><td>María Gómez</td><td>$300</td></tr>
+                                    <tr><td>3</td><td>Pedro Martínez</td><td>$450</td></tr>
+                                    <tr><td>4</td><td>Ana López</td><td>$600</td></tr>
+                                    <tr><td>5</td><td>Carlos Ruiz</td><td>$350</td></tr>
+                                    <tr><td>6</td><td>Laura Sánchez</td><td>$700</td></tr>
+                                    <tr><td>7</td><td>Oscar Díaz</td><td>$200</td></tr>
+                                    <tr><td>8</td><td>Camila Torres</td><td>$400</td></tr>
+                                    <tr><td>9</td><td>Martín Reyes</td><td>$500</td></tr>
+                                    <tr><td>10</td><td>Sofía Núñez</td><td>$600</td></tr>
+                                    <tr><td>11</td><td>Raúl Castro</td><td>$550</td></tr>
+                                </tbody>
+                            </table>
+                            <!-- Botones para exportar -->
+                            <button class="btn btn-success" onclick="exportExcel()">Exportar a Excel</button>
+                            <button class="btn btn-danger" onclick="exportPDF()">Exportar a PDF</button>
+                        </div>
+                        {% comment %} <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Understood</button>
+                        </div> {% endcomment %}
+                    </div>
+                    </div>
+                </div>
+            </div>       
+        </div>
 
         <div class="container mt-3">
             <!-- Fila con dos tarjetas con espacio entre ellas -->
@@ -57,17 +158,27 @@
                 <div class="col-md-4 offset-md-1">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Tarjeta 1</h5>
-                            <p class="card-text">Contenido de la tarjeta 1.</p>
+                            <h3 class="card-title">Residentes activos
+                                <button class="btn btn-primary btn-sm float-end" type="button" data-bs-toggle="modal" data-bs-target="#Activos">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </h3>
+                            <p class="card-text">Cantidad de Residentes : 250</p>
                         </div>
                     </div>
                 </div>
+
+                
                 <!-- Espacio de 4 columnas entre las tarjetas -->
                 <div class="col-md-4 offset-md-2">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Tarjeta 2</h5>
-                            <p class="card-text">Contenido de la tarjeta 2.</p>
+                            <h3 class="card-title">Residentes Morosos
+                                <button class="btn btn-primary btn-sm float-end" type="button" data-bs-toggle="modal" data-bs-target="#Morosos">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </h3>
+                            <p class="card-text">Cantidad de Residentes : 10</p>
                         </div>
                     </div>
                 </div>
@@ -88,25 +199,134 @@
             </div>
         </div>
     
+
        <!-- Modal de ayuda -->
-<div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header bg-primary"> <!-- Cambia bg-primary por el color que desees -->
-                        <h5 class="modal-title text-center" id="helpModalLabel">
-                            <i class="fa-solid fa-users-gear me-2"></i> Fun Ayuda
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Aquí puedes agregar el contenido de ayuda que desees proporcionar a los usuarios.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
+       <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary"> <!-- Cambia bg-primary por el color que desees -->
+                    <h5 class="modal-title text-center" id="helpModalLabel">
+                        <i class="fa-solid fa-users-gear me-2"></i> Fun Ayuda
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Aquí puedes agregar el contenido de ayuda que desees proporcionar a los usuarios.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
+        </div>
 
+
+        <!-- jQuery -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <!-- DataTables JS -->
+            <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+            <!-- Bootstrap JS -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Librerías para exportación -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+            <script>
+
+
+                
+                // Inicializar DataTables con 10 filas por página
+                $(document).ready(function() {
+                    $('#data-table1').DataTable({
+                        "pageLength": 10,  // Máximo de 10 filas por página
+                        "lengthChange": false, // Ocultar opción de cambiar el número de filas mostradas
+                        "pagingType": "simple_numbers", // Tipo de paginación
+                        "language": {
+                            "sProcessing":     "Procesando...",
+                            "sLengthMenu":     "Mostrar _MENU_ registros",
+                            "sZeroRecords":    "No se encontraron resultados",
+                            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                            "sInfoPostFix":    "",
+                            "sSearch":         "Búsqueda:",
+                            "sUrl":            "",
+                            "sInfoThousands":  ",",
+                            "sLoadingRecords": "Cargando...",
+                            "oPaginate": {
+                                "sFirst":    "Primero",
+                                "sLast":     "Último",
+                                "sNext":     "Siguiente",
+                                "sPrevious": "Anterior"
+                            },
+                            "oAria": {
+                                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                            }
+                        }
+                    });
+                });
+                $('#data-table2').DataTable({
+                    "pageLength": 10,  // Máximo de 10 filas por página
+                    "lengthChange": false, // Ocultar opción de cambiar el número de filas mostradas
+                    "pagingType": "simple_numbers", // Tipo de paginación
+                    "language": {
+                        "sProcessing":     "Procesando...",
+                        "sLengthMenu":     "Mostrar _MENU_ registros",
+                        "sZeroRecords":    "No se encontraron resultados",
+                        "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                        "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix":    "",
+                        "sSearch":         "Búsqueda:",
+                        "sUrl":            "",
+                        "sInfoThousands":  ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst":    "Primero",
+                            "sLast":     "Último",
+                            "sNext":     "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        }
+                    }
+                });
+            
+                // Función para exportar a Excel
+                function exportExcel() {
+                    var wb = XLSX.utils.table_to_book(document.getElementById('data-table1'), {sheet: "Sheet 1"});
+                    XLSX.writeFile(wb, 'resumen_morosos.xlsx');
+                }
+
+                // Función para exportar a PDF
+                function exportPDF() {
+                    var { jsPDF } = window.jspdf;
+                    var doc = new jsPDF();
+                    doc.text("Residentes Morosos", 10, 10);
+                    
+                    var rows = [];
+                    document.querySelectorAll('#data-table1 tbody tr').forEach(function(row) {
+                        var rowData = [];
+                        row.querySelectorAll('td').forEach(function(cell) {
+                            rowData.push(cell.innerText);
+                        });
+                        rows.push(rowData);
+                    });
+                    
+                    doc.autoTable({
+                        head: [['#', 'Nombre', 'Deuda']],
+                        body: rows
+                    });
+
+                    doc.save('resumen_morosos.pdf');
+                }
+            </script>
+
+ 
     
         <!-- Script para el gráfico de barras -->
         <script>
@@ -142,7 +362,8 @@
                 }
             });
         </script>
-    
+
+
         <!-- Bootstrap JS (Opcional para interactividad adicional) -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     </body>
