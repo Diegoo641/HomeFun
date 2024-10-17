@@ -6,16 +6,24 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
 from core.form import CrearUsuario, CrearCuentaUsuario
-from core.models import FichaResidente
+from core.models import FichaResidente, EspacioComun
 
 
 def home(request):
     return render(request, 'core/home.html')
+
 def inicio(request):
     return render(request, 'core/inicio.html')
+
 def panel_admin(request):
     return render(request, 'core/panel_admin.html')
 
+def admin_espacios_comunes(request):
+    espacio_comun = EspacioComun.objects.all()
+    datos = {
+        'espacio_comun': espacio_comun
+    }
+    return render(request, 'core/admin_espacios_comunes.html', datos)
 
 def asignar_permisos_colaborador(usuario):
     # Obtener el permiso deseado
