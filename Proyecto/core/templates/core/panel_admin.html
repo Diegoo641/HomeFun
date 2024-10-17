@@ -36,6 +36,26 @@
                 height: 50vh; /* Puedes ajustar la altura a tus necesidades */
                 width: 100%;
             }
+
+                /* Estilos personalizados para las etiquetas */
+            .badge-custom {
+                padding: 0.5em 1em;
+                border-radius: 0.25rem;
+                font-size: 0.875rem;
+                font-weight: 500;
+            }
+
+            .bg-lavender { background-color: #e5d1ff; color: #6c757d; }
+            .bg-pink { background-color: #ffcccc; color: #6c757d; }
+            .bg-yellow { background-color: #fff3cd; color: #6c757d; }
+            .bg-orange { background-color: #ffc107; color: #fff; }
+            .bg-green { background-color: #d4edda; color: #155724; }
+            .bg-blue { background-color: #cfe2ff; color: #084298; }
+
+            thead th {
+                text-align: center;
+                vertical-align: middle; 
+            }
     
             
         </style>
@@ -114,8 +134,8 @@
                         {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
                         </div>
                         <div class="modal-body">
-                            <table class="table table-bordered table-striped" id="data-table2">
-                                <thead>
+                            <table class="table table-bordered table-striped text-center" id="data-table2">
+                                <thead >
                                     <tr>
                                         <th>#</th>
                                         <th>Nombre</th>
@@ -124,7 +144,18 @@
                                 </thead>
                                 <tbody>
                                     <!-- Agregar más de 10 filas para mostrar la paginación -->
-                                    <tr><td>1</td><td>Juan Pérez</td><td>$500</td></tr>
+                                    <tr>
+                                        <td> 
+                                            <span class="badge-custom bg-blue">1</span>
+                                        </td>
+
+                                        <td>
+                                            <span class="badge-custom bg-blue">Juan Pérez</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge-custom bg-blue">$500</span>
+                                        </td>
+                                    </tr>
                                     <tr><td>2</td><td>María Gómez</td><td>$300</td></tr>
                                     <tr><td>3</td><td>Pedro Martínez</td><td>$450</td></tr>
                                     <tr><td>4</td><td>Ana López</td><td>$600</td></tr>
