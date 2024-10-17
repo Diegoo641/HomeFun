@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .controller import Controller
 from django.contrib.auth import authenticate, login 
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
-from core.form import CrearUsuario
+from core.form import CrearUsuario, CrearCuentaUsuario
+from core.models import FichaResidente
 
 
 def home(request):
@@ -65,16 +66,15 @@ def agregar_administrador(request):
         if formulario.is_valid():
             print(formulario.cleaned_data["nom_usuario"])
             formulario.save()
-            tipo_user = Usuario.objects.get(nom_usuario=formulario.cleaned_data["nom_usuario"])
-            tipo_user.tipo_usr = Tipo_usuario.objects.get(id=1)
+            tipo_user = FichaResidente.objects.get(nom_usuario=formulario.cleaned_data["nom_usuario"])
             tipo_user.save()
             messages.success(request, "Te has registrado correctamente")
             usuario = User
-            usuario = User.objects.create_user(username=formulario.cleaned_data["nom_usuario"], password=formulario.cleaned_data["password"],first_name=formulario.cleaned_data["nombres"],last_name=formulario.cleaned_data["apellidos"],email=formulario.cleaned_data["correo"],is_staff=0, is_superuser=1)
+            usuario = User.objects.create_user(username=formulario.cleaned_data["nom_usuario"], password=formulario.cleaned_data["password"],first_name=formulario.cleaned_data["nombres"],last_name=formulario.cleaned_data["apellidos"],email=formulario.cleaned_data["correo"],is_staff=0, is_superuser=0)
             asignar_permisos_administrador(usuario)
             user = authenticate(
                 username=formulario.cleaned_data["nom_usuario"], password=formulario.cleaned_data["password"])
             login(request, user)
-            return redirect(to="inicio")
+            return redirect(to="home")
         data["form"] = formulario
     return render(request, 'core/agregar_administrador.html', data)

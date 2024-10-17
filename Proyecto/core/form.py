@@ -13,7 +13,7 @@ class CrearCuentaUsuario (forms.ModelForm):
 
    class Meta:
     model = FichaResidente
-    fields=["nombres","apellidos","correo","direccion","fecha_nac"]
+    fields=["id_residente","nombre","apellido","correo","direccion","rut","genero","comuna","estado_civil"]
 
 class CrearUsuario (UserCreationForm):
    class Meta:
