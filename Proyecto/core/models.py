@@ -93,7 +93,7 @@ class EspacioComun(models.Model):
     ubicacion = models.CharField(max_length=100, verbose_name='Ubicación del Espacio Común')
     valor = models.DecimalField(max_digits=10, decimal_places=2, null=True,blank=True,verbose_name='Monto')
     imagen = models.ImageField(upload_to='imagenes/', verbose_name='Imagen del Espacio Común')
-    id_comunidad = models.ForeignKey(Comuna, on_delete=models.PROTECT, verbose_name='Comunidad Asociada')
+    id_comunidad = models.ForeignKey(Comunidad, on_delete=models.PROTECT, verbose_name='Comunidad Asociada')
     estado_ec = models.ForeignKey('Estado_EC', on_delete=models.PROTECT, verbose_name='Estado del Espacio Común')
 
     def __str__(self):
