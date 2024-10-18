@@ -5,8 +5,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
-from core.form import CrearUsuario, CrearCuentaUsuario
-from core.models import FichaResidente, EspacioComun
+from core.form import CrearUsuario, CrearCuentaUsuario , EspacioComunForm
+from core.models import FichaResidente, EspacioComun, Estado_EC
+from django.shortcuts import get_object_or_404
 
 
 def home(request):
@@ -24,6 +25,23 @@ def admin_espacios_comunes(request):
         'espacio_comun': espacio_comun
     }
     return render(request, 'core/admin_espacios_comunes.html', datos)
+
+def modificar_espacio_comun(request, id):
+    material = EspacioComun.objects.get(id_espacio_comun=id)
+    datos = {
+        'form': EspacioComunForm(instance=material)
+    }
+    if request.method == 'POST':
+        formulario = EspacioComunForm(data=request.POST, instance=material)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Producto modificado correctamente")
+            return redirect(to="admin_espacios_comunes")
+        datos = {
+            'form': EspacioComunForm(instance=material),
+            'mensaje': "Modificado correctamente"
+        }
+    return render(request, 'core/modificar_espacio_comun.html', datos)
 
 def asignar_permisos_colaborador(usuario):
     # Obtener el permiso deseado
@@ -86,3 +104,54 @@ def agregar_administrador(request):
             return redirect(to="home")
         data["form"] = formulario
     return render(request, 'core/agregar_administrador.html', data)
+
+def Validar_Postulacion(request, id):
+    postulacionInstr = PostulacionInstr.objects.get(idPostulacion=id)
+    datos = {
+        'form': PostulacionInstrForm(instance=postulacionInstr)
+    }
+    if request.method == 'POST':
+        formulario = PostulacionInstrForm(
+            data=request.POST, instance=postulacionInstr)
+        if formulario.is_valid():
+            postulacionInstr.estado = "aceptada"
+            postulacionInstr.save()
+            formulario.save()
+            messages.success(request, "Postulación aceptada")
+            nombre = postulacionInstr.nombres+" "+postulacionInstr.apellidos
+            email = postulacionInstr.correo
+            print(email)
+            contenido = "¡¡¡Le informamos que su postulación fue aceptada!!!\n\n Para continuar con el proceso, dirigase a nuestras oficinas en:\n  Av. Concha y Toro 1820, 8152857 Puente Alto, Región Metropolitana. \n\n\n ¡Estamos ansiosos de trabajar trabajar con usted! \n\n\n Atte.,\n Dirección de Recursos Humanos. \n Puente Alto."
+
+            # email=EmailMessage("Mensaje de app Django",
+            # "Estimad@ {} con la dirección {} escribe lo siguiente:\n\n {}".format(nombre, email, contenido),
+            # '',
+            email = EmailMessage("Mensaje de app Django",
+                                 "Hola! {} :\n\n {}".format(nombre, contenido),
+                                 '',
+                                 [email],
+                                 reply_to=[email])
+
+            email.send()
+            return redirect(to="Admin_Postulacion")
+
+        datos = {
+            'form': PostulacionInstrForm(instance=postulacionInstr),
+            'mensaje': "Correo enviado correctamente"
+        }
+    return render(request, 'core/Validar_Postulacion.html', datos)
+
+def eliminarEspacioComun(request, id):
+    espacioComun = get_object_or_404(EspacioComun, id_espacio_comun=id)
+    if request.method == 'POST':
+        # Cambiar el estado del espacio común a "eliminado"
+        estado_eliminado = get_object_or_404(Estado_EC, id_est_ec=4)  # Get the Estado_EC instance with ID 4
+        espacioComun.estado_ec = estado_eliminado
+        espacioComun.save()  # Guardar los cambios
+        messages.success(request, "Espacio Común Eliminado")
+        return redirect(to="admin_espacios_comunes")
+
+    # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
+    return render(request, 'core/admin_espacios_comunes.html', {
+        'form': EspacioComunForm(instance=espacioComun)
+    })
