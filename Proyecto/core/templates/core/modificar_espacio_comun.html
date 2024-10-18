@@ -87,34 +87,33 @@
                         <div class="formulario row">
                             <!-- Primera sección del formulario -->
                             <div class="col-md-6">
-                                <form action="" method="POST" enctype="multipart/form-data" class="text-left">
+                                <form action="" method="POST" >
                                     {% csrf_token %}
                                     {{ form.nombre|as_crispy_field|safe }}
                                     {{ form.descripcion|as_crispy_field|safe }}
                                     {{ form.valor|as_crispy_field|safe }}
-                                </form>
                             </div>
                             <!-- Segunda sección del formulario -->
                             
                             <div class="col-md-6">
-                                <form action="" method="POST" enctype="multipart/form-data" class="text-left">
                                     {% csrf_token %}
                                     {{ form.ubicacion|as_crispy_field|safe }}
                                     {{ form.imagen|as_crispy_field|safe }}
                                     {{ form.id_comunidad|as_crispy_field|safe }}
                                     {{ form.estado_ec|as_crispy_field|safe }}
                                     <br>
+                                    <div class="col-md-12">
+                                        <center>
+                                            <input type="submit" value="Registrar" class="btn btn-success btn-block">
+        
+                                        </center>
+                                    </div>
 
                                 </form>
 
                             </div>
                             <hr>
-                            <div class="col-md-12">
-                                <center>
-                                    <input type="submit" value="Registrar" class="btn btn-success btn-block">
-
-                                </center>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
