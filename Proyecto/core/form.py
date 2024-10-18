@@ -24,7 +24,7 @@ class CrearUsuario (UserCreationForm):
 class EspacioComunForm(forms.ModelForm):
   class Meta:
     model = EspacioComun
-    fields=['nombre','descripcion','ubicacion','imagen','valor']
+    fields=['nombre','descripcion','ubicacion','imagen','valor','id_comunidad','estado_ec']
 
 
 
