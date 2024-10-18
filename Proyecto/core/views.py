@@ -8,6 +8,8 @@ from django.contrib.auth.models import Permission
 from core.form import CrearUsuario, CrearCuentaUsuario , EspacioComunForm
 from core.models import FichaResidente, EspacioComun, Estado_EC
 from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from django.shortcuts import render
 
 
 def home(request):
@@ -28,20 +30,20 @@ def admin_espacios_comunes(request):
 
 def modificar_espacio_comun(request, id):
     material = EspacioComun.objects.get(id_espacio_comun=id)
-    datos = {
-        'form': EspacioComunForm(instance=material)
-    }
+
     if request.method == 'POST':
         formulario = EspacioComunForm(data=request.POST, instance=material)
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Producto modificado correctamente")
             return redirect(to="admin_espacios_comunes")
-        datos = {
-            'form': EspacioComunForm(instance=material),
-            'mensaje': "Modificado correctamente"
-        }
-    return render(request, 'core/modificar_espacio_comun.html', datos)
+
+    form = EspacioComunForm(instance=material)
+    if request.is_ajax():
+        html = render_to_string('core/modificar_espacio_comun.html', {'form': form})
+        return JsonResponse({'form': html})
+
+    return render(request, 'core/modificar_espacio_comun.html', {'form': form})
 
 def asignar_permisos_colaborador(usuario):
     # Obtener el permiso deseado

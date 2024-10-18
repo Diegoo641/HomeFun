@@ -119,6 +119,23 @@
     }
 </script>
 
+<script>
+    function cargarDatos(id) {
+        // Realiza una solicitud AJAX para obtener el formulario
+        $.ajax({
+            url: '/ruta/a/tu/view/modificar_espacio_comun/' + id, // Ajusta esta URL
+            method: 'GET',
+            success: function(response) {
+                // Inserta el formulario en el modal
+                $('#Activos .modal-body').html(response.form);
+            },
+            error: function(error) {
+                console.log("Error al cargar los datos:", error);
+            }
+        });
+    }
+    </script>
+
 {% endblock %}
 
 <body>
@@ -139,7 +156,12 @@
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="title">
                     <div class="table-responsive">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Activos" onclick="cargarDatos({{ ec.id_espacio_comun }})">
+                            <i class="fa-solid fa-eye" style="color: aliceblue"> Crear</i>
+                        </button>
+                        <br>
                         <table id="myTable" class="display nowrap dt-responsive" style="width:100%;">
+                            
                             <thead>
                                 <tr>
                                     <th style="width:5%;">ID</th>
@@ -221,7 +243,7 @@
                                     </td>
                                     <td>
                                         <div class="d-flex justify-content-center">
-                                            <button class="btn btn-success ">
+                                            <button class="btn btn-danger ">
                                                 <a href="#" onclick="eliminarEspacioComun({{ec.id_espacio_comun}})">
                                                     <i class="fa-sharp fa-solid fa-check" style="color: aliceblue"></i>
                                                 </a>
@@ -242,51 +264,6 @@
     </div>
     <br>
 
-
-    <!-- TABLE FIN-->
-    <!-- ----------------------- -->
-    <!-- Modal -->
-    <div tabindex="-1" aria-labelledby="modal" aria-hidden="true" class="modal fade" id="modal">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content content-center">
-                <div class="modal-header" style="background-color: rgb(254, 126, 126)">
-                    <p class="text-md-center text-dark fs-3">Datos de Postulación</p>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <fieldset disabled>
-                            <div class="mb-3">
-                                <label for="" class="col-form-label">Nombre: </label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="" class="col-form-label">Apellido: </label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="" class="col-form-label">Rut: </label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="" class="col-form-label">Correo: </label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="" class="col-form-label">Dirección: </label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="" class="col-form-label">Dirección: </label>
-                                <input type="text" class="form-control">
-                            </div>
-                        </fieldset>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- ----------------------- -->
     <!-- Footer -->
