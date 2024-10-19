@@ -31,7 +31,7 @@ font-size: 25px;}
           <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <a class="navbar-brand" href="inicio">INICIO</a>
+          <a class="navbar-brand" href="{% url 'home' %}">INICIO</a>
 
           {% if user.is_authenticated %}
           <a id="inicio_secion" class="nav-link" href="{% url 'logout' %}"><i class="fas fa-user-circle"></i> {{user.username}}, cerrar sesión</a>
@@ -50,14 +50,16 @@ font-size: 25px;}
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Productos</a>
+                  <a class="nav-link active" aria-current="page" href="{% url 'admin_espacios_comunes' %}">Espacios Comunes</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'panel_admin' %}">Dashboard</a>
                 </li>
                 {% if user.is_superuser %}
                 
-
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'home' %}">Panel de Administración</a>
+                </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Administracion
