@@ -1,5 +1,5 @@
 from django.urls import path, include
-from core.views import home , registro,agregar_administrador, panel_admin, admin_espacios_comunes, eliminarEspacioComun, modificar_espacio_comun
+from core.views import home , registro,agregar_administrador, panel_admin, admin_espacios_comunes, eliminarEspacioComun, modificar_espacio_comun, crear_espacio_comun
 
 
 urlpatterns = [
@@ -11,6 +11,9 @@ urlpatterns = [
     path('panel_admin', panel_admin, name="panel_admin"),
     path('eliminarEspacioComun/<id>/',eliminarEspacioComun,name="eliminarEspacioComun"),
     path('modificar_espacio_comun/<id>/', modificar_espacio_comun, name='modificar_espacio_comun'),
+    path('crear_espacio_comun', crear_espacio_comun, name="crear_espacio_comun"),
+
+
 
 
 

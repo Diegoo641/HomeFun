@@ -26,6 +26,19 @@ def admin_espacios_comunes(request):
     }
     return render(request, 'core/admin_espacios_comunes.html', datos)
 
+def crear_espacio_comun(request):
+    datos = {
+        'form': EspacioComunForm()
+    }
+    if request.method == 'POST':
+        formulario = EspacioComunForm(request.POST , request.FILES)
+
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request,"Espacio comun registrado correctamente")
+            datos['mensaje'] = "Guardados Correctamente"
+    return render(request, 'core/crear_espacio_comun.html',datos)   
+
 def modificar_espacio_comun(request, id):
     espacioComun = EspacioComun.objects.get(id_espacio_comun=id)
     datos = {
