@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 from django import forms
 from .validators import TamañoImagenValidator
-from .models import FichaResidente , EspacioComun
+from .models import FichaResidente , EspacioComun, ReservaEspComun
 
 class CrearCuentaUsuario (forms.ModelForm):
    nombres = forms.CharField(min_length=3, max_length=100)
@@ -26,6 +26,10 @@ class EspacioComunForm(forms.ModelForm):
     model = EspacioComun
     fields=['nombre','descripcion','ubicacion','imagen','valor','id_comunidad','estado_ec']
 
+class ReservaEspacioComunForm(forms.ModelForm):
+  class Meta:
+    model = ReservaEspComun
+    fields=['descripcion','fecha','hora','id_espacio_comun','id_residente']
 
 
 

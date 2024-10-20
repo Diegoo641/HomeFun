@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
 from core.form import CrearUsuario, CrearCuentaUsuario , EspacioComunForm
-from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun
+from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC
 from django.shortcuts import get_object_or_404
 
 
@@ -193,3 +193,35 @@ def habilitarEspacioComun(request, id):
     return render(request, 'core/admin_espacios_comunes.html', {
         'form': EspacioComunForm(instance=espacioComun)
     })
+
+def cancelarReservaEspacioComun(request, id):
+    resEspacioComun = get_object_or_404(ReservaEspComun, id_reserva_esp_comun=id)
+    if request.method == 'POST':
+        # Cambiar el estado del espacio común a "eliminado"
+        estado_eliminado = get_object_or_404(Estado_R_EC, id_est_r_ec=2)  # Get the Estado_EC instance with ID 4
+        resEspacioComun.estado_reserva = estado_eliminado
+        resEspacioComun.save()  # Guardar los cambios
+        messages.success(request, "Espacio Común Eliminado")
+        return redirect(to="admin_res_espacios_comunes")
+
+    # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
+    return render(request, 'core/admin_res_espacios_comunes.html', {
+        'form': EspacioComunForm(instance=resEspacioComun)
+    })
+
+def modificar_res_espacio_comun(request, id):
+    espacioComun = EspacioComun.objects.get(id_espacio_comun=id)
+    datos = {
+        'form': Res(instance=espacioComun)
+    }
+    if request.method == 'POST':
+        formulario = EspacioComunForm(data=request.POST,files=request.FILES, instance= espacioComun)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Producto modificado correctamente")
+            return redirect(to="admin_espacios_comunes")
+        datos = {
+            'form': EspacioComunForm(instance=espacioComun),
+            'mensaje': "Modificado correctamente"
+        }
+    return render(request, 'core/modificar_espacio_comun.html', datos)

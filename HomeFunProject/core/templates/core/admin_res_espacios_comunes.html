@@ -89,9 +89,9 @@
 
 
 <script>
-    function eliminarEspacioComun(id) {
+    function cancelarResEspacioComun(id) {
         Swal.fire({
-            "title": "¿Deseas eliminar este Espacio Comun?",
+            "title": "¿Deseas cancelar este Espacio Comun?",
             "text": "El espacio comun quedara con estado 'Eliminado'",
             "icon": "question",
             "showCancelButton": true,
@@ -105,7 +105,7 @@
                     // Cambiar a un método POST para eliminar el espacio
                     const form = document.createElement('form');
                     form.method = 'POST';
-                    form.action = "http://127.0.0.1:8000/eliminarEspacioComun/" + id + "/";
+                    form.action = "http://127.0.0.1:8000/cancelarReservaEspacioComun/" + id + "/";
                     const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
                     const csrfInput = document.createElement('input');
                     csrfInput.type = 'hidden';
@@ -134,7 +134,7 @@
                     // Cambiar a un método POST para eliminar el espacio
                     const form = document.createElement('form');
                     form.method = 'POST';
-                    form.action = "http://127.0.0.1:8000/habilitarEspacioComun/" + id + "/";
+                    form.action = "http://127.0.0.1:8000/cancelarReservaEspacioComun/" + id + "/";
                     const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
                     const csrfInput = document.createElement('input');
                     csrfInput.type = 'hidden';
@@ -209,15 +209,15 @@
                                         </div>
                                     </td>
                                     <td>
-                                        {% if ec.estado_ec.descripcion == "Eliminado" %}
-                                        <button class="btn btn-success" onclick="habilitarEspacioComun({{ rec.id_reserva_esp_comun }})">
-                                            <a>
-                                                <i class="fa-sharp fa-solid fa-undo" style="color: aliceblue"></i>
-                                                Recuperar
+                                        {% if rec.estado_reserva.descripcion == "Cancelado" %}
+                                        <button class="btn btn-danger" onclick="cancelarResEspacioComun({{ rec.id_reserva_esp_comun }})" disabled>
+                                            <a >
+                                                <i class="fa-sharp fa-solid fa-check" style="color: aliceblue"></i>
+                                                Eliminar
                                             </a>
                                         </button>
                                         {% else %}
-                                        <button class="btn btn-danger" onclick="eliminarEspacioComun({{ rec.id_reserva_esp_comun }})">
+                                        <button class="btn btn-danger" onclick="cancelarResEspacioComun({{ rec.id_reserva_esp_comun }})">
                                             <a >
                                                 <i class="fa-sharp fa-solid fa-check" style="color: aliceblue"></i>
                                                 Eliminar
