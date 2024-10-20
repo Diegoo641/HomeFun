@@ -78,16 +78,16 @@
 
         <hr class="my-4">
                
-
+<!-- Modal Activos -->
         <div>
-            <div class="modal fade " id="Activos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal fade " id="Activos" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog modal-xl">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Residentes Activos
+                      <h1 class="modal-title fs-6" id="staticBackdropLabel">Residentes Activos
                         
                       </h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
                     </div>
                     <div class="modal-body">
                         <table class="table table-bordered table-striped" id="data-table1">
@@ -117,18 +117,20 @@
                         <button class="btn btn-success" onclick="exportExcel()">Exportar a Excel</button>
                         <button class="btn btn-danger" onclick="exportPDF()">Exportar a PDF</button>
                     </div>
-                    <div class="modal-footer">
+                    {% comment %} <div class="modal-footer">
                       <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                      {% comment %} <button type="button" class="btn btn-primary">Understood</button> {% endcomment %}
-                    </div>
+                      <button type="button" class="btn btn-primary">Understood</button> 
+                    </div> {% endcomment %}
                   </div>
                 </div>
               </div>  
+
+<!-- Modal Morosos -->
             <div class="modal fade " id="Morosos"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Residentes Morosos
+                        <h1 class="modal-title fs-6" id="staticBackdropLabel">Residentes Morosos
                             
                         </h1>
                         {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
@@ -181,6 +183,8 @@
                 </div>
             </div>       
         </div>
+
+
 
         <div class="container mt-3">
             <!-- Fila con dos tarjetas con espacio entre ellas -->
