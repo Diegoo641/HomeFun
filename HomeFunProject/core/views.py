@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
-from core.form import CrearUsuario, CrearCuentaUsuario , EspacioComunForm
+from core.form import CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ReservaEspacioComunForm
 from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC
 from django.shortcuts import get_object_or_404
 
@@ -210,18 +210,18 @@ def cancelarReservaEspacioComun(request, id):
     })
 
 def modificar_res_espacio_comun(request, id):
-    espacioComun = EspacioComun.objects.get(id_espacio_comun=id)
+    resEspacioComun = ReservaEspComun.objects.get(id_reserva_esp_comun=id)
     datos = {
-        'form': Res(instance=espacioComun)
+        'form': ReservaEspacioComunForm(instance=resEspacioComun)
     }
     if request.method == 'POST':
-        formulario = EspacioComunForm(data=request.POST,files=request.FILES, instance= espacioComun)
+        formulario = ReservaEspacioComunForm(data=request.POST,files=request.FILES, instance= resEspacioComun)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, "Producto modificado correctamente")
-            return redirect(to="admin_espacios_comunes")
+            messages.success(request, "Reserva modificado correctamente")
+            return redirect(to="admin_res_espacios_comunes")
         datos = {
-            'form': EspacioComunForm(instance=espacioComun),
+            'form': ReservaEspacioComunForm(instance=resEspacioComun),
             'mensaje': "Modificado correctamente"
         }
-    return render(request, 'core/modificar_espacio_comun.html', datos)
+    return render(request, 'core/admin_res_espacios_comunes.html', datos)
