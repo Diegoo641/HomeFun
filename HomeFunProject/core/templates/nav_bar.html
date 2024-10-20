@@ -50,17 +50,14 @@ font-size: 25px;}
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="{% url 'admin_espacios_comunes' %}">Espacios Comunes</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'panel_admin' %}">Dashboard</a>
+                  <a class="nav-link active" aria-current="page" href="{% url 'admin_res_espacios_comunes' %}">Reservar Espacios Comunes</a>
                 </li>
                 {% if user.is_superuser %}
                 
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'home' %}">Panel de Administración</a>
                 </li>
-                <li class="nav-item dropdown">
+                {% comment %} <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Administracion
                   </a>
@@ -79,7 +76,7 @@ font-size: 25px;}
                     <li><a class="dropdown-item" href="#">Ingresar servicio</a></li>
                     <li><a class="dropdown-item" href="#">Ver servicios</a></li>     
                   </ul>
-                </li>
+                </li>  {% endcomment %}
                 {%elif user.is_staff%}
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -97,16 +94,21 @@ font-size: 25px;}
                 </li>
                 {%endif%}
               </ul>
-              <form class="d-flex mt-3" role="search">
+              {% comment %} <form class="d-flex mt-3" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-success" type="submit">Search</button>
-              </form>
+              </form> {% endcomment %}
+              <div class="navbar-footer text-center mt-3 py-3 sticky-bottom fs-6">
+                <small>© 2024 Proyecto de título - Todos los derechos reservados</small>
+            </div>
             </div>
           </div>
         </div>
       </nav>
 
-  <!-- Tu contenido aquí -->
- 
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 </body>
 </html>
