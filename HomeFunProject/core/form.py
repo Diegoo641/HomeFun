@@ -26,7 +26,13 @@ class EspacioComunForm(forms.ModelForm):
     model = EspacioComun
     fields=['nombre','descripcion','ubicacion','imagen','valor','id_comunidad','estado_ec']
 
-class ReservaEspacioComunForm(forms.ModelForm):
+class ModReservaEspacioComunForm(forms.ModelForm):
+  hora = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))
+  class Meta:
+    model = ReservaEspComun
+    fields=['descripcion','hora']
+
+class CrearReservaEspacioComunForm(forms.ModelForm):
   hora = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))
   class Meta:
     model = ReservaEspComun
