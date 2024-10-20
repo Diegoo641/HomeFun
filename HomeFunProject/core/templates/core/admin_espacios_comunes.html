@@ -100,22 +100,51 @@
             "reverseButtons": true,
             "confirmButtonColor": "#dc3545"
         })
-        .then(function (result) {
-            if (result.isConfirmed) {
-                // Cambiar a un método POST para eliminar el espacio
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = "http://127.0.0.1:8000/eliminarEspacioComun/" + id + "/";
-                const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
-                const csrfInput = document.createElement('input');
-                csrfInput.type = 'hidden';
-                csrfInput.name = 'csrfmiddlewaretoken';
-                csrfInput.value = csrfToken;
-                form.appendChild(csrfInput);
-                document.body.appendChild(form);
-                form.submit(); // Enviar el formulario
-            }
-        });
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    // Cambiar a un método POST para eliminar el espacio
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = "http://127.0.0.1:8000/eliminarEspacioComun/" + id + "/";
+                    const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = 'csrfmiddlewaretoken';
+                    csrfInput.value = csrfToken;
+                    form.appendChild(csrfInput);
+                    document.body.appendChild(form);
+                    form.submit(); // Enviar el formulario
+                }
+            });
+    }
+
+    function habilitarEspacioComun(id) {
+        Swal.fire({
+            "title": "¿Deseas habilitar este Espacio Comun?",
+            "text": "El espacio comun quedara con estado 'Eliminado'",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "No, cancelar",
+            "confirmButtonText": "Si, Aceptar",
+            "reverseButtons": true,
+            "confirmButtonColor": "#dc3545"
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    // Cambiar a un método POST para eliminar el espacio
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = "http://127.0.0.1:8000/habilitarEspacioComun/" + id + "/";
+                    const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = 'csrfmiddlewaretoken';
+                    csrfInput.value = csrfToken;
+                    form.appendChild(csrfInput);
+                    document.body.appendChild(form);
+                    form.submit(); // Enviar el formulario
+                }
+            });
     }
 </script>
 
@@ -175,7 +204,8 @@
                                     <td>
                                         <div class="d-flex justify-content-center">
                                             <button class="btn btn-warning">
-                                                <a class="a" href="http://127.0.0.1:8000/modificar_espacio_comun/{{ec.id_espacio_comun}}">
+                                                <a class="a"
+                                                    href="http://127.0.0.1:8000/modificar_espacio_comun/{{ec.id_espacio_comun}}">
                                                     <i class="fa-solid fa-eye" style="color: aliceblue"></i>
                                                 </a>
                                             </button>
@@ -210,7 +240,7 @@
                                                                         <td>{{ec.nombre}}</td>
                                                                         <td>$500</td>
                                                                     </tr>
-                                                                    
+
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -225,13 +255,21 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="d-flex justify-content-center">
-                                            <button class="btn btn-success ">
-                                                <a href="#" onclick="eliminarEspacioComun({{ec.id_espacio_comun}})">
-                                                    <i class="fa-sharp fa-solid fa-check" style="color: aliceblue"></i>
-                                                </a>
-                                            </button>
-                                        </div>
+                                        {% if ec.estado_ec.descripcion == "Eliminado" %}
+                                        <button class="btn btn-success">
+                                            <a href="#" onclick="habilitarEspacioComun({{ ec.id_espacio_comun }})">
+                                                <i class="fa-sharp fa-solid fa-undo" style="color: aliceblue"></i>
+                                                Recuperar
+                                            </a>
+                                        </button>
+                                        {% else %}
+                                        <button class="btn btn-danger">
+                                            <a href="#" onclick="eliminarEspacioComun({{ ec.id_espacio_comun }})">
+                                                <i class="fa-sharp fa-solid fa-check" style="color: aliceblue"></i>
+                                                Eliminar
+                                            </a>
+                                        </button>
+                                        {% endif %}
 
                                     </td>
 

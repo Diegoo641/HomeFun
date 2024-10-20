@@ -171,3 +171,18 @@ def eliminarEspacioComun(request, id):
     return render(request, 'core/admin_espacios_comunes.html', {
         'form': EspacioComunForm(instance=espacioComun)
     })
+
+def habilitarEspacioComun(request, id):
+    espacioComun = get_object_or_404(EspacioComun, id_espacio_comun=id)
+    if request.method == 'POST':
+        # Cambiar el estado del espacio común a "eliminado"
+        estado_eliminado = get_object_or_404(Estado_EC, id_est_ec=1)  # Get the Estado_EC instance with ID 4
+        espacioComun.estado_ec = estado_eliminado
+        espacioComun.save()  # Guardar los cambios
+        messages.success(request, "Espacio Común Habillitado")
+        return redirect(to="admin_espacios_comunes")
+
+    # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
+    return render(request, 'core/admin_espacios_comunes.html', {
+        'form': EspacioComunForm(instance=espacioComun)
+    })
