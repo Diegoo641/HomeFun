@@ -37,6 +37,9 @@ def crear_espacio_comun(request):
             formulario.save()
             messages.success(request,"Espacio comun registrado correctamente")
             datos['mensaje'] = "Guardados Correctamente"
+            return redirect(to="admin_espacios_comunes")
+        else:
+            print("Error")
     return render(request, 'core/crear_espacio_comun.html',datos)   
 
 def modificar_espacio_comun(request, id):

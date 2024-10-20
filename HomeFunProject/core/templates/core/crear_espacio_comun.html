@@ -87,7 +87,7 @@
                         <div class="formulario row">
                             <!-- Primera sección del formulario -->
                             <div class="col-md-6">
-                                <form action="" method="POST" >
+                                <form action="" method="POST" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     {{ form | crispy }}
                                   
