@@ -118,7 +118,7 @@ class ReservaEspComun(models.Model):
     estado_reserva = models.ForeignKey('Estado_R_EC', on_delete=models.PROTECT, verbose_name='Estado de la Reserva')
 
     def __str__(self):
-        return f"Reserva de {self.id_espacio_comun} por {self.id_residente}"
+        return self.descripcion
 
 # ESTADO_GC (Estado de gasto común)
 class Estado_GC(models.Model):

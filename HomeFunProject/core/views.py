@@ -218,10 +218,12 @@ def modificar_res_espacio_comun(request, id):
         formulario = ReservaEspacioComunForm(data=request.POST,files=request.FILES, instance= resEspacioComun)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, "Reserva modificado correctamente")
+            messages.success(request, "Producto modificado correctamente")
             return redirect(to="admin_res_espacios_comunes")
         datos = {
             'form': ReservaEspacioComunForm(instance=resEspacioComun),
             'mensaje': "Modificado correctamente"
         }
-    return render(request, 'core/admin_res_espacios_comunes.html', datos)
+    else:
+        print("error")
+    return render(request, 'core/modificar_res_espacio_comun.html', datos)

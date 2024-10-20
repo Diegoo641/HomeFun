@@ -86,27 +86,31 @@
                         <hr>
                         <div class="formulario row">
                             <!-- Primera sección del formulario -->
-                            <div class="col-md-6">
-                                <form action="" method="POST" enctype="multipart/form-data" >
+                            <div class="col-md-12">
+                                <form action="" method="POST" enctype="multipart/form-data">
                                     {% csrf_token %}
-                                    {{ form}}
-                               
+                                    <label for="id_hora">Descripcion</label>
+                                    <input type="text" name="descripcion" id="descripicon" class="form-control"
+                                        value="{{ form.descripcion.value }}" disabled>
+                                        <br><br>
+                                        <label for="id_hora">Hora</label>
+                                        <input type="time" name="hora" id="id_hora" class="form-control"
+                                            value="{{ form.hora.value }}">
+                                            
+                            <div class="col-md-12">
+                                <center>
+                                    <input type="submit" value="Registrar" class="btn btn-success btn-block">
+
+                                </center>
+                            </div>
                             </div>
                             <!-- Segunda sección del formulario -->
-                            
-        
-                                    <div class="col-md-12">
-                                        <center>
-                                            <input type="submit" value="Registrar" class="btn btn-success btn-block">
-        
-                                        </center>
-                                    </div>
 
-                                </form>
+                            </form>
 
-                            
+
                             <hr>
-                            
+
                         </div>
                     </div>
                 </div>
