@@ -40,7 +40,7 @@ class FichaResidente(models.Model):
     apellido = models.CharField(max_length=100, verbose_name='Apellido del Residente')
     correo = models.CharField(max_length=100, verbose_name='Correo Electrónico')
     direccion = models.CharField(max_length=100, verbose_name='Dirección')
-    rut = models.CharField(max_length=12, verbose_name='RUT')
+    rut = models.CharField(max_length=12, verbose_name='RUT' ,unique=True)
     genero = models.ForeignKey(Genero, on_delete=models.PROTECT, verbose_name='Género del Residente')
     comuna = models.ForeignKey(Comuna, on_delete=models.PROTECT, verbose_name='Comuna del Residente')
     estado_civil = models.ForeignKey(EstadoCivil, on_delete=models.PROTECT, verbose_name='Estado Civil')
