@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
 from core.form import CrearUsuario, CrearCuentaUsuario , EspacioComunForm
-from core.models import FichaResidente, EspacioComun, Estado_EC
+from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun
 from django.shortcuts import get_object_or_404
 
 
@@ -25,6 +25,13 @@ def admin_espacios_comunes(request):
         'espacio_comun': espacio_comun
     }
     return render(request, 'core/admin_espacios_comunes.html', datos)
+
+def admin_res_espacios_comunes(request):
+    res_espacio_comun = ReservaEspComun.objects.all()
+    datos = {
+        'res_espacio_comun': res_espacio_comun
+    }
+    return render(request, 'core/admin_res_espacios_comunes.html', datos)
 
 def crear_espacio_comun(request):
     datos = {
