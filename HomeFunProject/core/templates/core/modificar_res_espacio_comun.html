@@ -86,13 +86,15 @@
                         <hr>
                         <div class="formulario row">
                             <!-- Primera sección del formulario -->
+                            <div class="col-md-6">
+                                <form action="" method="POST" enctype="multipart/form-data" >
+                                    {% csrf_token %}
+                                    {{ form}}
+                               
+                            </div>
                             <!-- Segunda sección del formulario -->
                             
-                            <div class="col-md-6">
-                                    {% csrf_token %}
-                                    {{ form.hora|as_crispy_field|safe }}
-                                   
-                                    <br>
+        
                                     <div class="col-md-12">
                                         <center>
                                             <input type="submit" value="Registrar" class="btn btn-success btn-block">
@@ -102,7 +104,7 @@
 
                                 </form>
 
-                            </div>
+                            
                             <hr>
                             
                         </div>
