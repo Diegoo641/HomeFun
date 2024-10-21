@@ -18,7 +18,7 @@ urlpatterns = [
     path('crear_espacio_comun', crear_espacio_comun, name="crear_espacio_comun"),
     path('cancelarReservaEspacioComun/<id>/',cancelarReservaEspacioComun,name="habilitarEspacioComun"),
     path('modificar_res_espacio_comun/<id>/', modificar_res_espacio_comun, name='modificar_res_espacio_comun'),
-     path('consulta_estado_cuenta', consulta_estado_cuenta, name="consulta_estado_cuenta"),
+    path('consulta_estado_cuenta', consulta_estado_cuenta, name="consulta_estado_cuenta"),
 
 
 

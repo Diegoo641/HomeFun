@@ -195,7 +195,7 @@
                                 </thead>
                                 <tbody>
 
-                                    {% for ec in espacio_comun %}
+                                    {% for gc in gasto_comun %}
 
                                     
                                     <!-- Modal para ver la imagen del mapa -->
@@ -223,13 +223,13 @@
                                     </div>
   
                                     <tr>
-                                        <td>{{ec.id_espacio_comun}}</td>
-                                        <td>{{ec.nombre}}</td>
-                                        <td>{{ec.descripcion}}</td>
-                                        <td>{{ec.ubicacion}}</td>
-                                        <td>{{ec.estado_ec.descripcion}}</td>
-                                        <td>{{ec.valor}}</td>
-                                        <td>{{ec.id_comunidad.nombre}}</td>
+                                        <td>{{gc.id_gc}}</td>
+                                        <td>{{gc.nombre}}</td>
+                                        <td>{{gc.monto}}</td>
+                                        <td>{{gc.estado_gc.descripcion}}</td>
+                                        <td>{{gc.id_dpto.id_residente.rut}}</td>
+                                        <td>{{gc.valor}}</td>
+                                        <td>{{gc.id_comunidad.nombre}}</td>
                                         <td>
                                             <div class="dropdown">
                                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">

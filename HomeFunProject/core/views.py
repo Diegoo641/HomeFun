@@ -34,7 +34,16 @@ def admin_espacios_comunes(request):
     return render(request, 'core/admin_espacios_comunes.html', datos)
 
 def consulta_estado_cuenta(request):
-    gasto_comun = GastoComun.objects.all()
+    rut_usuario = request.user.username  # Asumiendo que el nombre de usuario es el RUT
+    # Filtrar los gastos comunes según el 'rut'
+    residente = FichaResidente.objects.filter(rut=rut_usuario).first()
+    print(residente.rut)
+
+    if residente:
+        gasto_comun = GastoComun.objects.filter(id_dpto__id_residente__rut=residente.rut)
+        print(gasto_comun)
+    else:
+        gasto_comun = GastoComun.objects.none()
     datos = {
         'gasto_comun': gasto_comun
     }

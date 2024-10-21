@@ -25,89 +25,103 @@ font-size: 25px;}
 
 </style>
 </head>
+
 <body>
-    <nav class="navbar navbar-dark bg-dark fixed-top">
-        <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <a class="navbar-brand" href="{% url 'home' %}">INICIO</a>
+  <nav class="navbar navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
+        aria-controls="offcanvasDarkNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'home' %}">INICIO</a>
 
-          {% if user.is_authenticated %}
-          <a id="inicio_secion" class="nav-link" href="{% url 'logout' %}"><i class="fas fa-user-circle"></i> {{user.username}}, cerrar sesión</a>
+      {% if user.is_authenticated %}
+      <a id="inicio_secion" class="nav-link" href="{% url 'logout' %}"><i class="fas fa-user-circle"></i>
+        {{user.username}}, cerrar sesión</a>
 
-        {% else %} 
+      {% else %}
 
-          <a id="inicio_secion" class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</a>
+      <a id="inicio_secion" class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Iniciar
+        sesión</a>
 
-        {% endif %}
-   
-          <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Dark offcanvas</h5>
-              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="{% url 'admin_res_espacios_comunes' %}">Reservar Espacios Comunes</a>
+      {% endif %}
+
+      <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+        aria-labelledby="offcanvasDarkNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Dark offcanvas</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+
+          {% if user.is_superuser %}
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">Panel de Administración</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="{% url 'panel_admin' %}">Panel de DashBoard</a>
+          </li>
+          {% comment %} <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Administracion
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li><a class="dropdown-item" href="#">Ingresar producto</a></li>
+              <li><a class="dropdown-item" href="#">Ver producto</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Ingresar colaborador</a></li>
+              <li><a class="dropdown-item" href="#">Ingresar administrador</a></li>
+              <li><a class="dropdown-item" href="#">Ver colaboradores</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Ingresar servicio</a></li>
+              <li><a class="dropdown-item" href="#">Ver servicios</a></li>
+            </ul>
+          </li> {% endcomment %}
+
+          {% elif not user.is_superuser and not user.is_staff %}
+          <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'admin_res_espacios_comunes' %}">Reservar
+                Espacios Comunes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'consulta_estado_cuenta' %}">gastos comunes</a>
+            </li>
+            {%elif user.is_staff%}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Administracion
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href="#">Ingresar producto</a></li>
+                <li><a class="dropdown-item" href="#">Ver producto</a></li>
+                <li>
+                  <hr class="dropdown-divider">
                 </li>
-                {% if user.is_superuser %}
-                
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'home' %}">Panel de Administración</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="{% url 'panel_admin' %}">Panel de DashBoard</a>
-                </li>
-                {% comment %} <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Administracion
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-dark">
-                    <li><a class="dropdown-item" href="#">Ingresar producto</a></li>
-                    <li><a class="dropdown-item" href="#">Ver producto</a></li>
-                    <li>
-                      <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Ingresar colaborador</a></li>
-                    <li><a class="dropdown-item" href="#">Ingresar administrador</a></li>
-                    <li><a class="dropdown-item" href="#">Ver colaboradores</a></li>
-                    <li>
-                      <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Ingresar servicio</a></li>
-                    <li><a class="dropdown-item" href="#">Ver servicios</a></li>     
-                  </ul>
-                </li>  {% endcomment %}
-                {%elif user.is_staff%}
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Administracion
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-dark">
-                    <li><a class="dropdown-item" href="#">Ingresar producto</a></li>
-                    <li><a class="dropdown-item" href="#">Ver producto</a></li>
-                    <li>
-                      <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Ingresar servicio</a></li>
-                    <li><a class="dropdown-item" href="#">Ver servicios</a></li>                    
-                  </ul>
-                </li>
-                {%endif%}
+                <li><a class="dropdown-item" href="#">Ingresar servicio</a></li>
+                <li><a class="dropdown-item" href="#">Ver servicios</a></li>
               </ul>
-              {% comment %} <form class="d-flex mt-3" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-success" type="submit">Search</button>
-              </form> {% endcomment %}
-              <div class="navbar-footer text-center mt-3 py-3 sticky-bottom fs-6">
-                <small>© 2024 Proyecto de título - Todos los derechos reservados</small>
-            </div>
-            </div>
+            </li>
+            {%endif%}
+          </ul>
+          {% comment %} <form class="d-flex mt-3" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-success" type="submit">Search</button>
+          </form> {% endcomment %}
+          <div class="navbar-footer text-center mt-3 py-3 sticky-bottom fs-6">
+            <small>© 2024 Proyecto de título - Todos los derechos reservados</small>
           </div>
         </div>
-      </nav>
+      </div>
+    </div>
+  </nav>
 
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
