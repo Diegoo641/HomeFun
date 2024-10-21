@@ -236,7 +236,7 @@
             <div class="row mt-5">
                 <div class="col-12">
                     <div class="chart-container">
-                        <h3 class="text-center">Gráfico de Barras - Espacios comunes más utilizados 
+                        <h3 class="text-center">Espacios comunes más utilizados 
                             {% comment %} <i class="fas fa-question-circle help-icon" data-bs-toggle="modal" data-bs-target="#helpModal"></i> {% endcomment %}
                         </h3>
                         <canvas id="barChart"></canvas>
@@ -248,16 +248,79 @@
 
        <!-- Modal de ayuda -->
        <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <div class="modal-header bg-primary"> <!-- Cambia bg-primary por el color que desees -->
+                <div class="modal-header bg-primary text-white"> <!-- Cambia bg-primary por el color que desees -->
                     <h5 class="modal-title text-center" id="helpModalLabel">
                         <i class="fa-solid fa-users-gear me-2"></i> Fun Ayuda
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Aquí puedes agregar el contenido de ayuda que desees proporcionar a los usuarios.
+                    <div class="row">
+                        <div class="col-md-5 ms-auto">
+                            <div class="card w-100">
+                                <div class="card-body">
+                                  {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                                  <p class="card-text">
+                                    <img src="/media/imagenes/Activos.jpg" alt="Descripción de la imagen" class="img-fluid" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7 ms-auto">
+                            
+                            <div class="card w-100">
+                                <div class="card-body">
+                                  <h5 class="card-title">Descripcion Residentes activos</h5>
+                                  <p class="card-text">Esta Tarjeta permite visualizar la cantidad de Residemtes activos que tiene el condominio y al dar clic sobre la fecha color blanco, el sistema desplegará una lista con todos la información.</p>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-md-5 ms-auto">
+                            <div class="card w-100">
+                                <div class="card-body">
+                                  {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                                  <p class="card-text">
+                                    <img src="/media/imagenes/Morosos.jpg" alt="Descripción de la imagen" class="img-fluid" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-7 ms-auto">
+                            <div class="card w-100">
+                                <div class="card-body">
+                                  <h5 class="card-title">Descripcion Residentes Moros</h5>
+                                  <p class="card-text">
+                                    Esta Tarjeta permite visualizar la cantidad de Residemtes Morosos y al dar clic sobre la fecha color blanco, el sistema desplegará una lista con todos la información.</p>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    <hr>
+                      <div class="row">
+                        <div class="col-md-5 ms-auto">
+                            <div class="card w-100">
+                                <div class="card-body">
+                                  {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                                  <p class="card-text">
+                                    <img src="/media/imagenes/GraficoComunes.jpg" alt="Descripción de la imagen" class="img-fluid" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7 ms-auto">
+                            
+                            <div class="card w-100">
+                                <div class="card-body">
+                                  <h5 class="card-title">Descripcion Espacios comunes más utilizados</h5>
+                                  <p class="card-text">El sistema en base a estadisticas de reservas, crea un gráfico con los espacios comunes que han sido más utilizado por los residentes en el mes en curso.</p>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
