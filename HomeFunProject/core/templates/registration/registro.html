@@ -87,7 +87,11 @@
                         
                         <div class="formulario">
                             <form action="" method="post">
+                                {% csrf_token %}
                                 {{ form | crispy }}
+                                <!-- Campo de contraseña que no está en el formulario -->
+                    <label for="password">Contraseña</label>
+                    <input type="password" name="password" id="password" class="form-control" required>
                                 <input type="submit" value="Registrar" class="btn btn-success btn-block">
                             </form>
                         </div>
