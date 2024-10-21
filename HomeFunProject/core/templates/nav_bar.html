@@ -43,7 +43,7 @@ font-size: 25px;}
 
       <a id="inicio_secion" class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Iniciar
         sesión</a>
-
+        
       {% endif %}
 
       <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
@@ -54,7 +54,9 @@ font-size: 25px;}
             aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'panel_residente' %}">Panel de Residente</a>
+          </li>
           {% if user.is_superuser %}
 
           <li class="nav-item">

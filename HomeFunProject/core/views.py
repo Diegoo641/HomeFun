@@ -25,6 +25,9 @@ def inicio(request):
 def panel_admin(request):
     return render(request, 'core/panel_admin.html')
 
+def panel_residente(request):
+    return render(request, 'core/panel_residente.html')
+
 @user_passes_test(es_superusuario_o_staff)
 def admin_espacios_comunes(request):
     espacio_comun = EspacioComun.objects.all()
