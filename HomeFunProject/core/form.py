@@ -6,9 +6,6 @@ from .validators import TamañoImagenValidator
 from .models import FichaResidente , EspacioComun, ReservaEspComun
 
 class CrearCuentaUsuario (forms.ModelForm):
-   nombres = forms.CharField(min_length=3, max_length=100)
-   apellidos = forms.CharField(min_length=3, max_length=100)
-   fecha_nac = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
    correo = forms.EmailField()
 
    class Meta:

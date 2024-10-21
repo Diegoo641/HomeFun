@@ -122,9 +122,9 @@ def registro(request):
         if formulario.is_valid():
             print(formulario.cleaned_data["rut"])
             formulario.save()
-            messages.success(request, "Te has registrado correctamente")
+            messages.success(request, "Has creado la ficha de usuario de manera correcta")
             usuario = User
-            usuario = User.objects.create_user(username=formulario.cleaned_data["rut"],first_name=formulario.cleaned_data["nombres"],last_name=formulario.cleaned_data["apellidos"],email=formulario.cleaned_data["correo"],is_staff=0, is_superuser=0)
+            usuario = User.objects.create_user(username=formulario.cleaned_data["rut"],first_name=formulario.cleaned_data["nombre"],last_name=formulario.cleaned_data["apellido"],email=formulario.cleaned_data["correo"],is_staff=0, is_superuser=0)
             password = request.POST.get('password')
             usuario.set_password(password)
             usuario.save()
