@@ -87,6 +87,7 @@
                         
                         <div class="formulario">
                             <form action="" method="post">
+                                {% csrf_token %}
                                 {{ form | crispy }}
                                 <input type="submit" value="Registrar" class="btn btn-success btn-block">
                             </form>

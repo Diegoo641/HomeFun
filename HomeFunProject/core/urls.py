@@ -1,5 +1,7 @@
 from django.urls import path, include
-from core.views import home , registro,agregar_administrador, modificar_res_espacio_comun,cancelarReservaEspacioComun,panel_admin, admin_espacios_comunes, eliminarEspacioComun, modificar_espacio_comun, crear_espacio_comun, habilitarEspacioComun,admin_res_espacios_comunes
+from core.views import home , registro,agregar_administrador, modificar_res_espacio_comun,cancelarReservaEspacioComun,\
+    panel_admin, admin_espacios_comunes, eliminarEspacioComun, modificar_espacio_comun, crear_espacio_comun, \
+    habilitarEspacioComun,admin_res_espacios_comunes,consulta_estado_cuenta
 
 
 urlpatterns = [
@@ -16,6 +18,9 @@ urlpatterns = [
     path('crear_espacio_comun', crear_espacio_comun, name="crear_espacio_comun"),
     path('cancelarReservaEspacioComun/<id>/',cancelarReservaEspacioComun,name="habilitarEspacioComun"),
     path('modificar_res_espacio_comun/<id>/', modificar_res_espacio_comun, name='modificar_res_espacio_comun'),
+     path('consulta_estado_cuenta', consulta_estado_cuenta, name="consulta_estado_cuenta"),
+
+
 
 
 

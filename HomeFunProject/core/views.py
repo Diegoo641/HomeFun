@@ -8,6 +8,12 @@ from django.contrib.auth.models import Permission
 from core.form import CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm
 from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required, user_passes_test
+
+def es_superusuario_o_staff(user):
+    return user.is_superuser or user.is_staff
+
+@login_required
 
 
 def home(request):
@@ -19,6 +25,7 @@ def inicio(request):
 def panel_admin(request):
     return render(request, 'core/panel_admin.html')
 
+@user_passes_test(es_superusuario_o_staff)
 def admin_espacios_comunes(request):
     espacio_comun = EspacioComun.objects.all()
     datos = {
@@ -26,13 +33,14 @@ def admin_espacios_comunes(request):
     }
     return render(request, 'core/admin_espacios_comunes.html', datos)
 
-def gastos_comun(request):
+def consulta_estado_cuenta(request):
     gasto_comun = GastoComun.objects.all()
     datos = {
         'gasto_comun': gasto_comun
     }
-    return render(request, 'core/admin_espacios_comunes.html', datos)
+    return render(request, 'core/consulta_estado_cuenta.html', datos)
 
+@user_passes_test(es_superusuario_o_staff)
 def admin_res_espacios_comunes(request):
     res_espacio_comun = ReservaEspComun.objects.all()
     datos = {
@@ -96,7 +104,8 @@ def asignar_permisos_administrador(usuario):
     # Asignar el permiso al usuario
     usuario.user_permissions.add(permisos_objetos)
 
-def registro (request):
+
+def agregar_administrador (request):
     data ={
         'form':CrearUsuario
     }
@@ -107,33 +116,34 @@ def registro (request):
             messages.success(request,"Te has registrado correctamente")
             user = authenticate(username=formulario.cleaned_data["username"], password=formulario.cleaned_data["password1"])
             login(request,user)
-            return redirect(to="index_home")
+            return redirect(to="home")
         data["form"] = formulario
     return render(request, 'registration/registro.html',data)
 
 
 
-def agregar_administrador(request):
+def registro(request):
     data = {
         'form': CrearCuentaUsuario
     }
     if request.method == 'POST':
         formulario = CrearCuentaUsuario(data=request.POST)
         if formulario.is_valid():
-            print(formulario.cleaned_data["nom_usuario"])
+            print(formulario.cleaned_data["rut"])
             formulario.save()
-            tipo_user = FichaResidente.objects.get(nom_usuario=formulario.cleaned_data["nom_usuario"])
-            tipo_user.save()
-            messages.success(request, "Te has registrado correctamente")
+            messages.success(request, "Has creado la ficha de usuario de manera correcta")
             usuario = User
-            usuario = User.objects.create_user(username=formulario.cleaned_data["nom_usuario"], password=formulario.cleaned_data["password"],first_name=formulario.cleaned_data["nombres"],last_name=formulario.cleaned_data["apellidos"],email=formulario.cleaned_data["correo"],is_staff=0, is_superuser=0)
-            asignar_permisos_administrador(usuario)
-            user = authenticate(
-                username=formulario.cleaned_data["nom_usuario"], password=formulario.cleaned_data["password"])
-            login(request, user)
+            usuario = User.objects.create_user(username=formulario.cleaned_data["rut"],first_name=formulario.cleaned_data["nombre"],last_name=formulario.cleaned_data["apellido"],email=formulario.cleaned_data["correo"],is_staff=0, is_superuser=0)
+            password = request.POST.get('password')
+            usuario.set_password(password)
+            usuario.save()
+            #asignar_permisos_administrador(usuario)
+            # user = authenticate(
+            #     username=formulario.cleaned_data["nom_usuario"], password=formulario.cleaned_data["password"])
+            # login(request, user)
             return redirect(to="home")
         data["form"] = formulario
-    return render(request, 'core/agregar_administrador.html', data)
+    return render(request, 'registration/registro.html', data)
 
 def Validar_Postulacion(request, id):
     postulacionInstr = PostulacionInstr.objects.get(idPostulacion=id)
