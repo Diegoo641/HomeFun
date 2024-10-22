@@ -243,7 +243,6 @@ def modificar_res_espacio_comun(request, id):
     datos = {
         'form': ModReservaEspacioComunForm(instance=resEspacioComun)
     }
-    print(resEspacioComun)
     if request.method == 'POST':
         formulario = ModReservaEspacioComunForm(data= request.POST, instance= resEspacioComun)
         if formulario.is_valid():

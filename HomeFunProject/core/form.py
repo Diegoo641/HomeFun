@@ -32,7 +32,7 @@ class CrearReservaEspacioComunForm(forms.ModelForm):
   hora = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))
   class Meta:
     model = ReservaEspComun
-    fields=['descripcion','fecha','hora','id_espacio_comun','id_residente']
+    fields=['descripcion','hora']
 
 
 
