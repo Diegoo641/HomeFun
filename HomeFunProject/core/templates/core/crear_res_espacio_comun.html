@@ -79,28 +79,35 @@
     <div class="container">
         <br><br><br><br>
         <div class="row">
-            <div class="col-12 ">
+            <div class="col-10 mx-auto">
                 <div class="card">
                     <div class="card-body">
-                        <h2 style="text-align: center;">Modificar Espacio Comun</h2>
+                        <h2 style="text-align: center;">Crear Reserva Espacio Comun</h2>
                         <hr>
                         <div class="formulario row">
                             <!-- Primera sección del formulario -->
-                            <div class="col-md-6">
-                                <form id="formulario" method="POST" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    {{ form | crispy }}
-                                  
-                                    <br>
-                                    <div class="col-md-12">
-                                        <center>
-                                            <input type="submit" value="Registrar" class="btn btn-success btn-block">
-        
-                                        </center>
-                                    </div>
-
-                                </form>
-
+                            <div class="d-flex justify-content-center">
+                                <div class="col-md-6">
+                                    <form action="" method="post">
+                                        {% csrf_token %}
+                                        {{ form | crispy }}
+                                        
+                                        <style>
+                                            input[name="hora"],
+                                            input[name="fecha"] {
+                                                font-size: 16px; /* Cambia el tamaño de la fuente */
+                                                width: 100%;     /* Aumenta el ancho del input */
+                                                padding: 10px;   /* Aumenta el padding del input */
+                                            }
+                                        </style>   
+                                        <br>
+                                        <div class="col-md-12">
+                                            <center>
+                                                <input type="submit" value="Registrar" class="btn btn-success btn-block">
+                                            </center>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                             <hr>
                             

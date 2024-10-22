@@ -261,13 +261,13 @@ def crear_res_espacio_comun(request):
         'form': CrearReservaEspacioComunForm()
     }
     if request.method == 'POST':
-        formulario = CrearReservaEspacioComunForm(request.POST , request.FILES)
-
+        formulario = CrearReservaEspacioComunForm(data= request.POST)
         if formulario.is_valid():
+            formulario.cleaned_data["estado_reserva"]
             formulario.save()
             messages.success(request,"Espacio comun registrado correctamente")
             datos['mensaje'] = "Guardados Correctamente"
             return redirect(to="admin_res_espacios_comunes")
         else:
             print("Error")
-    return render(request, 'core/admin_res_espacios_comunes.html',datos)  
+    return render(request, 'core/crear_res_espacio_comun.html',datos)  
