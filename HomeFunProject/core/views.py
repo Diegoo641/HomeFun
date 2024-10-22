@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
-from core.form import CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm
+from core.form import CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, CrearReservaEspacioComunForm
 from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -255,3 +255,19 @@ def modificar_res_espacio_comun(request, id):
         }
 
     return render(request, 'core/modificar_res_espacio_comun.html', datos)
+
+def crear_res_espacio_comun(request):
+    datos = {
+        'form': CrearReservaEspacioComunForm()
+    }
+    if request.method == 'POST':
+        formulario = CrearReservaEspacioComunForm(request.POST , request.FILES)
+
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request,"Espacio comun registrado correctamente")
+            datos['mensaje'] = "Guardados Correctamente"
+            return redirect(to="admin_res_espacios_comunes")
+        else:
+            print("Error")
+    return render(request, 'core/admin_res_espacios_comunes.html',datos)  

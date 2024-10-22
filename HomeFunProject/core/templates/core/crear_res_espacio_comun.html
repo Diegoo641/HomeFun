@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Pagina de Inicio</title>
+
+
+
+    <title>Crear Reserva Espacio Comun</title>
+</head>
+<header>
+    {%block content %}
+    <div>
+        {% include "nav_bar.html " %}
+    </div>
+    {%endblock%}
+
+</header>
+<style>
+    /* Estilo de fondo con la imagen */
+    body {
+        background-image: url("{% static 'core/img/fondo4.jpg'%}");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .formulario form {
+        width: 100%;
+        max-width: 400px;
+        /* Ajusta según sea necesario */
+        margin: auto;
+        /* Centra el formulario horizontalmente */
+        text-align: center;
+    }
+
+    .formulario input[type="text"],
+    .formulario input[type="number"],
+    .formulario input[type="password"],
+    .formulario select {
+        width: 100%;
+        box-sizing: border-box;
+        /* Asegura que el ancho incluya el relleno y el borde */
+        margin-bottom: 10px;
+        /* Ajusta según sea necesario */
+        padding: 8px;
+        /* Ajusta el relleno según sea necesario */
+    }
+
+    .formulario input[type="submit"] {
+        width: 30%;
+        box-sizing: border-box;
+        padding: 10px;
+        /* Ajusta el relleno según sea necesario */
+        border-radius: 5px;
+        /* Redondea las esquinas */
+        border: none;
+        /* Elimina el borde para el botón */
+        background-color: #28a745;
+        /* Color de fondo del botón */
+        color: white;
+        /* Color del texto del botón */
+        cursor: pointer;
+        /* Cambia el cursor al pasar el ratón */
+
+    }
+</style>
+
+<body>
+    {% load crispy_forms_tags %}
+    <div class="container">
+        <br><br><br><br>
+        <div class="row">
+            <div class="col-12 ">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 style="text-align: center;">Modificar Espacio Comun</h2>
+                        <hr>
+                        <div class="formulario row">
+                            <!-- Primera sección del formulario -->
+                            <div class="col-md-6">
+                                <form id="formulario" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {{ form | crispy }}
+                                  
+                                    <br>
+                                    <div class="col-md-12">
+                                        <center>
+                                            <input type="submit" value="Registrar" class="btn btn-success btn-block">
+        
+                                        </center>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                            <hr>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+    <footer>
+    </footer>
+</body>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% if messages %}
+{% for m in messages %}
+<script>
+    Swal.fire({
+        "title": "Felicitaciones",
+        "text": "{{m}}",
+        "icon": "success"
+    })
+
+</script>
+{% endfor %}
+{% endif %}
+
+</html>
