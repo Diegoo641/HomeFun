@@ -185,10 +185,10 @@
                                         <th style="width:10%;">fecha</th>
                                         <th style="width:10%;">hora</th>
                                         <th style="width:10%;">Estado</th>
-                                        <th style="width:15%;">Residente</th>
-                                        <th style="width:5%;">Acciones</th>
-                                        {% comment %} <th style="width:5%;">Cancelar</th> {% endcomment %}
-                                        </th>
+                                        <th style="width:10%;">Residente</th>
+                                        <th style="width:10%;">Editar</th>
+                                        <th style="width:10%;">Cancelar</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -202,25 +202,13 @@
                                         <td>{{rec.estado_reserva.descripcion}}</td>
                                         <td>{{rec.id_residente.nombre}}</td>
                                         <td>
-
-                                            <div class="dropdown">
-                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Acciones
-                                                </button>
-                                                
-                                                <!-- Menú desplegable -->
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                                                    <li>
-                                                        
-                                                        <a class="dropdown-item action-item fw-bold" 
-                                                        href="http://127.0.0.1:8000/modificar_res_espacio_comun/{{rec.id_reserva_esp_comun}}">
-                                                        Editar Reserva
-                                                        </a>       
-                                                    
-                                                    </li>
-                                                    <li>
-                                                        {% if rec.estado_reserva.descripcion == "Cancelado" %}
+                                            <a class="dropdown-item action-item fw-bold" 
+                                            href="http://127.0.0.1:8000/modificar_res_espacio_comun/{{rec.id_reserva_esp_comun}}">
+                                            Editar Reserva
+                                            </a> 
+                                        </td>
+                                        <td>    
+                                            {% if rec.estado_reserva.descripcion == "Cancelado" %}
                                                         <a class="dropdown-item action-item text-danger fw-bold" href="#" onclick="cancelarResEspacioComun({{ rec.id_reserva_esp_comun }})" disabled>
                                                                 Reserva Cancelada
                                                             </a>
@@ -232,16 +220,10 @@
                                                             </a>
                                                         </button>
                                                         {% endif %}
-                                                    </li>
-                                                    
-                                                    
-                                                </ul>
-                                            </div>
+                                                  
+                                        </td>  
 
-                                        </td>
-                                       
-    
-    
+
                                     </tr>
                                     {% endfor %}
                                 </tbody>
