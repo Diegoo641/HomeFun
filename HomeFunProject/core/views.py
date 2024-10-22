@@ -9,7 +9,7 @@ from core.form import CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModRe
 from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
-
+from .controller import Controller
 def es_superusuario_o_staff(user):
     return user.is_superuser or user.is_staff
 
@@ -48,8 +48,11 @@ def consulta_estado_cuenta(request):
     else:
         gasto_comun = GastoComun.objects.none()
     datos = {
-        'gasto_comun': gasto_comun
+        'gasto_comun': gasto_comun,
+        'preference_id':'',
     }
+    
+
     return render(request, 'core/consulta_estado_cuenta.html', datos)
 
 @user_passes_test(es_superusuario_o_staff)

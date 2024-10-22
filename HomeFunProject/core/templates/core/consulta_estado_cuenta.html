@@ -178,7 +178,33 @@
                                 Crear Espacio comun
                             </a>
                         </button>
-
+                        <div class="d-grid gap-2 col-12 mx-auto">
+                            <!-- INTEGRACION -->
+                            <div id="wallet_container"></div>
+                    
+                            <!-- // SDK MercadoPago.js -->
+                            <script src="https://sdk.mercadopago.com/js/v2"></script>
+                    
+                            <script>
+                                //CLAVE UNICA DEL VENDEDOR -->
+                                const mp = new MercadoPago('');
+                                const bricksBuilder = mp.bricks();
+                    
+                                mp.bricks().create("wallet", "wallet_container", {
+                                    initialization: {
+                                        preferenceId: "{{preference_id}}",
+                                    },
+                                });
+                    
+                            </script>
+                    
+                            
+                    
+                            <!-- FIN INTEGRACION -->
+                    
+                    
+                    
+                        </div>
                         <div class="container mt-4">                    
                             <table id="myTable" class="display nowrap dt-responsive table text-start" style="width:100%;">
                                 <thead>
@@ -228,7 +254,7 @@
                                         <td>{{gc.monto}}</td>
                                         <td>{{gc.estado_gc.descripcion}}</td>
                                         <td>{{gc.id_dpto.id_residente.rut}}</td>
-                                        <td>{{gc.valor}}</td>
+                                        <td>{{gc.id_dpto}}</td>
                                         <td>{{gc.id_comunidad.nombre}}</td>
                                         <td>
                                             <div class="dropdown">
@@ -240,20 +266,9 @@
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
                                                     <li>
-                                                        <a class="dropdown-item action-item" href="http://127.0.0.1:8000/modificar_espacio_comun/{{ec.id_espacio_comun}}">Modificar        
-                                                    </a>
+                                                     
                                                     </li>
-                                                    <li>
-                                                        {% if ec.estado_ec.descripcion == "Eliminado" %}
-                                                            <a class="dropdown-item action-item" href="#" onclick="habilitarEspacioComun({{ ec.id_espacio_comun }})">
-                                                            Recuperar
-                                                            </a>
-                                                        {% else %}
-                                                            <a class="dropdown-item action-item" href="#" onclick="eliminarEspacioComun({{ ec.id_espacio_comun }})">
-                                                                Eliminar
-                                                            </a>
-                                                        {% endif %} 
-                                                    </li>
+                                    
                                                     <li>
                                                         <a class="dropdown-item action-item" href="#" data-bs-toggle="modal" data-bs-target="#verMapaModal" onclick="verMapa('media/{{ ec.imagen }}', '{{ ec.descripcion|escapejs }}')">
                                                             Ver Mapa
