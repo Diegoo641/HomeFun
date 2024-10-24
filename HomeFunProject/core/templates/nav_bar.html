@@ -8,22 +8,41 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
 <style>
-.navbar{
-      background: linear-gradient(to right, rgb(0, 0, 0), rgb(8, 47, 201),rgb(0, 0, 0)); 
-    color: white;
-    overflow: hidden;
-}
-.navbar-brand {
-    margin: 0 auto;
-font-size: 25px;}
+  
+    .navbar {
+        background: linear-gradient(to right, rgb(0, 0, 0), rgb(8, 47, 201), rgb(0, 0, 0));
+        color: white;
+        overflow: hidden;
+    }
 
-#inicio_secion:hover {
-    transform: scale(1.1); /* Escala aumentada al pasar el mouse */
-    transition: transform 0.3s ease;
-    box-shadow: 0 0 20px rgba(18, 159, 211, 0.5);
-}
+    .navbar-brand {
+        margin: 0 auto;
+        font-size: 25px;
+    }
 
+    #inicio_secion:hover {
+        transform: scale(1.1);
+        transition: transform 0.3s ease;
+        box-shadow: 0 0 20px rgba(18, 159, 211, 0.5);
+    }
+
+    /* Eliminar puntos de las listas del menú de navegación */
+    .offcanvas-body li {
+        list-style: none;
+    }
+
+    /* Efecto de zoom al pasar el mouse sobre los títulos */
+    .offcanvas-body li a {
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .offcanvas-body li a:hover {
+        transform: scale(1.1); /* Aumentar ligeramente el tamaño */
+        color: #0dcaf0; /* Cambiar color al pasar el mouse (puedes cambiar este color) */
+    }
 </style>
+
+
 </head>
 
 <body>
@@ -59,16 +78,19 @@ font-size: 25px;}
         </div>
         <div class="offcanvas-body">
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'panel_residente' %}">Panel de Residente</a>
+            <a class="nav-link ms-4" href="{% url 'panel_residente' %}">  Panel de Residente</a>
           </li>
+          <hr>
           {% if user.is_superuser %}
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'home' %}">Panel de Administración</a>
+            <a class="nav-link ms-4" href="{% url 'home' %}">  Panel de Administración</a>
           </li>
+          <hr>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{% url 'panel_admin' %}">Panel de DashBoard</a>
+            <a class="nav-link ms-4" aria-current="page" href="{% url 'panel_admin' %}">  Panel de DashBoard</a>
           </li>
+          <hr>
           {% comment %} <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Administracion
