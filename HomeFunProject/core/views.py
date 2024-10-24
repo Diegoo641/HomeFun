@@ -283,8 +283,9 @@ def admin_cuentas(request):
     }
     return render(request, 'core/admin_cuentas.html', datos)
 
-def desactivarCuenta(request, id):
-    user = get_object_or_404(User, id_espacio_comun=id)
+def desactivarCuenta(request, id_user):
+    user = User.objects.get(id=id_user)
+    print(user)
     if request.method == 'POST':
         # Cambiar el estado del espacio común a "eliminado"
         user.is_active = 0
@@ -297,12 +298,10 @@ def desactivarCuenta(request, id):
         'form': CrearUsuario(instance=user)
     })
 
-def activarCuenta(request, id):
-    espacioComun = get_object_or_404(EspacioComun, id_espacio_comun=id)
+def activarCuenta(request, id_user):
+    espacioComun = get_object_or_404(EspacioComun, id=id_user)
     if request.method == 'POST':
         # Cambiar el estado del espacio común a "eliminado"
-        estado_eliminado = get_object_or_404(Estado_EC, id_est_ec=1)  # Get the Estado_EC instance with ID 4
-        espacioComun.estado_ec = estado_eliminado
         espacioComun.save()  # Guardar los cambios
         messages.success(request, "Espacio Común Habillitado")
         return redirect(to="admin_espacios_comunes")
@@ -319,9 +318,8 @@ def crear_cuenta(request):
     if request.method == 'POST':
         formulario = CrearUsuario(data= request.POST)
         if formulario.is_valid():
-            formulario.cleaned_data["estado_reserva"]
             formulario.save()
-            messages.success(request,"Espacio comun registrado correctamente")
+            messages.success(request,"Cuenta creada correctamente")
             datos['mensaje'] = "Guardados Correctamente"
             return redirect(to="admin_cuentas")
         else:

@@ -94,10 +94,10 @@
 
 
 <script>
-    function eliminarEspacioComun(id) {
+    function desactivarCuenta(id) {
         Swal.fire({
-            "title": "¿Deseas eliminar este Espacio Comun?",
-            "text": "El espacio comun quedara con estado 'Eliminado'",
+            "title": "¿Deseas desactivar esta cueta?",
+            "text": "El espacio comun quedara con estado 'desactivada'",
             "icon": "question",
             "showCancelButton": true,
             "cancelButtonText": "No, cancelar",
@@ -110,7 +110,7 @@
                     // Cambiar a un método POST para eliminar el espacio
                     const form = document.createElement('form');
                     form.method = 'POST';
-                    form.action = "http://127.0.0.1:8000/eliminarEspacioComun/" + id + "/";
+                    form.action = "http://127.0.0.1:8000/desactivarCuenta/" + id + "/";
                     const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
                     const csrfInput = document.createElement('input');
                     csrfInput.type = 'hidden';
@@ -123,10 +123,10 @@
             });
     }
 
-    function habilitarEspacioComun(id) {
+    function activarCuetna(id) {
         Swal.fire({
-            "title": "¿Deseas habilitar este Espacio Comun?",
-            "text": "El espacio comun quedara con estado 'Eliminado'",
+            "title": "¿Deseas activar esta cuenta?",
+            "text": "El espacio comun quedara con estado 'Activada'",
             "icon": "question",
             "showCancelButton": true,
             "cancelButtonText": "No, cancelar",
@@ -139,7 +139,7 @@
                     // Cambiar a un método POST para eliminar el espacio
                     const form = document.createElement('form');
                     form.method = 'POST';
-                    form.action = "http://127.0.0.1:8000/habilitarEspacioComun/" + id + "/";
+                    form.action = "http://127.0.0.1:8000/activarCuenta/" + id + "/";
                     const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
                     const csrfInput = document.createElement('input');
                     csrfInput.type = 'hidden';
@@ -176,7 +176,7 @@
                         
                         <button class="btn btn-primary">
                             <a class="a text-light fs-6"  href="http://127.0.0.1:8000/crear_cuenta">
-                                Crear Cuenta
+                                Crear Cuenta de usuario
                             </a>
                         </button>
 
@@ -237,7 +237,12 @@
                                                 Residente
                                             {% endif %}
                                         </td>                                        
-                                        <td>{{cu.is_active}}</td>
+                                        <td>{% if cu.is_active %}
+                                            Activa
+                                        {% else %}
+                                            Desactivada
+                                        {% endif %}
+                                        </td>
                                         <td>
                                             <div class="dropdown">
                                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -248,17 +253,17 @@
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
                                                     <li>
-                                                        <a class="dropdown-item action-item" href="http://127.0.0.1:8000/modificar_espacio_comun/{{ec.id_espacio_comun}}">Modificar        
+                                                        <a class="dropdown-item action-item" href="http://127.0.0.1:8000/modificar_espacio_comun/{{cu.id}}">Modificar        
                                                     </a>
                                                     </li>
                                                     <li>
-                                                        {% if ec.estado_ec.descripcion == "Eliminado" %}
-                                                            <a class="dropdown-item action-item" href="#" onclick="habilitarEspacioComun({{ ec.id_espacio_comun }})">
-                                                            Recuperar
+                                                        {% if cu.is_active == 0 %}
+                                                            <a class="dropdown-item action-item" href="#" onclick="activarCuenta({{ cu.id }})">
+                                                            Activar
                                                             </a>
                                                         {% else %}
-                                                            <a class="dropdown-item action-item" href="#" onclick="eliminarEspacioComun({{ ec.id_espacio_comun }})">
-                                                                Eliminar
+                                                            <a class="dropdown-item action-item" href="#" onclick="desactivarCuenta({{ cu.id}})">
+                                                                Desactivar
                                                             </a>
                                                         {% endif %} 
                                                     </li>
