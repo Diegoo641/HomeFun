@@ -274,3 +274,11 @@ def crear_res_espacio_comun(request):
         else:
             print("Error")
     return render(request, 'core/crear_res_espacio_comun.html',datos)  
+
+@user_passes_test(es_superusuario_o_staff)
+def admin_cuentas(request):
+    cuentas_user = User.objects.all()
+    datos = {
+        'cuentas_user': cuentas_user
+    }
+    return render(request, 'core/admin_cuentas.html', datos)
