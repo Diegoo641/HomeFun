@@ -283,8 +283,8 @@ def admin_cuentas(request):
     }
     return render(request, 'core/admin_cuentas.html', datos)
 
-def desactivarCuenta(request, id_user):
-    user = User.objects.get(id=id_user)
+def desactivarCuenta(request, id):
+    user = User.objects.get(id=id)
     print(user)
     if request.method == 'POST':
         # Cambiar el estado del espacio común a "eliminado"
@@ -298,17 +298,19 @@ def desactivarCuenta(request, id_user):
         'form': CrearUsuario(instance=user)
     })
 
-def activarCuenta(request, id_user):
-    espacioComun = get_object_or_404(EspacioComun, id=id_user)
+def activarCuenta(request, id):
+    user = User.objects.get(id=id)
+    print(user)
     if request.method == 'POST':
         # Cambiar el estado del espacio común a "eliminado"
-        espacioComun.save()  # Guardar los cambios
-        messages.success(request, "Espacio Común Habillitado")
-        return redirect(to="admin_espacios_comunes")
+        user.is_active = 1
+        user.save()  # Guardar los cambios
+        messages.success(request, "Cuenta activada")
+        return redirect(to="admin_cuentas")
 
     # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
-    return render(request, 'core/admin_espacios_comunes.html', {
-        'form': EspacioComunForm(instance=espacioComun)
+    return render(request, 'core/admin_cuentas.html', {
+        'form': CrearUsuario(instance=user)
     })
 
 def crear_cuenta(request):
