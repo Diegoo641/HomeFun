@@ -7,12 +7,377 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <title>Pagina de Inicio</title>
+    <title>Administrador Cuentas</title>
+    <!-- Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!--DATATABLE RESPONSIVE CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
+    <!-- DataTable -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css">
+    <!-- DATATABLE BUTTONS CSS     -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.5.0/css/select.dataTables.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<!-- NAV -->
+{% block content %}
+{% include 'nav_bar.html'%}
+{% endblock %}
+<!-- FIN NAV -->
+
+
+<Style>
+    .right {
+        text-align: right !important;
+    }
+
+    .a {
+        text-decoration: none !important;
+    }
+
+    .top {
+        top: 0;
+        height: 100vh;
+        background-color: black;
+        display: grid;
+        place-items: center;
+        transition: .4s;
+    }
+
+    .close {
+        top: 5em;
+        left: 70%;
+    }
+
+    .translate {
+        transform: translateY(-100%);
+    }
+
+    .action-item:hover {
+        color: white !important;
+        background-color: #007bff !important; /* Color azul */
+    }   
+
+</Style>
+
+
+
+{% block js %}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function evaluarPostulacion(id) {
+        Swal.fire({
+            "title": "¿Desea rechazar la postulación?",
+            "text": "Enviaras un correo al postulante con la no aceptación de su postulación",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "No, cancelar",
+            "confirmButtonText": "Si, rechazar",
+            "reverseButtons": true,
+            "confirmButtonColor": "#dc3545"
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = "http://127.0.0.1:8000/EvaluarPostulacion/" + id + "/"
+                }
+            })
+    }
+</script>
+
+
+<script>
+    function eliminarEspacioComun(id) {
+        Swal.fire({
+            "title": "¿Deseas eliminar este Espacio Comun?",
+            "text": "El espacio comun quedara con estado 'Eliminado'",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "No, cancelar",
+            "confirmButtonText": "Si, Aceptar",
+            "reverseButtons": true,
+            "confirmButtonColor": "#dc3545"
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    // Cambiar a un método POST para eliminar el espacio
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = "http://127.0.0.1:8000/eliminarEspacioComun/" + id + "/";
+                    const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = 'csrfmiddlewaretoken';
+                    csrfInput.value = csrfToken;
+                    form.appendChild(csrfInput);
+                    document.body.appendChild(form);
+                    form.submit(); // Enviar el formulario
+                }
+            });
+    }
+
+    function habilitarEspacioComun(id) {
+        Swal.fire({
+            "title": "¿Deseas habilitar este Espacio Comun?",
+            "text": "El espacio comun quedara con estado 'Eliminado'",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "No, cancelar",
+            "confirmButtonText": "Si, Aceptar",
+            "reverseButtons": true,
+            "confirmButtonColor": "#dc3545"
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    // Cambiar a un método POST para eliminar el espacio
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = "http://127.0.0.1:8000/habilitarEspacioComun/" + id + "/";
+                    const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = 'csrfmiddlewaretoken';
+                    csrfInput.value = csrfToken;
+                    form.appendChild(csrfInput);
+                    document.body.appendChild(form);
+                    form.submit(); // Enviar el formulario
+                }
+            });
+    }
+</script>
+
+{% endblock %}
+
+<body>
+
+    <!-- ----------------------- -->
+
+    <!-- BOTON AGREGAR TALLER -->
+    <br>
+    <br><br>
+    <div class="container my-3 bg-dark text-white rounded-3">
+        <p class="text-md-center text-light fs-3"> Administracion de Cuentas</p>
+    </div>
+    <br>
+
+    <!-- TABLA -->
+    <div class="container md-6">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="title">
+                    <div class="table-responsive text-end">
+                        
+                        <button class="btn btn-primary">
+                            <a class="a text-light fs-6"  href="http://127.0.0.1:8000/crear_espacio_comun">
+                                Crear Espacio comun
+                            </a>
+                        </button>
+
+                        <div class="container mt-4">                    
+                            <table id="myTable" class="display nowrap dt-responsive table text-start" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="width:5%;">ID</th>
+                                        <th style="width:15%;">Nombre</th>
+                                        <th style="width:15%;">Apellido</th>
+                                        <th style="width:15%;">Nombre Usuario</th>
+                                        <th style="width:10%;">Tipo de usuario</th>
+                                        <th style="width:10%;">Cuenta Activa</th>
+                                        <th style="width:10%;">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for cu in cuentas_user %}
+
+                                    
+                                    <!-- Modal para ver la imagen del mapa -->
+                                    <div class="modal fade" id="verMapaModal" tabindex="-1" aria-labelledby="verMapaModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-fullscreen-md-down">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-primary text-white ">
+                                            <h5 class="modal-title" id="verMapaModalLabel">Mapa de Espacio Común</h5>
+
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body text-start">
+                                                <p class="fw-bold"> Desripción:</p>
+                                                <p id="descripcionMapa"></p>
+                                            <hr> 
+                                            </div>   
+                                            <div class="modal-body text-center">
+                                            <img id="mapaImagen" src="" alt="Mapa" class="img-fluid"/>
+                                            </div>
+                                            <div class="modal-footer text">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
   
+                                    <tr>
+                                        <td>{{cu.id}}</td>
+                                        <td>{{cu.first_name}}</td>
+                                        <td>{{cu.last_name}}</td>
+                                        <td>{{cu.username}}</td>
+
+                                        <td>
+                                            {% if cu.is_superuser %}
+                                                Administrador
+                                            {% else %}
+                                                Residente
+                                            {% endif %}
+                                        </td>                                        
+                                        <td>{{cu.is_active}}</td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Acciones
+                                                </button>
+                                                
+                                                <!-- Menú desplegable -->
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                                    <li>
+                                                        <a class="dropdown-item action-item" href="http://127.0.0.1:8000/modificar_espacio_comun/{{ec.id_espacio_comun}}">Modificar        
+                                                    </a>
+                                                    </li>
+                                                    <li>
+                                                        {% if ec.estado_ec.descripcion == "Eliminado" %}
+                                                            <a class="dropdown-item action-item" href="#" onclick="habilitarEspacioComun({{ ec.id_espacio_comun }})">
+                                                            Recuperar
+                                                            </a>
+                                                        {% else %}
+                                                            <a class="dropdown-item action-item" href="#" onclick="eliminarEspacioComun({{ ec.id_espacio_comun }})">
+                                                                Eliminar
+                                                            </a>
+                                                        {% endif %} 
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item action-item" href="#" data-bs-toggle="modal" data-bs-target="#verMapaModal" onclick="verMapa('media/{{ ec.imagen }}', '{{ ec.descripcion|escapejs }}')">
+                                                            Ver Mapa
+                                                    </li>
+                                                    
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+
+    {% comment %} <!-- Footer -->
+    {% include 'Footer.html'%}
+    <!-- Footer FIN--> {% endcomment %}
+
+    <!-- Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <!-- DataTable -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.0/js/responsive.bootstrap5.min.js"></script>
+    <!-- FUNCION Descarga -->
+    <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
+    <!-- FUNCION dataTable -->
+
+    <script src="{% static 'core/js/modal.js'%}"></script>
+
+    <script>
+        function verMapa(imagenUrl, descripcion) {
+            // Cambia el src de la imagen del modal para que sea la imagen del espacio común.
+            document.getElementById('mapaImagen').src = imagenUrl;
+            document.getElementById('descripcionMapa').innerText = descripcion;
+        }
+        </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                lengthMenu: [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, 'All'],
+                ],
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy',
+                    'csv',
+                    'excel',
+                    'pdf',
+                    {
+                        extend: 'print',
+                        text: 'Imprimir pantalla',
+                        exportOptions: {
+                            modifier: {
+                                selected: null
+                            }
+                        }
+                    }
+                ],
+
+                // responsive: {
+                //     details: {
+                //         display: $.fn.dataTable.Responsive.display.modal({
+                //             header: function (row) {
+                //                 var data = row.data();
+                //                 return 'Details for ' + data[0] + ' ' + data[1];
+                //             }
+                //         }),
+                //         renderer: $.fn.dataTable.Responsive.renderer.tableAll()
+                //     }
+                // },
+                select: false,
+                pageLength: 5,
+                language: {
+                    lengthMenu: "Mostrar _MENU_ registros por página",
+                    zeroRecords: "Ningún usuario encontrado",
+                    info: "Mostrando de _START_ a _END_ de un total de _TOTAL_ registros",
+                    infoEmpty: "Ningún usuario encontrado",
+                    infoFiltered: "(filtrados desde _MAX_ registros totales)",
+                    search: "Buscar:",
+                    loadingRecords: "Cargando...",
+                    paginate: {
+                        first: "Primero",
+                        last: "Último",
+                        next: "Siguiente",
+                        previous: "Anterior"
+                    }
+                },
+            });
+
+            responsive: true
+            autoWidth: false
+            paging: false
+        });
+
+
+    </script>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {% if messages %}
@@ -23,142 +388,11 @@
             "text": "{{m}}",
             "icon": "success"
         })
-
     </script>
     {% endfor %}
     {% endif %}
-    <title>Registro de colaborador</title>
-</head>
-<header>
-    {%block content %}
-    <div>
-        {% include "nav_bar.html " %}
-    </div>
-    {%endblock%}
 
-</header>
-<style>
-        /* Estilo de fondo con la imagen */
-        body {
-            background-image: url("{% static 'core/img/fondo4.jpg'%}");
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-    .formulario form {
-        width: 100%;
-        max-width: 400px; /* Ajusta según sea necesario */
-        margin: auto; /* Centra el formulario horizontalmente */
-        text-align: center;
-    }
-
-    .formulario input[type="text"],
-    .formulario input[type="email"],
-    .formulario input[type="password"],
-    .formulario input[type="date"],
-    .formulario select {
-        width: 100%;
-        box-sizing: border-box; /* Asegura que el ancho incluya el relleno y el borde */
-        margin-bottom: 10px; /* Ajusta según sea necesario */
-        padding: 8px; /* Ajusta el relleno según sea necesario */
-    }
-
-    .formulario input[type="submit"] {
-        width: 100%;
-        box-sizing: border-box;   
-        padding: 10px; /* Ajusta el relleno según sea necesario */
-        border-radius: 5px; /* Redondea las esquinas */
-        border: none; /* Elimina el borde para el botón */
-        background-color: #28a745; /* Color de fondo del botón */
-        color: white; /* Color del texto del botón */
-        cursor: pointer; /* Cambia el cursor al pasar el ratón */
-    }
-</style>
-<body>
-
-    {% load crispy_forms_tags %}
-    <div class="container">
-        <br><br><br><br>
-        <div class="row">
-            <div class="col-6">
-
-                <div class="col-12 ">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 style="text-align: center;">Registro de colaborador</h2>
-                        <hr>
-                        
-                        <div class="formulario">
-                            <form action="" method="post">
-                                {% csrf_token %}
-                                {{ form.nombres|as_crispy_field|safe }}
-                                {{ form.apellidos|as_crispy_field|safe }}
-                                {{ form.nom_usuario|as_crispy_field|safe }}
-                                {{ form.password|as_crispy_field|safe }}
-                                {{ form.correo|as_crispy_field|safe }}
-                                {{ form.direccion|as_crispy_field|safe }}
-                                {{ form.fecha_nac|as_crispy_field|safe }}
-                                <input type="submit" value="Registrar" class="btn btn-success btn-block">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-            <div class="col-6" style="float: right;">
-
-                <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                          <img src="{% static 'core/img/Proyectos.jpg'%}" alt="" width="750px" height="500px" class="img-fluid"
-                        style="border-radius: 10%;">
-                        </div>
-                        <div class="carousel-item">
-                          <img src="{% static 'core/img/reparacion.jpeg'%}" alt="" width="750px" height="500px" class="img-fluid"
-                        style="border-radius: 10%;">
-                        </div>
-                        <div class="carousel-item">
-                          <img src="{% static 'core/img/mantenimiento.jpeg'%}" alt="" width="750px" height="500px" class="img-fluid"
-                            style="border-radius: 10%;">
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                    </button>
-                  </div>
-
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-                    <div class="carousel-indicators">
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    </div>
-     
-            
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                    </button>
-                  </div>
-            </div>
-    </div>
-
-</div>
-
- 
-    <br><br><br>
-    <footer>
-
-    </footer>
 </body>
+
 
 </html>
