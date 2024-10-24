@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'crispy_forms',
 ]
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'  # o el pack que estés utilizando
+CRISPY_CLASS_CONVERTERS = {'textinput': 'form-control', 'passwordinput': 'form-control'}
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

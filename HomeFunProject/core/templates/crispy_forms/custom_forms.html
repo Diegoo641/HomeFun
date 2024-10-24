@@ -1,0 +1,15 @@
+<div class="col-lg-6 d-flex align-items-center login-section" style="background-color: rgb(170, 183, 184)">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="text-center mb-4">
+                    <img src="/media/imagenes/LogoHF.jpeg" alt="Logo Homefun" class="img-fluid rounded-3">
+                </div>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
