@@ -5,7 +5,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
-from core.form import CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, CrearReservaEspacioComunForm
+from core.form import CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
+    CrearReservaEspacioComunForm,ModificarUsuarioForm
 from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -327,3 +328,24 @@ def crear_cuenta(request):
         else:
             print("Error")
     return render(request, 'core/crear_cuenta.html',datos) 
+
+def modificar_cuenta(request, id):
+    cuenta_user = User.objects.get(id=id)
+    datos = {
+        'form': ModificarUsuarioForm(instance=cuenta_user)
+    }
+    if request.method == 'POST':
+        formulario = ModificarUsuarioForm(data= request.POST, instance= cuenta_user)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Cuenta modificada correctamente")
+            return redirect(to="admin_cuenta")
+        else:
+            print(request)
+            print(formulario)
+        datos = {
+            'form': ModificarUsuarioForm(instance=cuenta_user),
+            'mensaje': "Modificado correctamente"
+        }
+
+    return render(request, 'core/modificar_cuenta.html', datos)
