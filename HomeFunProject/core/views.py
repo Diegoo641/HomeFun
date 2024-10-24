@@ -7,7 +7,8 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
 from core.form import CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
     CrearReservaEspacioComunForm,ModificarUsuarioForm
-from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun
+from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun,\
+    Multa
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .controller import Controller
@@ -340,12 +341,17 @@ def modificar_cuenta(request, id):
             formulario.save()
             messages.success(request, "Cuenta modificada correctamente")
             return redirect(to="admin_cuentas")
-        else:
-            print(request)
-            print(formulario)
         datos = {
             'form': ModificarUsuarioForm(instance=cuenta_user),
             'mensaje': "Modificado correctamente"
         }
 
     return render(request, 'core/modificar_cuenta.html', datos)
+
+@user_passes_test(es_superusuario_o_staff)
+def admin_multas(request):
+    multa = Multa.objects.all()
+    datos = {
+        'multa': multa
+    }
+    return render(request, 'core/admin_multas.html', datos)
