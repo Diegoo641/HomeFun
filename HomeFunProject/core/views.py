@@ -291,10 +291,10 @@ def desactivarCuenta(request, id_user):
         user.is_active = 0
         user.save()  # Guardar los cambios
         messages.success(request, "Cuenta desactivada")
-        return redirect(to="admin_espacios_comunes")
+        return redirect(to="admin_cuentas")
 
     # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
-    return render(request, 'core/admin_espacios_comunes.html', {
+    return render(request, 'core/admin_cuentas.html', {
         'form': CrearUsuario(instance=user)
     })
 
