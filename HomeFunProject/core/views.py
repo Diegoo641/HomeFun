@@ -311,3 +311,19 @@ def activarCuenta(request, id):
     return render(request, 'core/admin_espacios_comunes.html', {
         'form': EspacioComunForm(instance=espacioComun)
     })
+
+def crear_cuenta(request):
+    datos = {
+        'form': CrearUsuario()
+    }
+    if request.method == 'POST':
+        formulario = CrearUsuario(data= request.POST)
+        if formulario.is_valid():
+            formulario.cleaned_data["estado_reserva"]
+            formulario.save()
+            messages.success(request,"Espacio comun registrado correctamente")
+            datos['mensaje'] = "Guardados Correctamente"
+            return redirect(to="admin_cuentas")
+        else:
+            print("Error")
+    return render(request, 'core/crear_cuenta.html',datos) 

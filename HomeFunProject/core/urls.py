@@ -2,7 +2,7 @@ from django.urls import path, include
 from core.views import home , registro,agregar_administrador, modificar_res_espacio_comun,cancelarReservaEspacioComun,\
     panel_admin, admin_espacios_comunes, eliminarEspacioComun, modificar_espacio_comun, crear_espacio_comun, \
     habilitarEspacioComun,admin_res_espacios_comunes,consulta_estado_cuenta, panel_residente,crear_res_espacio_comun,\
-    admin_cuentas
+    admin_cuentas,crear_cuenta
 
 
 urlpatterns = [
@@ -23,6 +23,8 @@ urlpatterns = [
     path('panel_residente',panel_residente, name="panel_residente"),
     path('crear_res_espacio_comun', crear_res_espacio_comun, name="crear_res_espacio_comun"),
     path('admin_cuentas', admin_cuentas, name="admin_cuentas"),
+    path('crear_cuenta', crear_cuenta, name="crear_cuenta"),
+
 
 
 

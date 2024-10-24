@@ -175,8 +175,8 @@
                     <div class="table-responsive text-end">
                         
                         <button class="btn btn-primary">
-                            <a class="a text-light fs-6"  href="http://127.0.0.1:8000/crear_espacio_comun">
-                                Crear Espacio comun
+                            <a class="a text-light fs-6"  href="http://127.0.0.1:8000/crear_cuenta">
+                                Crear Cuenta
                             </a>
                         </button>
 
@@ -188,6 +188,7 @@
                                         <th style="width:15%;">Nombre</th>
                                         <th style="width:15%;">Apellido</th>
                                         <th style="width:15%;">Nombre Usuario</th>
+                                        <th style="width:15%;">Email</th>
                                         <th style="width:10%;">Tipo de usuario</th>
                                         <th style="width:10%;">Cuenta Activa</th>
                                         <th style="width:10%;">Acciones</th>
@@ -227,6 +228,7 @@
                                         <td>{{cu.first_name}}</td>
                                         <td>{{cu.last_name}}</td>
                                         <td>{{cu.username}}</td>
+                                        <td>{{cu.email}}</td>
 
                                         <td>
                                             {% if cu.is_superuser %}
