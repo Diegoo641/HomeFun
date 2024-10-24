@@ -339,7 +339,7 @@ def modificar_cuenta(request, id):
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Cuenta modificada correctamente")
-            return redirect(to="admin_cuenta")
+            return redirect(to="admin_cuentas")
         else:
             print(request)
             print(formulario)

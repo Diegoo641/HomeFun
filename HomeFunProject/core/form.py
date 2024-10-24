@@ -16,7 +16,7 @@ class CrearUsuario (UserCreationForm):
     model = User
     fields=['username',"first_name","last_name","email","password1","password2"]
 
-class ModificarUsuarioForm (UserCreationForm):
+class ModificarUsuarioForm (forms.ModelForm):
    class Meta:
     model = User
     fields=["first_name","last_name","email"]
