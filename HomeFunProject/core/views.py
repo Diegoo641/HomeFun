@@ -437,3 +437,11 @@ def eliminarMulta(request, id):
     return render(request, 'core/admin_multas.html', {
         'form': CrearMultaForm(instance=multa)
     })
+
+@user_passes_test(es_superusuario_o_staff)
+def admin_gastos_comunes(request):
+    gasto_comun = GastoComun.objects.all()
+    datos = {
+        'gasto_comun': gasto_comun
+    }
+    return render(request, 'core/admin_gastos_comunes.html', datos)

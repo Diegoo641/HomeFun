@@ -3,7 +3,7 @@ from core.views import home , registro,agregar_administrador, modificar_res_espa
     panel_admin, admin_espacios_comunes, eliminarEspacioComun, modificar_espacio_comun, crear_espacio_comun, \
     habilitarEspacioComun,admin_res_espacios_comunes,consulta_estado_cuenta, panel_residente,crear_res_espacio_comun,\
     admin_cuentas,crear_cuenta,desactivarCuenta,activarCuenta, modificar_cuenta, admin_multas , modificar_multa ,\
-    crear_multa,cancelarMulta,pagarMulta,eliminarMulta
+    crear_multa,cancelarMulta,pagarMulta,eliminarMulta,admin_gastos_comunes
 
 
 urlpatterns = [
@@ -34,6 +34,7 @@ urlpatterns = [
     path('cancelarMulta/<id>/',cancelarMulta,name="cancelarMulta"),
     path('pagarMulta/<id>/',pagarMulta,name="pagarMulta"),
     path('eliminarMulta/<id>/',eliminarMulta,name="eliminarMulta"),
+    path('admin_gastos_comunes',admin_gastos_comunes,name="admin_gastos_comunes"),
 
 
 
