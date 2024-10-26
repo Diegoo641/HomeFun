@@ -5,10 +5,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
-from core.form import CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
-    CrearReservaEspacioComunForm,ModificarUsuarioForm
-from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun,\
-    Multa
+from core.form import CrearMultaForm, CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
+    CrearReservaEspacioComunForm,ModificarUsuarioForm, ModificarMultaForm
+from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun,Multa,EstadoMulta
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .controller import Controller
@@ -355,3 +354,86 @@ def admin_multas(request):
         'multa': multa
     }
     return render(request, 'core/admin_multas.html', datos)
+
+
+def crear_multa(request):
+    datos = {
+        'form': CrearMultaForm()
+    }
+    if request.method == 'POST':
+        formulario = CrearMultaForm(data= request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request,"Cuenta creada correctamente")
+            datos['mensaje'] = "Guardados Correctamente"
+            return redirect(to="admin_multas")
+        else:
+            print("Error")
+    return render(request, 'core/crear_multa.html',datos) 
+
+
+def modificar_multa(request, id):
+    multa = Multa.objects.get(id_multa=id)
+    datos = {
+        'form': ModificarMultaForm(instance=multa)
+    }
+    if request.method == 'POST':
+        formulario = ModificarMultaForm(data= request.POST, instance= multa)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Multa modificada correctamente")
+            return redirect(to="admin_multas")
+        datos = {
+            'form': ModificarMultaForm(instance=multa),
+            'mensaje': "Modificado correctamente"
+        }
+
+    return render(request, 'core/modificar_multa.html', datos)
+
+def cancelarMulta(request, id):
+    multa = Multa.objects.get(id_multa=id)
+    if request.method == 'POST':
+        # Cambiar el estado del espacio común a "eliminado"
+        estado_cancelado = get_object_or_404(EstadoMulta, id_est_multa=3)  # Get the Estado_EC instance with ID 4
+
+        multa.estado_multa = estado_cancelado
+        multa.save()  # Guardar los cambios
+        messages.success(request, "Multa Cancelada")
+        return redirect(to="admin_multas")
+
+    # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
+    return render(request, 'core/admin_multas.html', {
+        'form': CrearMultaForm(instance=multa)
+    })
+
+def pagarMulta(request, id):
+    multa = Multa.objects.get(id_multa=id)
+    print(multa)
+    if request.method == 'POST':
+        # Cambiar el estado del espacio común a "eliminado"
+        estado_pagado = get_object_or_404(EstadoMulta, id_est_multa=2)  # Get the Estado_EC instance with ID 4
+        multa.estado_multa = estado_pagado
+        multa.save()  # Guardar los cambios
+        messages.success(request, "Multa pagada")
+        return redirect(to="admin_multas")
+
+    # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
+    return render(request, 'core/admin_multas.html', {
+        'form': CrearMultaForm(instance=multa)
+    })
+
+def eliminarMulta(request, id):
+    multa = Multa.objects.get(id_multa=id)
+    print(multa)
+    if request.method == 'POST':
+        # Cambiar el estado del espacio común a "eliminado"
+        estado_pagado = get_object_or_404(EstadoMulta, id_est_multa=4)  # Get the Estado_EC instance with ID 4
+        multa.estado_multa = estado_pagado
+        multa.save()  # Guardar los cambios
+        messages.success(request, "Multa Eliminada")
+        return redirect(to="admin_multas")
+
+    # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
+    return render(request, 'core/admin_multas.html', {
+        'form': CrearMultaForm(instance=multa)
+    })

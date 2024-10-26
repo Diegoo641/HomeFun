@@ -62,9 +62,9 @@
 
     .action-item:hover {
         color: white !important;
-        background-color: #007bff !important; /* Color azul */
-    }   
-
+        background-color: #007bff !important;
+        /* Color azul */
+    }
 </Style>
 
 
@@ -72,31 +72,11 @@
 {% block js %}
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-    function evaluarPostulacion(id) {
-        Swal.fire({
-            "title": "¿Desea rechazar la postulación?",
-            "text": "Enviaras un correo al postulante con la no aceptación de su postulación",
-            "icon": "question",
-            "showCancelButton": true,
-            "cancelButtonText": "No, cancelar",
-            "confirmButtonText": "Si, rechazar",
-            "reverseButtons": true,
-            "confirmButtonColor": "#dc3545"
-        })
-            .then(function (result) {
-                if (result.isConfirmed) {
-                    window.location.href = "http://127.0.0.1:8000/EvaluarPostulacion/" + id + "/"
-                }
-            })
-    }
-</script>
-
 
 <script>
-    function eliminarEspacioComun(id) {
+    function cancelarMulta(id) {
         Swal.fire({
-            "title": "¿Deseas eliminar este Espacio Comun?",
+            "title": "¿Deseas cancelar la multa?",
             "text": "El espacio comun quedara con estado 'Eliminado'",
             "icon": "question",
             "showCancelButton": true,
@@ -110,7 +90,7 @@
                     // Cambiar a un método POST para eliminar el espacio
                     const form = document.createElement('form');
                     form.method = 'POST';
-                    form.action = "http://127.0.0.1:8000/eliminarEspacioComun/" + id + "/";
+                    form.action = "http://127.0.0.1:8000/cancelarMulta/" + id + "/";
                     const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
                     const csrfInput = document.createElement('input');
                     csrfInput.type = 'hidden';
@@ -123,7 +103,7 @@
             });
     }
 
-    function habilitarEspacioComun(id) {
+    function pagarMulta(id) {
         Swal.fire({
             "title": "¿Deseas habilitar este Espacio Comun?",
             "text": "El espacio comun quedara con estado 'Eliminado'",
@@ -139,7 +119,36 @@
                     // Cambiar a un método POST para eliminar el espacio
                     const form = document.createElement('form');
                     form.method = 'POST';
-                    form.action = "http://127.0.0.1:8000/habilitarEspacioComun/" + id + "/";
+                    form.action = "http://127.0.0.1:8000/pagarMulta/" + id + "/";
+                    const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = 'csrfmiddlewaretoken';
+                    csrfInput.value = csrfToken;
+                    form.appendChild(csrfInput);
+                    document.body.appendChild(form);
+                    form.submit(); // Enviar el formulario
+                }
+            });
+    }
+
+    function eliminarMulta(id) {
+        Swal.fire({
+            "title": "¿Deseas eliminar la multa?",
+            "text": "La multa quedara con estado 'Eliminado'",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "No, cancelar",
+            "confirmButtonText": "Si, Aceptar",
+            "reverseButtons": true,
+            "confirmButtonColor": "#dc3545"
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    // Cambiar a un método POST para eliminar el espacio
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = "http://127.0.0.1:8000/eliminarMulta/" + id + "/";
                     const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
                     const csrfInput = document.createElement('input');
                     csrfInput.type = 'hidden';
@@ -174,39 +183,40 @@
                 <div class="title">
                     <div class="table-responsive text-end">
                         <button class="btn btn-primary">
-                            <a class="a text-light fs-6"  href="http://127.0.0.1:8000/crear_espacio_comun">
+                            <a class="a text-light fs-6" href="http://127.0.0.1:8000/crear_multa">
                                 Crear Espacio comun
                             </a>
                         </button>
                         <div class="d-grid gap-2 col-12 mx-auto">
                             <!-- INTEGRACION -->
                             <div id="wallet_container"></div>
-                    
+
                             <!-- // SDK MercadoPago.js -->
                             <script src="https://sdk.mercadopago.com/js/v2"></script>
-                    
+
                             <script>
                                 //CLAVE UNICA DEL VENDEDOR -->
                                 const mp = new MercadoPago('');
                                 const bricksBuilder = mp.bricks();
-                    
+
                                 mp.bricks().create("wallet", "wallet_container", {
                                     initialization: {
                                         preferenceId: "{{preference_id}}",
                                     },
                                 });
-                    
+
                             </script>
-                    
-                            
-                    
+
+
+
                             <!-- FIN INTEGRACION -->
-                    
-                    
-                    
+
+
+
                         </div>
-                        <div class="container mt-4">                    
-                            <table id="myTable" class="display nowrap dt-responsive table text-start" style="width:100%;">
+                        <div class="container mt-4">
+                            <table id="myTable" class="display nowrap dt-responsive table text-start"
+                                style="width:100%;">
                                 <thead>
                                     <tr>
                                         <th style="width:5%;">ID</th>
@@ -222,31 +232,35 @@
 
                                     {% for m in multa %}
 
-                                    
-                                    <!-- Modal para ver la imagen del mapa -->
-                                    <div class="modal fade" id="verMapaModal" tabindex="-1" aria-labelledby="verMapaModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-fullscreen-md-down">
-                                        <div class="modal-content">
-                                            <div class="modal-header bg-primary text-white ">
-                                            <h5 class="modal-title" id="verMapaModalLabel">Mapa de Espacio Común</h5>
 
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <!-- Modal para ver la imagen del mapa -->
+                                    <div class="modal fade" id="verMapaModal" tabindex="-1"
+                                        aria-labelledby="verMapaModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-fullscreen-md-down">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-primary text-white ">
+                                                    <h5 class="modal-title" id="verMapaModalLabel">Mapa de Espacio Común
+                                                    </h5>
+
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-start">
+                                                    <p class="fw-bold"> Desripción:</p>
+                                                    <p id="descripcionMapa"></p>
+                                                    <hr>
+                                                </div>
+                                                <div class="modal-body text-center">
+                                                    <img id="mapaImagen" src="" alt="Mapa" class="img-fluid" />
+                                                </div>
+                                                <div class="modal-footer text">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cerrar</button>
+                                                </div>
                                             </div>
-                                            <div class="modal-body text-start">
-                                                <p class="fw-bold"> Desripción:</p>
-                                                <p id="descripcionMapa"></p>
-                                            <hr> 
-                                            </div>   
-                                            <div class="modal-body text-center">
-                                            <img id="mapaImagen" src="" alt="Mapa" class="img-fluid"/>
-                                            </div>
-                                            <div class="modal-footer text">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                            </div>
-                                        </div>
                                         </div>
                                     </div>
-  
+
                                     <tr>
                                         <td>{{m.id_multa}}</td>
                                         <td>{{m.descripcion}}</td>
@@ -256,148 +270,178 @@
                                         <td>{{m.id_dpto}}</td>
                                         <td>
                                             <div class="dropdown">
-                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
                                                     Acciones
                                                 </button>
-                                                
+
                                                 <!-- Menú desplegable -->
+                                                {% if m.estado_multa.descripcion == "Pendiente" %}
+
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
                                                     <li>
-                                                     
+                                                        <a class="dropdown-item action-item"
+                                                            href="http://127.0.0.1:8000/modificar_multa/{{m.id_multa}}">Modificar
+                                                        </a>
                                                     </li>
-                                    
+
                                                     <li>
-                                                        <a class="dropdown-item action-item" href="#" data-bs-toggle="modal" data-bs-target="#verMapaModal" onclick="verMapa('media/{{ ec.imagen }}', '{{ ec.descripcion|escapejs }}')">
-                                                            Ver Mapa
+                                                        <a class="dropdown-item action-item" href="#"
+                                                            onclick="pagarMulta({{ m.id_multa }})">
+                                                            pagar
+                                                        </a>
                                                     </li>
+                                                    <li>
+                                                        <a class="dropdown-item action-item" href="#"
+                                                            onclick="cancelarMulta({{ m.id_multa }})">
+                                                            Cancelar
+                                                        </a>
+                                                    </li>
+
                                                     
+
                                                 </ul>
+                                                {% else %}
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                               
+                                                    <li>
+                                                        <a class="dropdown-item action-item" href="#"
+                                                            onclick="eliminarMulta({{ m.id_multa }})">
+                                                            Eliminar
+                                                        </a>
+                                               </li>
+
+                                                </ul>
+                                                {% endif %}
+
                                             </div>
                                         </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
-                            
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <br>
+        <br>
 
 
-    {% comment %} <!-- Footer -->
-    {% include 'Footer.html'%}
-    <!-- Footer FIN--> {% endcomment %}
+        {% comment %} <!-- Footer -->
+        {% include 'Footer.html'%}
+        <!-- Footer FIN--> {% endcomment %}
 
-    <!-- Bootstrap-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
+        <!-- Bootstrap-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- jQuery -->
-    <!-- DataTable -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.4.0/js/responsive.bootstrap5.min.js"></script>
-    <!-- FUNCION Descarga -->
-    <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
-    <!-- FUNCION dataTable -->
+        <!-- jQuery -->
+        <!-- DataTable -->
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.4.0/js/responsive.bootstrap5.min.js"></script>
+        <!-- FUNCION Descarga -->
+        <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
+        <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
+        <!-- FUNCION dataTable -->
 
-    <script src="{% static 'core/js/modal.js'%}"></script>
+        <script src="{% static 'core/js/modal.js'%}"></script>
 
-    <script>
-        function verMapa(imagenUrl, descripcion) {
-            // Cambia el src de la imagen del modal para que sea la imagen del espacio común.
-            document.getElementById('mapaImagen').src = imagenUrl;
-            document.getElementById('descripcionMapa').innerText = descripcion;
-        }
+        <script>
+            function verMapa(imagenUrl, descripcion) {
+                // Cambia el src de la imagen del modal para que sea la imagen del espacio común.
+                document.getElementById('mapaImagen').src = imagenUrl;
+                document.getElementById('descripcionMapa').innerText = descripcion;
+            }
         </script>
 
-    <script>
-        $(document).ready(function () {
-            $('#myTable').DataTable({
-                lengthMenu: [
-                    [10, 25, 50, -1],
-                    [10, 25, 50, 'All'],
-                ],
-                dom: 'Bfrtip',
-                buttons: [
-                    'copy',
-                    'csv',
-                    'excel',
-                    'pdf',
-                    {
-                        extend: 'print',
-                        text: 'Imprimir pantalla',
-                        exportOptions: {
-                            modifier: {
-                                selected: null
+        <script>
+            $(document).ready(function () {
+                $('#myTable').DataTable({
+                    lengthMenu: [
+                        [10, 25, 50, -1],
+                        [10, 25, 50, 'All'],
+                    ],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy',
+                        'csv',
+                        'excel',
+                        'pdf',
+                        {
+                            extend: 'print',
+                            text: 'Imprimir pantalla',
+                            exportOptions: {
+                                modifier: {
+                                    selected: null
+                                }
                             }
                         }
-                    }
-                ],
+                    ],
 
-                // responsive: {
-                //     details: {
-                //         display: $.fn.dataTable.Responsive.display.modal({
-                //             header: function (row) {
-                //                 var data = row.data();
-                //                 return 'Details for ' + data[0] + ' ' + data[1];
-                //             }
-                //         }),
-                //         renderer: $.fn.dataTable.Responsive.renderer.tableAll()
-                //     }
-                // },
-                select: false,
-                pageLength: 5,
-                language: {
-                    lengthMenu: "Mostrar _MENU_ registros por página",
-                    zeroRecords: "Ningún usuario encontrado",
-                    info: "Mostrando de _START_ a _END_ de un total de _TOTAL_ registros",
-                    infoEmpty: "Ningún usuario encontrado",
-                    infoFiltered: "(filtrados desde _MAX_ registros totales)",
-                    search: "Buscar:",
-                    loadingRecords: "Cargando...",
-                    paginate: {
-                        first: "Primero",
-                        last: "Último",
-                        next: "Siguiente",
-                        previous: "Anterior"
-                    }
-                },
+                    // responsive: {
+                    //     details: {
+                    //         display: $.fn.dataTable.Responsive.display.modal({
+                    //             header: function (row) {
+                    //                 var data = row.data();
+                    //                 return 'Details for ' + data[0] + ' ' + data[1];
+                    //             }
+                    //         }),
+                    //         renderer: $.fn.dataTable.Responsive.renderer.tableAll()
+                    //     }
+                    // },
+                    select: false,
+                    pageLength: 5,
+                    language: {
+                        lengthMenu: "Mostrar _MENU_ registros por página",
+                        zeroRecords: "Ningún usuario encontrado",
+                        info: "Mostrando de _START_ a _END_ de un total de _TOTAL_ registros",
+                        infoEmpty: "Ningún usuario encontrado",
+                        infoFiltered: "(filtrados desde _MAX_ registros totales)",
+                        search: "Buscar:",
+                        loadingRecords: "Cargando...",
+                        paginate: {
+                            first: "Primero",
+                            last: "Último",
+                            next: "Siguiente",
+                            previous: "Anterior"
+                        }
+                    },
+                });
+
+                responsive: true
+                autoWidth: false
+                paging: false
             });
 
-            responsive: true
-            autoWidth: false
-            paging: false
-        });
 
+        </script>
 
-    </script>
-
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    {% if messages %}
-    {% for m in messages %}
-    <script>
-        Swal.fire({
-            "title": "Felicitaciones",
-            "text": "{{m}}",
-            "icon": "success"
-        })
-    </script>
-    {% endfor %}
-    {% endif %}
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        {% if messages %}
+        {% for m in messages %}
+        <script>
+            Swal.fire({
+                "title": "Felicitaciones",
+                "text": "{{m}}",
+                "icon": "success"
+            })
+        </script>
+        {% endfor %}
+        {% endif %}
 
 </body>
 

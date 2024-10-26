@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 from django import forms
 from .validators import TamañoImagenValidator
-from .models import FichaResidente , EspacioComun, ReservaEspComun
+from .models import FichaResidente , EspacioComun, ReservaEspComun, Multa
 
 class CrearCuentaUsuario (forms.ModelForm):
    correo = forms.EmailField()
@@ -38,6 +38,18 @@ class CrearReservaEspacioComunForm(forms.ModelForm):
   class Meta:
     model = ReservaEspComun
     fields=['descripcion','fecha','hora','id_espacio_comun','id_residente','estado_reserva']
+
+class CrearMultaForm(forms.ModelForm):
+  fecha_ingreso = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+  class Meta:
+    model = Multa
+    fields=['descripcion','monto','fecha_ingreso','id_dpto','estado_multa']
+
+
+class ModificarMultaForm(forms.ModelForm):
+  class Meta:
+    model = Multa
+    fields=['descripcion','monto']
 
 
 
