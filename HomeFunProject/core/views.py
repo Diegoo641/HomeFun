@@ -29,6 +29,10 @@ def panel_admin(request):
 def panel_residente(request):
     return render(request, 'core/panel_residente.html')
 
+
+def admin_ficha_residentes(request):
+    return render(request, 'core/admin_ficha_residentes.html')
+
 @user_passes_test(es_superusuario_o_staff)
 def admin_espacios_comunes(request):
     espacio_comun = EspacioComun.objects.all()

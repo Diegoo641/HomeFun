@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrador de Espacios comunes</title>
+    <title>Gastos Comunes</title>
     <!-- Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -163,7 +163,7 @@
     <br>
     <br><br>
     <div class="container my-3 bg-dark text-white rounded-3">
-        <p class="text-md-center text-light fs-3"> Administracion de espacios comunes</p>
+        <p class="text-md-center text-light fs-3"> Administración tipos de gastos comunes</p>
     </div>
     <br>
 
@@ -211,10 +211,9 @@
                                     <tr>
                                         <th style="width:5%;">ID</th>
                                         <th style="width:15%;">Nombre</th>
-                                        <th style="width:15%;">Descripcion</th>
-                                        <th style="width:15%;">Ubicación</th>
+                                        <th style="width:15%;">Valor</th>
+                                        <th style="width:15%;">Reajuste</th>
                                         <th style="width:10%;">Estado</th>
-                                        <th style="width:10%;">Valor</th>
                                         <th style="width:15%;">Comunidad</th>
                                         <th style="width:10%;">Acciones</th>
                                     </tr>
@@ -222,38 +221,12 @@
                                 <tbody>
 
                                     {% for gc in gasto_comun %}
-
-                                    
-                                    <!-- Modal para ver la imagen del mapa -->
-                                    <div class="modal fade" id="verMapaModal" tabindex="-1" aria-labelledby="verMapaModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-fullscreen-md-down">
-                                        <div class="modal-content">
-                                            <div class="modal-header bg-primary text-white ">
-                                            <h5 class="modal-title" id="verMapaModalLabel">Mapa de Espacio Común</h5>
-
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body text-start">
-                                                <p class="fw-bold"> Desripción:</p>
-                                                <p id="descripcionMapa"></p>
-                                            <hr> 
-                                            </div>   
-                                            <div class="modal-body text-center">
-                                            <img id="mapaImagen" src="" alt="Mapa" class="img-fluid"/>
-                                            </div>
-                                            <div class="modal-footer text">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </div>
-  
+ 
                                     <tr>
                                         <td>{{gc.id_gc}}</td>
                                         <td>{{gc.nombre}}</td>
                                         <td>{{gc.monto}}</td>
                                         <td>{{gc.estado_gc.descripcion}}</td>
-                                        <td>{{gc.id_dpto.id_residente.rut}}</td>
                                         <td>{{gc.id_dpto}}</td>
                                         <td>{{gc.id_comunidad.nombre}}</td>
                                         <td>
@@ -298,7 +271,13 @@
                                                             onclick="eliminarMulta({{ m.id_multa }})">
                                                             Eliminar
                                                         </a>
-                                               </li>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item action-item" href="#"
+                                                            onclick="eliminarMulta({{ m.id_multa }})">
+                                                            Editar
+                                                        </a>
+                                                    </li>
 
                                                 </ul>
                                                 {% endif %}

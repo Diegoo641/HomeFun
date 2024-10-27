@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuentas de usuarios</title>
+    <title>Residentes</title>
     <!-- Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -163,7 +163,7 @@
     <br>
     <br><br>
     <div class="container my-3 bg-dark text-white rounded-3">
-        <p class="text-md-center text-light fs-3">Cuentas de usuarios</p>
+        <p class="text-md-center text-light fs-3">Lista de Residentes</p>
     </div>
     <br>
 
@@ -176,7 +176,7 @@
                         
                         <button class="btn btn-primary">
                             <a class="a text-light fs-6"  href="http://127.0.0.1:8000/crear_cuenta">
-                                Crear Cuenta de usuario
+                                Crear Residente
                             </a>
                         </button>
 
@@ -189,8 +189,9 @@
                                         <th style="width:15%;">Apellido</th>
                                         <th style="width:15%;">Nombre Usuario</th>
                                         <th style="width:15%;">Email</th>
-                                        <th style="width:10%;">Tipo de usuario</th>
-                                        <th style="width:10%;">Cuenta Activa</th>
+                                        <th style="width:10%;">Piso</th>
+                                        <th style="width:10%;">Depto</th>
+                                        <th style="width:10%;">Activo</th>
                                         <th style="width:10%;">Acciones</th>
                                     </tr>
                                 </thead>
@@ -199,8 +200,8 @@
                                     {% for cu in cuentas_user %}
 
                                     
-                                    <!-- Modal para ver la imagen del mapa -->
-                                    {% comment %} <div class="modal fade" id="verMapaModal" tabindex="-1" aria-labelledby="verMapaModalLabel" aria-hidden="true">
+                                    <!-- Modal para ver toda la ficha del residente -->
+                                    <div class="modal fade" id="verFicha1" tabindex="-1" aria-labelledby="verMapaModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-fullscreen-md-down">
                                         <div class="modal-content">
                                             <div class="modal-header bg-primary text-white ">
@@ -221,7 +222,7 @@
                                             </div>
                                         </div>
                                         </div>
-                                    </div> {% endcomment %}
+                                    </div>
   
                                     <tr>
                                         <td>{{cu.id}}</td>
@@ -267,10 +268,10 @@
                                                             </a>
                                                         {% endif %} 
                                                     </li>
-                                                    {% comment %} <li>
-                                                        <a class="dropdown-item action-item" href="#" data-bs-toggle="modal" data-bs-target="#verMapaModal" onclick="verMapa('media/{{ ec.imagen }}', '{{ ec.descripcion|escapejs }}')">
-                                                            Ver Mapa
-                                                    </li> {% endcomment %}
+                                                    <li>
+                                                        <a class="dropdown-item action-item" href="#" data-bs-toggle="modal" data-bs-target="#verFichal" onclick="verMapadescripcion|escapejs }}')">
+                                                            Ver Ficha
+                                                    </li>
                                                     
                                                 </ul>
                                             </div>
@@ -317,9 +318,7 @@
     <script src="{% static 'core/js/modal.js'%}"></script>
 
     <script>
-        function verMapa(imagenUrl, descripcion) {
-            // Cambia el src de la imagen del modal para que sea la imagen del espacio común.
-            document.getElementById('mapaImagen').src = imagenUrl;
+        function verMapa(descripcion) {
             document.getElementById('descripcionMapa').innerText = descripcion;
         }
         </script>
