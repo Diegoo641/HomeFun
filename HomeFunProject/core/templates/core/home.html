@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 
+{% load static %}
+
 <head>
-    {% load static %}
+    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'core/css/whatsapp.css' %}">
     <title>Panel Administración</title>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
@@ -27,6 +30,8 @@
             background-repeat: no-repeat;
             background-size: cover;
             padding-top: 60px; /* Ajusta este valor según la altura de tu navbar */
+            
+
             }
         
 
@@ -40,7 +45,7 @@
           display: flex;
           flex-direction: column;
           justify-content: space-between; /* Asegura que el contenido se distribuya */
-          height: 250px; /* Altura fija para las tarjetas */
+          height: 200px; /* Altura fija para las tarjetas */
         }
         .card-body {
           flex: 1; /* Esto permite que el cuerpo de la tarjeta ocupe el espacio disponible */
@@ -66,12 +71,26 @@
 <body>
 
   <!-- Botón de ayuda -->
-  <div class="container my-3 bg-dark text-white rounded-3">
-    <div class="d-flex justify-content-between align-items-center">
-        <p class="text-light fs-3 mb-0 mx-auto text-center">Modulos Administrador</p>
-        <i class="fas fa-question-circle" style="color: red; font-size: 28px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#helpModal"></i>
+<div class="row">
+    <div class="col-md-11">
+        <div class="container my-3 bg-dark text-white rounded-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="text-light fs-3 mb-0 mx-auto text-center">Módulos Administrador</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-1">    
+        <div class="d-flex justify-content-end align-items-center h-100">
+            <div style="padding-right: 25px;"> <!-- Ajusta el padding según sea necesario -->
+                <i class="fas fa-question-circle" style="color: black; font-size: 28px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#helpModal"></i>
+            </div>
+        </div>
     </div>
 </div>
+
+
+
 
 <hr class="my-4">
 
@@ -82,7 +101,7 @@
               <div class="card-body text-center">
                   <i class="fa-solid fa-building fa-5x"></i>             
                   <h4 class="card-text mt-3">Espacios Comunes</h4>
-                  <br>
+                  
                   <p class="card-text">
                     <a href="{% url 'admin_espacios_comunes' %}" class="btn btn-outline-light btn-sm ms-auto">Ver Información</a>
                 </p>            
@@ -95,7 +114,6 @@
               <div class="card-body text-center">
                   <i class="fa-solid fa-users fa-5x"></i>             
                   <h4 class="card-text mt-3">Cuentas de usuarios</h4>
-                  <br>
                   <p class="card-text">
                     <a href="{% url 'admin_cuentas' %}" class="btn btn-outline-light btn-sm ms-auto">Ver Información</a>
                 </p>           
@@ -108,7 +126,6 @@
               <div class="card-body text-center">
                   <i class="fa-solid fa-gavel fa-5x"></i>             
                   <h4 class="card-text mt-3">Multas</h4>
-                  <br>
                   <p class="card-text">
                     <a href="{% url 'admin_multas' %}" class="btn btn-outline-light btn-sm ms-auto">Ver Información</a>
                   </p>          
@@ -123,7 +140,6 @@
               <div class="card-body text-center">
                   <i class="fa-solid fa-wallet fa-5x"></i>             
                   <h4 class="card-text mt-3">Gastos comunes</h4>
-                  <br>
                   <p class="card-text">
                     <a href="{% url 'admin_gastos_comunes' %}" class="btn btn-outline-light btn-sm ms-auto">Ver Información</a>
                 </p>         
@@ -136,7 +152,6 @@
               <div class="card-body text-center">
                   <i class="fa-solid fa-person fa-5x"></i>             
                   <h4 class="card-text mt-3">Residentes</h4>
-                  <br>
                   <p class="card-text">
                     <a href="{% url 'admin_ficha_residentes' %}" class="btn btn-outline-light btn-sm ms-auto">Ver Información</a>
                   </p>             
@@ -150,7 +165,6 @@
                   <i class="fas fa-dollar-sign fa-5x"></i>
                   <i class="fas fa-exclamation-circle warning-icon fa-5x"></i>            
                   <h4 class="card-text mt-3">Visualizar Morosos</h4>
-                  <br>
                   <p class="card-text">
                     <a href="{% url 'visualizar_morosidad' %}" class="btn btn-outline-light btn-sm ms-auto">Ver Información</a>
                   </p>               
@@ -159,8 +173,43 @@
       </div>
   </div>
 </div>
+
+
+<div id="whatsapp-button" class="whatsapp-float">
+    <a href="https://api.whatsapp.com/send?phone=56949052463&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Risi.cl." class="floatWapp" target="_blank">
+      <img src="{% static 'core/img/WhatsApp.svg.webp' %}" alt="Chatea con nosotros" class="whatsapp-icon">
+      
+    </a>
+    <button class="close-btn" onclick="closeWhatsAppButton()">×</button>
+  </div>
+  
+
+
+  <script src="{% static 'core/js/whatsapp.js' %}"></script>
+
+<script>
+  (function() {
+    const maxZoom = 1; // 150%
+    
+    window.addEventListener('resize', function() {
+        const scale = window.innerWidth / document.documentElement.clientWidth;
+        
+        if (scale > maxZoom) {
+            document.body.style.transform = `scale(${maxZoom})`;
+            document.body.style.transformOrigin = '0 0';
+            document.body.style.width = `${document.documentElement.clientWidth / maxZoom}px`;
+        } else {
+            document.body.style.transform = '';
+            document.body.style.width = '100%'; // Restablece el ancho
+        }
+    });
+})();
+</script>
+
 </body>
   
+
+
 
 
 
