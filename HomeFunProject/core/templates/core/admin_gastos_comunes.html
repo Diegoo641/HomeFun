@@ -163,7 +163,7 @@
     <br>
     <br><br>
     <div class="container my-3 bg-dark text-white rounded-3">
-        <p class="text-md-center text-light fs-3"> Administración tipos de gastos comunes</p>
+        <p class="text-md-center text-light fs-3">Tipos de gastos comunes</p>
     </div>
     <br>
 
@@ -175,34 +175,9 @@
                     <div class="table-responsive text-end">
                         <button class="btn btn-primary">
                             <a class="a text-light fs-6"  href="http://127.0.0.1:8000/crear_espacio_comun">
-                                Crear Espacio comun
+                                Crear Gasto Común
                             </a>
                         </button>
-                        <div class="d-grid gap-2 col-12 mx-auto">
-                            <!-- INTEGRACION -->
-                            <div id="wallet_container"></div>
-                    
-                            <!-- // SDK MercadoPago.js -->
-                            <script src="https://sdk.mercadopago.com/js/v2"></script>
-                    
-                            <script>
-                                //CLAVE UNICA DEL VENDEDOR -->
-                                const mp = new MercadoPago('');
-                                const bricksBuilder = mp.bricks();
-                    
-                                mp.bricks().create("wallet", "wallet_container", {
-                                    initialization: {
-                                        preferenceId: "{{preference_id}}",
-                                    },
-                                });
-                    
-                            </script>
-                    
-                            
-                    
-                            <!-- FIN INTEGRACION -->
-                    
-                    
                     
                         </div>
                         <div class="container mt-4">                    
@@ -212,7 +187,7 @@
                                         <th style="width:5%;">ID</th>
                                         <th style="width:15%;">Nombre</th>
                                         <th style="width:15%;">Valor</th>
-                                        <th style="width:15%;">Reajuste</th>
+                                        <th style="width:15%;">Reajuste(%)</th>
                                         <th style="width:10%;">Estado</th>
                                         <th style="width:15%;">Comunidad</th>
                                         <th style="width:10%;">Acciones</th>

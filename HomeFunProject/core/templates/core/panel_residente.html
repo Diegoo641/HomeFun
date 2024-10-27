@@ -37,7 +37,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 250px; /* Altura fija para las tarjetas */
+            height: 200px; /* Altura fija para las tarjetas */
         }
 
         .card-body {
@@ -73,7 +73,7 @@
 
         /* El contenedor del carrusel tendrá una altura mínima */
         .carousel-inner {
-            min-height: 300px; /* Ajusta la altura según el espacio que deseas reservar */
+            min-height: 200px; /* Ajusta la altura según el espacio que deseas reservar */
         }
 
         /* El carrusel ocupará el 40% del ancho de la página */
@@ -154,7 +154,7 @@
       <div class="col-md-4">
         <div class="card bg-primary text-white rounded-4">
           <div class="card-body text-center">
-            <i class="fa-solid fa-building fa-6x"></i>
+            <i class="fa-solid fa-building fa-4x"></i>
             <h4 class="card-text mt-3">Reservar Espacios Comunes</h4>
             <p class="card-text">
               <a href="{% url 'admin_res_espacios_comunes' %}" class="btn btn-outline-light btn-sm ms-auto">Ver Información</a>
@@ -165,7 +165,7 @@
       <div class="col-md-4">
         <div class="card bg-secondary text-white rounded-4">
           <div class="card-body text-center">
-            <i class="fa-solid fa-user fa-6x"></i>
+            <i class="fa-solid fa-user fa-4x"></i>
             <h4 class="card-text mt-3">Ver Perfil</h4>
             <p class="card-text">
               <button class="btn btn-outline-light btn-sm ms-auto">Ver Información</button>
@@ -176,10 +176,10 @@
       <div class="col-md-4">
         <div class="card bg-success text-white rounded-4">
           <div class="card-body text-center">
-            <i class="fa-solid fa-wallet fa-6x"></i>
+            <i class="fa-solid fa-wallet fa-4x"></i>
             <h4 class="card-text mt-3">Pagar Gastos comunes</h4>
             <p class="card-text">
-              <a href="{% url 'admin_res_espacios_comunes' %}" class="btn btn-outline-light btn-sm ms-auto">Ver Información</a>
+              <a href="{% url 'pagarDeuda' %}" class="btn btn-outline-light btn-sm ms-auto">Ver Información</a>
             </p>
           </div>
         </div>

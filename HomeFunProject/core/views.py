@@ -37,6 +37,8 @@ def visualizar_morosidad(request):
     return render(request, 'core/visualizar_morosidad.html')
 
 
+def pagarDeuda(request):
+    return render(request, 'core/pagarDeuda.html')
 
 @user_passes_test(es_superusuario_o_staff)
 def admin_espacios_comunes(request):

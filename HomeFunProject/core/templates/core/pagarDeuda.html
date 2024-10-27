@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multas</title>
+    <title>Deudas</title>
     <!-- Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -25,6 +25,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
         integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+        // SDK MercadoPago.js
+        <script src="https://sdk.mercadopago.com/js/v2"></script>
+
 </head>
 <!-- NAV -->
 {% block content %}
@@ -172,7 +177,7 @@
     <br>
     <br><br>
     <div class="container my-3 bg-dark text-white rounded-3">
-        <p class="text-md-center text-light fs-3">Tipos de Multas</p>
+        <p class="text-md-center text-light fs-3">Pagar Deudas</p>
     </div>
     <br>
 
@@ -184,7 +189,7 @@
                     <div class="table-responsive text-end">
                         <button class="btn btn-primary">
                             <a class="a text-light fs-6" href="http://127.0.0.1:8000/crear_multa">
-                                Crear Multa
+                                Historial de Pagos
                             </a>
                         </button>
  
@@ -195,19 +200,15 @@
                                 <thead>
                                     <tr>
                                         <th style="width:5%;">ID</th>
-                                        <th style="width:15%;">descripción</th>
-                                        <th style="width:15%;">Valor</th>
-                                        <th style="width:15%;">Fecha Ingreso</th>
-                                        <th style="width:10%;">Estado</th>
-                                        <th style="width:10%;">Valor</th>
+                                        <th style="width:15%;">Descripción</th>
+                                        <th style="width:15%;">Monto($)</th>
+                                        <th style="width:15%;">Fecha deuda</th>
+                                        {% comment %} <th style="width:10%;">Tipo</th> {% endcomment %}
+                                        {% comment %} <th style="width:10%;">Valor</th> {% endcomment %}
                                         <th style="width:10%;">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    {% for m in multa %}
-
-
                                     <!-- Modal para ver la imagen del mapa -->
                                     <div class="modal fade" id="verMapaModal" tabindex="-1"
                                         aria-labelledby="verMapaModalLabel" aria-hidden="true">
@@ -237,67 +238,24 @@
                                     </div>
 
                                     <tr>
-                                        <td>{{m.id_multa}}</td>
-                                        <td>{{m.descripcion}}</td>
-                                        <td>{{m.monto}}</td>
-                                        <td>{{m.fecha_ingreso}}</td>
-                                        <td>{{m.estado_multa}}</td>
-                                        <td>{{m.id_dpto}}</td>
+                                        <td>1</td>
+                                        <td>Gasto Común</td>
+                                        <td>150000</td>
+                                        <td>18-11-2024</td>
                                         <td>
-                                            <div class="dropdown">
-                                                <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                    id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
-                                                    Acciones
-                                                </button>
-
-                                                <!-- Menú desplegable -->
-                                                {% if m.estado_multa.descripcion == "Pendiente" %}
-
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                                                    <li>
-                                                        <a class="dropdown-item action-item"
-                                                            href="http://127.0.0.1:8000/modificar_multa/{{m.id_multa}}">Modificar
-                                                        </a>
-                                                    </li>
-
-                                                    <li>
-                                                        <a class="dropdown-item action-item" href="#"
-                                                            onclick="pagarMulta({{ m.id_multa }})">
-                                                            pagar
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item action-item" href="#"
-                                                            onclick="cancelarMulta({{ m.id_multa }})">
-                                                            Cancelar
-                                                        </a>
-                                                    </li>
-
-                                                    
-
-                                                </ul>
-                                                {% else %}
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                                               
-                                                    <li>
-                                                        <a class="dropdown-item action-item" href="#"
-                                                            onclick="eliminarMulta({{ m.id_multa }})">
-                                                            Eliminar
-                                                        </a>
-                                               </li>
-
-                                                </ul>
-                                                {% endif %}
-
-                                            </div>
+                                            <a class="btn btn-primary" href="#" role="button">
+                                                <div id="checkout-btn"></div> Pagar
+                                                <div id="wallet_container"></div>
+                                            </a>
                                         </td>
                                     </tr>
-                                    {% endfor %}
+                                    
+
+
                                 </tbody>
                             </table>
+
+                            </div>
 
                         </div>
                     </div>
@@ -334,6 +292,42 @@
         <!-- FUNCION dataTable -->
 
         <script src="{% static 'core/js/modal.js'%}"></script>
+
+        <script>
+        const mp = new MercadoPago('YOUR_PUBLIC_KEY');
+        const bricksBuilder = mp.bricks();
+        </script>
+
+                    <!-- INTEGRACION -->
+                    <div id="wallet_container"></div>
+            
+                    <!-- // SDK MercadoPago.js -->
+                    <script src="https://sdk.mercadopago.com/js/v2"></script>
+            
+                    <script>
+                        //CLAVE UNICA DEL VENDEDOR -->
+                        const mp = new MercadoPago('TEST-3511773968506450-102717-8677de7085489db9d366c7d4281a0e4a-255638280');
+                        const bricksBuilder = mp.bricks();
+            
+                        mp.bricks().create("wallet", "wallet_container", {
+                            initialization: {
+                                preferenceId: "{{preference_id}}",
+                            },
+                        });
+            
+                    </script>
+
+        <script>
+        const settings = {
+            ...,
+            customization: {
+                 visual: {
+                     buttonBackground: 'black',
+                     borderRadius: '16px',
+                 },
+            },
+           }
+        </script>
 
         <script>
             function verMapa(imagenUrl, descripcion) {
