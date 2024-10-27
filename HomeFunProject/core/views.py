@@ -33,6 +33,11 @@ def panel_residente(request):
 def admin_ficha_residentes(request):
     return render(request, 'core/admin_ficha_residentes.html')
 
+def visualizar_morosidad(request):
+    return render(request, 'core/visualizar_morosidad.html')
+
+
+
 @user_passes_test(es_superusuario_o_staff)
 def admin_espacios_comunes(request):
     espacio_comun = EspacioComun.objects.all()
