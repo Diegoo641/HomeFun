@@ -127,14 +127,36 @@ class Estado_GC(models.Model):
 
     def __str__(self):
         return self.descripcion
+    
+# ESTADO_GC (Estado de gasto común)
+class Estado_T_GC(models.Model):
+    id_est_t_gc = models.AutoField(primary_key=True, verbose_name='ID de Estado del Gasto Común')
+    descripcion = models.CharField(max_length=100, verbose_name='Descripción del Estado')
+
+    def __str__(self):
+        return self.descripcion
+    
+# GASTO_COMUN
+class TipoGastoComun(models.Model):
+    id_t_gc = models.AutoField(primary_key=True, verbose_name='ID de Gasto Común')
+    nombre = models.CharField(max_length=100, verbose_name='Nombre del Gasto Común')
+    monto =models.IntegerField(verbose_name='Monto del gasto')
+    reajuste = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Reajuste del Gasto Común')
+    estado_t_gc = models.ForeignKey('Estado_T_GC', on_delete=models.PROTECT, verbose_name='Estado del Tipo de Gasto Común')
+
+    def __str__(self):
+        return f"Gasto común: {self.nombre}"
 
 # GASTO_COMUN
 class GastoComun(models.Model):
     id_gc = models.AutoField(primary_key=True, verbose_name='ID de Gasto Común')
     nombre = models.CharField(max_length=100, verbose_name='Nombre del Gasto Común')
-    monto = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Monto del Gasto Común')
+    fecha = models.DateField(verbose_name='Fecha del gasto comun.')
+    total = models.IntegerField(verbose_name='Total')
     id_dpto = models.ForeignKey(CasaDepto, on_delete=models.PROTECT, verbose_name='Departamento Asociado')
     estado_gc = models.ForeignKey('Estado_GC', on_delete=models.PROTECT, verbose_name='Estado del Gasto Común')
+    tipo = models.ForeignKey('TipoGastoComun', on_delete=models.PROTECT, verbose_name='Tipo del Gasto Común')
+
 
     def __str__(self):
         return f"Gasto común: {self.nombre}"
@@ -147,14 +169,29 @@ class EstadoMulta(models.Model):
     def __str__(self):
         return self.descripcion
 
+# ESTADO_MULTA (Estado de la multa)
+class EstadoTipoMulta(models.Model):
+    id_est_t_multa = models.AutoField(primary_key=True, verbose_name='ID de Estado de Multa')
+    descripcion = models.CharField(max_length=100, verbose_name='Descripción del Estado')
+
+    def __str__(self):
+        return self.descripcion    
+
+class TipoMulta(models.Model):
+    id_t_multa = models.AutoField(primary_key=True, verbose_name='ID tipo de la Multa')
+    descripcion = models.CharField(max_length=100, verbose_name='Descripción del tipo de Multa')
+    monto = models.IntegerField(verbose_name='Monto de la Multa')
+    estado_t_multa =models.ForeignKey('EstadoTipoMulta', on_delete=models.PROTECT, verbose_name='Estado de la Multa')
+
+
 # MULTA
 class Multa(models.Model):
     id_multa = models.AutoField(primary_key=True, verbose_name='ID de la Multa')
     descripcion = models.CharField(max_length=100, verbose_name='Descripción de la Multa')
-    monto = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Monto de la Multa')
     fecha_ingreso = models.DateField(verbose_name='Fecha de Ingreso de la Multa')
     id_dpto = models.ForeignKey(CasaDepto, on_delete=models.PROTECT, verbose_name='Departamento Asociado')
     estado_multa = models.ForeignKey('EstadoMulta', on_delete=models.PROTECT, verbose_name='Estado de la Multa')
+    tipo = models.ForeignKey('TipoMulta', on_delete=models.PROTECT, verbose_name='Tipo de Multa')
 
     def __str__(self):
         return f"Multa: {self.descripcion}"
