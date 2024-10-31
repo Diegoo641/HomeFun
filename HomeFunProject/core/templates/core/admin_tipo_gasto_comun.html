@@ -174,7 +174,7 @@
                 <div class="title">
                     <div class="table-responsive text-end">
                         <button class="btn btn-primary">
-                            <a class="a text-light fs-6"  href="http://127.0.0.1:8000/crear_espacio_comun">
+                            <a class="a text-light fs-6"  href="http://127.0.0.1:8000/crear_tipo_gasto_comun">
                                 Crear Gasto Común
                             </a>
                         </button>
@@ -189,21 +189,19 @@
                                         <th style="width:15%;">Valor</th>
                                         <th style="width:15%;">Reajuste(%)</th>
                                         <th style="width:10%;">Estado</th>
-                                        <th style="width:15%;">Comunidad</th>
                                         <th style="width:10%;">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    {% for gc in gasto_comun %}
+                                    {% for tgc in gasto_comun %}
  
                                     <tr>
-                                        <td>{{gc.id_gc}}</td>
-                                        <td>{{gc.nombre}}</td>
-                                        <td>{{gc.monto}}</td>
-                                        <td>{{gc.estado_gc.descripcion}}</td>
-                                        <td>{{gc.id_dpto}}</td>
-                                        <td>{{gc.id_comunidad.nombre}}</td>
+                                        <td>{{tgc.id_t_gc}}</td>
+                                        <td>{{tgc.nombre}}</td>
+                                        <td>{{tgc.monto}}</td>
+                                        <td>{{tgc.reajuste}}</td>
+                                        <td>{{tgc.estado_t_gc.descripcion}}</td>
                                         <td>
                                             <div class="dropdown">
                                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -217,19 +215,19 @@
 
                                                     <li>
                                                         <a class="dropdown-item action-item"
-                                                            href="http://127.0.0.1:8000/modificar_multa/{{gc.id_gc}}">Modificar
+                                                            href="http://127.0.0.1:8000/modificar_multa/{{tgc.id_t_gc}}">Modificar
                                                         </a>
                                                     </li>
 
                                                     <li>
                                                         <a class="dropdown-item action-item" href="#"
-                                                            onclick="pagarMulta({{ gc.id_gc }})">
+                                                            onclick="pagarMulta({{ tgc.id_t_gc }})">
                                                             pagar
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a class="dropdown-item action-item" href="#"
-                                                            onclick="cancelarMulta({{ gc.id_gc }})">
+                                                            onclick="cancelarMulta({{ tgc.id_t_gc }})">
                                                             Cancelar
                                                         </a>
                                                     </li>
@@ -243,13 +241,13 @@
                                                
                                                     <li>
                                                         <a class="dropdown-item action-item" href="#"
-                                                            onclick="eliminarMulta({{ m.id_multa }})">
+                                                            onclick="eliminarMulta({{ tgc.id_t_gc }})">
                                                             Eliminar
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a class="dropdown-item action-item" href="#"
-                                                            onclick="eliminarMulta({{ m.id_multa }})">
+                                                            onclick="eliminarMulta({{ tgc.id_t_gc }})">
                                                             Editar
                                                         </a>
                                                     </li>

@@ -6,8 +6,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
 from core.form import CrearMultaForm, CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
-    CrearReservaEspacioComunForm,ModificarUsuarioForm, ModificarMultaForm
-from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun,Multa,EstadoMulta
+    CrearReservaEspacioComunForm,ModificarUsuarioForm, ModificarMultaForm, CrearTipoGastoComunForm
+from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun,Multa,EstadoMulta,\
+TipoGastoComun
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .controller import Controller
@@ -450,9 +451,24 @@ def eliminarMulta(request, id):
     })
 
 @user_passes_test(es_superusuario_o_staff)
-def admin_gastos_comunes(request):
-    gasto_comun = GastoComun.objects.all()
+def admin_tipo_gasto_comun(request):
+    gasto_comun = TipoGastoComun.objects.all()
     datos = {
         'gasto_comun': gasto_comun
     }
-    return render(request, 'core/admin_gastos_comunes.html', datos)
+    return render(request, 'core/admin_tipo_gasto_comun.html', datos)
+
+def crear_tipo_gasto_comun(request):
+    datos = {
+        'form': CrearTipoGastoComunForm()
+    }
+    if request.method == 'POST':
+        formulario = CrearTipoGastoComunForm(data= request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request,"Tipo de gasto comun creado correctamente")
+            datos['mensaje'] = "Guardados Correctamente"
+            return redirect(to="admin_tipo_gasto_comun")
+        else:
+            print("Error")
+    return render(request, 'core/crear_tipo_gasto_comun.html',datos) 
