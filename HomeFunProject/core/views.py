@@ -8,7 +8,7 @@ from django.contrib.auth.models import Permission
 from core.form import CrearMultaForm, CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
     CrearReservaEspacioComunForm,ModificarUsuarioForm, ModificarMultaForm, CrearTipoGastoComunForm
 from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun,Multa,EstadoMulta,\
-TipoGastoComun
+TipoGastoComun,Estado_T_GC
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .controller import Controller
@@ -472,3 +472,34 @@ def crear_tipo_gasto_comun(request):
         else:
             print("Error")
     return render(request, 'core/crear_tipo_gasto_comun.html',datos) 
+
+
+def desactivarTipoGastoComun(request, id):
+    gasto_comun = get_object_or_404(TipoGastoComun, id_t_gc=id)
+    if request.method == 'POST':
+        # Cambiar el estado del espacio común a "eliminado"
+        estado_eliminado = get_object_or_404(Estado_T_GC, id_est_t_gc=2)  # Get the Estado_EC instance with ID 4
+        gasto_comun.estado_t_gc = estado_eliminado
+        gasto_comun.save()  # Guardar los cambios
+        messages.success(request, "Tipo de gasto comu desactivado")
+        return redirect(to="admin_tipo_gasto_comun")
+
+    # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
+    return render(request, 'core/admin_tipo_gasto_comun.html', {
+        'form': EspacioComunForm(instance=gasto_comun)
+    })
+
+def activarTipoGastoComun(request, id):
+    gasto_comun = get_object_or_404(TipoGastoComun, id_t_gc=id)
+    if request.method == 'POST':
+        # Cambiar el estado del espacio común a "eliminado"
+        estado_activado = get_object_or_404(Estado_T_GC, id_est_t_gc=1)  # Get the Estado_EC instance with ID 4
+        gasto_comun.estado_t_gc = estado_activado
+        gasto_comun.save()  # Guardar los cambios
+        messages.success(request, "Tipo de gasto comu activado")
+        return redirect(to="admin_tipo_gasto_comun")
+
+    # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
+    return render(request, 'core/admin_tipo_gasto_comun.html', {
+        'form': EspacioComunForm(instance=gasto_comun)
+    })

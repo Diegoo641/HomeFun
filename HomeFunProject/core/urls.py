@@ -4,7 +4,7 @@ from core.views import home , registro,agregar_administrador, modificar_res_espa
     habilitarEspacioComun,admin_res_espacios_comunes,consulta_estado_cuenta, panel_residente,crear_res_espacio_comun,\
     admin_cuentas,crear_cuenta,desactivarCuenta,activarCuenta, modificar_cuenta, admin_multas , modificar_multa ,\
     crear_multa,cancelarMulta,pagarMulta,eliminarMulta,admin_tipo_gasto_comun, admin_ficha_residentes, visualizar_morosidad,\
-    pagarDeuda,crear_tipo_gasto_comun
+    pagarDeuda,crear_tipo_gasto_comun,activarTipoGastoComun,desactivarTipoGastoComun
 
 
 urlpatterns = [
@@ -40,6 +40,8 @@ urlpatterns = [
     path('visualizar_morosidad',visualizar_morosidad,name="visualizar_morosidad"),
     path('pagarDeuda',pagarDeuda,name="pagarDeuda"),
     path('crear_tipo_gasto_comun', crear_tipo_gasto_comun, name="crear_tipo_gasto_comun"),
+    path('activarTipoGastoComun/<id>/',activarTipoGastoComun,name="activarTipoGastoComun"),
+    path('desactivarTipoGastoComun/<id>/',desactivarTipoGastoComun,name="desactivarTipoGastoComun"),
 
 
 

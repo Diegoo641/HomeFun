@@ -94,7 +94,7 @@
 
 
 <script>
-    function eliminarEspacioComun(id) {
+    function desactivarGastoComun(id) {
         Swal.fire({
             "title": "¿Deseas eliminar este Espacio Comun?",
             "text": "El espacio comun quedara con estado 'Eliminado'",
@@ -110,7 +110,7 @@
                     // Cambiar a un método POST para eliminar el espacio
                     const form = document.createElement('form');
                     form.method = 'POST';
-                    form.action = "http://127.0.0.1:8000/eliminarEspacioComun/" + id + "/";
+                    form.action = "http://127.0.0.1:8000/desactivarTipoGastoComun/" + id + "/";
                     const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
                     const csrfInput = document.createElement('input');
                     csrfInput.type = 'hidden';
@@ -123,7 +123,7 @@
             });
     }
 
-    function habilitarEspacioComun(id) {
+    function activarGastoComun(id) {
         Swal.fire({
             "title": "¿Deseas habilitar este Espacio Comun?",
             "text": "El espacio comun quedara con estado 'Eliminado'",
@@ -139,7 +139,7 @@
                     // Cambiar a un método POST para eliminar el espacio
                     const form = document.createElement('form');
                     form.method = 'POST';
-                    form.action = "http://127.0.0.1:8000/habilitarEspacioComun/" + id + "/";
+                    form.action = "http://127.0.0.1:8000/activarTipoGastoComun/" + id + "/";
                     const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
                     const csrfInput = document.createElement('input');
                     csrfInput.type = 'hidden';
@@ -209,7 +209,7 @@
                                                 </button>
                                                 
                                                 <!-- Menú deplegable -->
-                                                {% if gc.estado_gc.descripcion == "Pendiente" %}
+                                                {% if tgc.estado_gc.descripcion == "Inactivo" %}
 
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
@@ -221,36 +221,29 @@
 
                                                     <li>
                                                         <a class="dropdown-item action-item" href="#"
-                                                            onclick="pagarMulta({{ tgc.id_t_gc }})">
+                                                            onclick="activarGastoComun({{ tgc.id_t_gc }})">
                                                             pagar
                                                         </a>
                                                     </li>
-                                                    <li>
-                                                        <a class="dropdown-item action-item" href="#"
-                                                            onclick="cancelarMulta({{ tgc.id_t_gc }})">
-                                                            Cancelar
-                                                        </a>
-                                                    </li>
-
-                                                    
+                                        
 
                                                 </ul>
                                                 {% else %}
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                                               
                                                     <li>
-                                                        <a class="dropdown-item action-item" href="#"
-                                                            onclick="eliminarMulta({{ tgc.id_t_gc }})">
-                                                            Eliminar
+                                                        <a class="dropdown-item action-item"
+                                                            href="http://127.0.0.1:8000/modificar_multa/{{tgc.id_t_gc}}">Modificar
                                                         </a>
                                                     </li>
+
                                                     <li>
                                                         <a class="dropdown-item action-item" href="#"
-                                                            onclick="eliminarMulta({{ tgc.id_t_gc }})">
-                                                            Editar
+                                                            onclick="desactivarGastoComun({{ tgc.id_t_gc }})">
+                                                            pagar
                                                         </a>
                                                     </li>
+                                        
 
                                                 </ul>
                                                 {% endif %}
