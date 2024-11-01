@@ -210,9 +210,6 @@
                                         <th style="width:15%;">Mes</th>
                                         <th style="width:15%;">Valor</th>
                                         <th style="width:10%;">Depto</th>
-                                        <th style="width:10%;">Piso</th>
-                                        <th style="width:15%;">Comunidad</th>
-                                        <th style="width:10%;">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -225,61 +222,6 @@
                                         <td>{{gc.monto}}</td>
                                         <td>{{gc.estado_gc.descripcion}}</td>
                                         <td>{{gc.id_dpto}}</td>
-                                        <td>{{gc.id_comunidad.nombre}}</td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Acciones
-                                                </button>
-                                                
-                                                <!-- Menú deplegable -->
-                                                {% if gc.estado_gc.descripcion == "Pendiente" %}
-
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                                                    <li>
-                                                        <a class="dropdown-item action-item"
-                                                            href="http://127.0.0.1:8000/modificar_multa/{{gc.id_gc}}">Modificar
-                                                        </a>
-                                                    </li>
-
-                                                    <li>
-                                                        <a class="dropdown-item action-item" href="#"
-                                                            onclick="pagarMulta({{ gc.id_gc }})">
-                                                            pagar
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item action-item" href="#"
-                                                            onclick="cancelarMulta({{ gc.id_gc }})">
-                                                            Cancelar
-                                                        </a>
-                                                    </li>
-
-                                                    
-
-                                                </ul>
-                                                {% else %}
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                                               
-                                                    <li>
-                                                        <a class="dropdown-item action-item" href="#"
-                                                            onclick="eliminarMulta({{ m.id_multa }})">
-                                                            Eliminar
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item action-item" href="#"
-                                                            onclick="eliminarMulta({{ m.id_multa }})">
-                                                            Editar
-                                                        </a>
-                                                    </li>
-
-                                                </ul>
-                                                {% endif %}
-                                            </div>
-                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
