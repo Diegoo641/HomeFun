@@ -356,6 +356,11 @@ def crear_cuenta(request):
         formulario = CrearUsuario(data= request.POST)
         if formulario.is_valid():
             formulario.save()
+            username = formulario.cleaned_data['username']
+            print(username)
+            usuario = User.objects.get(username=username)
+            usuario.is_superuser= 1
+            usuario.save()
             messages.success(request,"Cuenta creada correctamente")
             datos['mensaje'] = "Guardados Correctamente"
             return redirect(to="admin_cuentas")
