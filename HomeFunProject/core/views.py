@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
-from core.form import CrearMultaForm, CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
+from core.form import CrearMultaForm, GenerarMultaForm,CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
     CrearReservaEspacioComunForm,ModificarUsuarioForm, ModificarMultaForm, CrearTipoGastoComunForm
 from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun,Multa,EstadoMulta,\
 TipoGastoComun,Estado_T_GC
@@ -40,6 +40,30 @@ def visualizar_morosidad(request):
 
 def pagarDeuda(request):
     return render(request, 'core/pagarDeuda.html')
+
+
+    
+def Multas(request):
+        return render(request, 'core/Multas.html')
+
+
+def generar_multa(request):
+    datos = {
+        'form': GenerarMultaForm()
+    }
+    if request.method == 'POST':
+        formulario = GenerarMultaForm(request.POST , request.FILES)
+
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request,"Multa registrada correctamente")
+            datos['mensaje'] = "Guardados Correctamente"
+            return redirect(to="Multas")
+        else:
+            print("Error")
+    return render(request, 'core/generar_multa.html',datos)   
+
+
 
 @user_passes_test(es_superusuario_o_staff)
 def admin_espacios_comunes(request):
@@ -503,3 +527,4 @@ def activarTipoGastoComun(request, id):
     return render(request, 'core/admin_tipo_gasto_comun.html', {
         'form': EspacioComunForm(instance=gasto_comun)
     })
+    

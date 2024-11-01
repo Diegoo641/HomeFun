@@ -195,7 +195,7 @@
                                 <thead>
                                     <tr>
                                         <th style="width:5%;">ID</th>
-                                        <th style="width:15%;">descripción</th>
+                                        <th style="width:15%;">Departamento</th>
                                         <th style="width:15%;">Valor</th>
                                         <th style="width:15%;">Fecha Ingreso</th>
                                         <th style="width:10%;">Estado</th>
@@ -206,35 +206,6 @@
                                 <tbody>
 
                                     {% for m in multa %}
-
-
-                                    <!-- Modal para ver la imagen del mapa -->
-                                    <div class="modal fade" id="verMapaModal" tabindex="-1"
-                                        aria-labelledby="verMapaModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-fullscreen-md-down">
-                                            <div class="modal-content">
-                                                <div class="modal-header bg-primary text-white ">
-                                                    <h5 class="modal-title" id="verMapaModalLabel">Mapa de Espacio Común
-                                                    </h5>
-
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body text-start">
-                                                    <p class="fw-bold"> Desripción:</p>
-                                                    <p id="descripcionMapa"></p>
-                                                    <hr>
-                                                </div>
-                                                <div class="modal-body text-center">
-                                                    <img id="mapaImagen" src="" alt="Mapa" class="img-fluid" />
-                                                </div>
-                                                <div class="modal-footer text">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Cerrar</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     <tr>
                                         <td>{{m.id_multa}}</td>
