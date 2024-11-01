@@ -39,6 +39,7 @@
             transform: scale(1.05);
             transition: transform 0.3s ease;
             box-shadow: 0 0 20px rgba(18, 159, 211, 0.5);
+            overflow-x: hidden;
         }
 
         .card {
@@ -52,14 +53,15 @@
         }
 
         html {
-            min-height: 95%;
+            min-height: 90%;
             position: relative;
+            overflow-x: hidden;
         }
 
    
         .content {
             flex: 1;
-            padding-bottom: 95px;
+            padding-bottom: 90px;
             /* Ajusta el espacio para el footer */
         }
 
@@ -82,7 +84,7 @@
 
     <div class="col-md-1">    
         <div class="d-flex justify-content-end align-items-center h-100">
-            <div style="padding-right: 25px;"> <!-- Ajusta el padding según sea necesario -->
+            <div style="padding-right: 20px;"> <!-- Ajusta el padding según sea necesario -->
                 <i class="fas fa-question-circle" style="color: black; font-size: 28px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#helpModal"></i>
             </div>
         </div>
