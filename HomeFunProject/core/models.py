@@ -32,6 +32,13 @@ class Comuna(models.Model):
 
     def __str__(self):
         return self.nombre
+    
+class Estado_residente(models.Model):
+    id_est_r = models.AutoField(primary_key=True, verbose_name='ID de Estado del residente')
+    descripcion = models.CharField(max_length=100, verbose_name='Descripción del Estado')
+
+    def __str__(self):
+        return self.descripcion
 
 # FICHA_RESIDENTE
 class FichaResidente(models.Model):
@@ -44,6 +51,7 @@ class FichaResidente(models.Model):
     genero = models.ForeignKey(Genero, on_delete=models.PROTECT, verbose_name='Género del Residente')
     comuna = models.ForeignKey(Comuna, on_delete=models.PROTECT, verbose_name='Comuna del Residente')
     estado_civil = models.ForeignKey(EstadoCivil, on_delete=models.PROTECT, verbose_name='Estado Civil')
+    estado = models.ForeignKey(Estado_residente, on_delete=models.PROTECT, verbose_name='Estado del residente')
 
     def __str__(self):
         return f"{self.nombre} {self.apellido}"

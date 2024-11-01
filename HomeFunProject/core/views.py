@@ -31,9 +31,6 @@ def panel_residente(request):
     return render(request, 'core/panel_residente.html')
 
 
-def admin_ficha_residentes(request):
-    return render(request, 'core/admin_ficha_residentes.html')
-
 def visualizar_morosidad(request):
     return render(request, 'core/visualizar_morosidad.html')
 
@@ -547,3 +544,11 @@ def modificar_tipo_gasto_comun(request, id):
             'mensaje': "Modificado correctamente"
         }
     return render(request, 'core/modificar_tipo_gasto_comun.html', datos)
+
+@user_passes_test(es_superusuario_o_staff)
+def admin_ficha_residentes(request):
+    residentes = FichaResidente.objects.all()
+    datos = {
+        'residentes': residentes
+    }
+    return render(request, 'core/admin_ficha_residentes.html',datos)

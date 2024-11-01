@@ -175,7 +175,7 @@
                     <div class="table-responsive text-end">
                         
                         <button class="btn btn-primary">
-                            <a class="a text-light fs-6"  href="http://127.0.0.1:8000/crear_cuenta">
+                            <a class="a text-light fs-6"  href="http://127.0.0.1:8000/registro">
                                 Crear Residente
                             </a>
                         </button>
@@ -187,17 +187,18 @@
                                         <th style="width:5%;">ID</th>
                                         <th style="width:15%;">Nombre</th>
                                         <th style="width:15%;">Apellido</th>
-                                        <th style="width:15%;">Nombre Usuario</th>
-                                        <th style="width:15%;">Email</th>
-                                        <th style="width:10%;">Piso</th>
-                                        <th style="width:10%;">Depto</th>
-                                        <th style="width:10%;">Activo</th>
+                                        <th style="width:15%;">Correo</th>
+                                        <th style="width:15%;">RUT</th>
+                                        <th style="width:10%;">Dirección</th>
+                                        <th style="width:10%;">Comuna</th>
+                                        <th style="width:10%;">Est. Civil</th>
+                                        <th style="width:10%;">Genero</th>
                                         <th style="width:10%;">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    {% for cu in cuentas_user %}
+                                    {% for r in residentes %}
 
                                     
                                     <!-- Modal para ver toda la ficha del residente -->
@@ -225,25 +226,17 @@
                                     </div>
   
                                     <tr>
-                                        <td>{{cu.id}}</td>
-                                        <td>{{cu.first_name}}</td>
-                                        <td>{{cu.last_name}}</td>
-                                        <td>{{cu.username}}</td>
-                                        <td>{{cu.email}}</td>
+                                        <td>{{r.id_residente}}</td>
+                                        <td>{{r.nombre}}</td>
+                                        <td>{{r.apellido}}</td>
+                                        <td>{{r.correo}}</td>
+                                        <td>{{r.rut}}</td>
+                                        <td>{{r.direccion}}</td>
+                                        <td>{{r.comuna}}</td>
+                                        <td>{{r.estado_civil}}</td>
+                                        <td>{{r.genero}}</td>
 
-                                        <td>
-                                            {% if cu.is_superuser %}
-                                                Administrador
-                                            {% else %}
-                                                Residente
-                                            {% endif %}
-                                        </td>                                        
-                                        <td>{% if cu.is_active %}
-                                            Activa
-                                        {% else %}
-                                            Desactivada
-                                        {% endif %}
-                                        </td>
+
                                         <td>
                                             <div class="dropdown">
                                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
