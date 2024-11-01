@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
 from core.form import CrearMultaForm, GenerarMultaForm,CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
-    CrearReservaEspacioComunForm,ModificarUsuarioForm, ModificarMultaForm, CrearTipoGastoComunForm
+    CrearReservaEspacioComunForm, ModificarTipoGastoComunForm,ModificarUsuarioForm, ModificarMultaForm, CrearTipoGastoComunForm
 from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun,Multa,EstadoMulta,\
 TipoGastoComun,Estado_T_GC
 from django.shortcuts import get_object_or_404
@@ -166,8 +166,6 @@ def agregar_administrador (request):
         if formulario.is_valid:
             formulario.save()
             messages.success(request,"Te has registrado correctamente")
-            user = authenticate(username=formulario.cleaned_data["username"], password=formulario.cleaned_data["password1"])
-            login(request,user)
             return redirect(to="home")
         data["form"] = formulario
     return render(request, 'registration/registro.html',data)
@@ -528,3 +526,19 @@ def activarTipoGastoComun(request, id):
         'form': EspacioComunForm(instance=gasto_comun)
     })
     
+def modificar_tipo_gasto_comun(request, id):
+    tipo_gasto = TipoGastoComun.objects.get(id_t_gc=id)
+    datos = {
+        'form': ModificarTipoGastoComunForm(instance=tipo_gasto)
+    }
+    if request.method == 'POST':
+        formulario = ModificarTipoGastoComunForm(data= request.POST, instance= tipo_gasto)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Multa modificada correctamente")
+            return redirect(to="admin_tipo_gasto_comun")
+        datos = {
+            'form': ModificarTipoGastoComunForm(instance=tipo_gasto),
+            'mensaje': "Modificado correctamente"
+        }
+    return render(request, 'core/modificar_tipo_gasto_comun.html', datos)

@@ -65,4 +65,10 @@ class CrearTipoGastoComunForm(forms.ModelForm):
     fields =['nombre','monto','reajuste','estado_t_gc']
 
 
+class ModificarTipoGastoComunForm(forms.ModelForm):
+  class Meta:
+    model = TipoGastoComun
+    fields =['nombre','monto','reajuste','estado_t_gc']
+
+
 
