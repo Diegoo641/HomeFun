@@ -51,7 +51,7 @@ class FichaResidente(models.Model):
     genero = models.ForeignKey(Genero, on_delete=models.PROTECT, verbose_name='Género del Residente')
     comuna = models.ForeignKey(Comuna, on_delete=models.PROTECT, verbose_name='Comuna del Residente')
     estado_civil = models.ForeignKey(EstadoCivil, on_delete=models.PROTECT, verbose_name='Estado Civil')
-    estado = models.ForeignKey(Estado_residente, on_delete=models.PROTECT, verbose_name='Estado del residente')
+    estado = models.ForeignKey(Estado_residente,null=True,blank=True, on_delete=models.PROTECT, verbose_name='Estado del residente')
 
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
