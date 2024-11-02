@@ -204,11 +204,18 @@
     <div class="row">
         <div class="col-md-9">
             <div class="d-flex text-start" style="padding-left: 130px;">
-                <p class="text-dark fs-4  mx-fluid text-start">
-                    Estimado, {{user.username}} usted pagará: $
+                <p id="mensaje-pago" class="text-dark fs-4 mx-fluid text-start" style="display: none;">
+                    Estimado, {{user.username}} usted pagará: $ <span id="monto-pago"></span>
                 </p>
+                <div id="historial-boton-contenedor" style="display: none;">
+                    <button class="btn btn-primary btn-md ms-3" type="button" data-bs-toggle="modal" data-bs-target="#Historial">
+                        Historial de pagos
+                    </button>
+                </div>
             </div>
         </div>
+
+
     
         <div class="col-md-3">    
                 <div style="padding-right: 130px;">
@@ -309,10 +316,10 @@
                                       <tr>
                                         <td>1</td>
                                         <td>Gasto Común</td>
-                                        <td>150000</td>
+                                        <td class="monto">5000</td>
                                         <td>18-11-2024</td>
                                         <td>
-                                            <a class="btn btn-primary" href="#" role="button">
+                                            <a class="btn btn-primary sumar-pago-btn" href="#" role="button">
                                                 <div id="checkout-btn"></div> Sumar a pago
                                                 <div id="wallet_container"></div>
                                             </a>
@@ -321,6 +328,21 @@
                                                 <div id="wallet_container"></div>
                                             </a>
                                         </td>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Gasto Común</td>
+                                            <td class="monto">15000</td>
+                                            <td>18-11-2024</td>
+                                            <td>
+                                                <a class="btn btn-primary sumar-pago-btn" href="#" role="button">
+                                                    <div id="checkout-btn"></div> Sumar a pago
+                                                    <div id="wallet_container"></div>
+                                                </a>
+                                                <a class="btn btn-primary" href="#" role="button">
+                                                    <div id="checkout-btn"></div> Descontar a pago
+                                                    <div id="wallet_container"></div>
+                                                </a>
+                                            </td>
                                     </tr>
                                     
 
@@ -360,6 +382,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
         <script>
    
+
+
+
        // Inicializar DataTables con 10 filas por página
        $(document).ready(function() {
            $('#data-table1').DataTable({
@@ -533,7 +558,24 @@
             }
         </script>
 
-      
+        <script>
+            // JavaScript para mostrar solo el monto al hacer clic en "Sumar a pago"
+            document.querySelectorAll('.sumar-pago-btn').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault(); // Evita que el enlace recargue la página
+                    
+                    // Encuentra el elemento <td> de la columna "Monto" en la misma fila que el botón
+                    const monto = button.closest('tr').querySelector('.monto').textContent;
+                    
+                    // Inserta solo el monto en el lugar correspondiente del mensaje
+                    document.getElementById('monto-pago').textContent = monto;
+                    
+                    // Asegura que el mensaje se muestre
+                    document.getElementById('mensaje-pago').style.display = 'block';
+                    document.getElementById('historial-boton-contenedor').style.display = 'block';
+                });
+            });
+        </script>
 
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         {% if messages %}
