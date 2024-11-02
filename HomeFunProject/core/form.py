@@ -71,4 +71,11 @@ class ModificarTipoGastoComunForm(forms.ModelForm):
     fields =['nombre','monto','reajuste','estado_t_gc']
 
 
+class ModificarFichaResidenteForm (forms.ModelForm):
+   correo = forms.EmailField()
+   class Meta:
+    model = FichaResidente
+    fields=["nombre","apellido","correo","direccion","genero","comuna","estado_civil"]
+
+
 

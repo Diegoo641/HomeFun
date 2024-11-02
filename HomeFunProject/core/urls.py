@@ -5,7 +5,7 @@ from core.views import home , registro,agregar_administrador, modificar_res_espa
     admin_cuentas,crear_cuenta,desactivarCuenta,activarCuenta, modificar_cuenta, admin_multas , modificar_multa ,\
     crear_multa,cancelarMulta,pagarMulta,eliminarMulta,admin_tipo_gasto_comun, admin_ficha_residentes, visualizar_morosidad,\
     pagarDeuda,crear_tipo_gasto_comun,activarTipoGastoComun,desactivarTipoGastoComun, Multas, generar_multa,modificar_tipo_gasto_comun,\
-    admin_ficha_residentes
+    admin_ficha_residentes,modificar_ficha_residente,activarFichaResidente,desactivarFichaResidente
 
 
 urlpatterns = [
@@ -47,6 +47,10 @@ urlpatterns = [
     path('generar_multa',generar_multa,name="generar_multa"),
     path('modificar_tipo_gasto_comun/<id>/', modificar_tipo_gasto_comun, name="modificar_tipo_gasto_comun"),
     path('admin_ficha_residentes', admin_ficha_residentes, name="admin_ficha_residentes"),
+    path('modificar_ficha_residente/<id>/', modificar_ficha_residente, name="modificar_ficha_residente"),
+    path('activarFichaResidente/<id>/',activarFichaResidente,name="activarFichaResidente"),
+    path('desactivarFichaResidente/<id>/',desactivarFichaResidente,name="desactivarFichaResidente"),
+
 
 
 

@@ -94,7 +94,7 @@
 
 
 <script>
-    function desactivarCuenta(id) {
+    function desactivarFichaResidente(id) {
         Swal.fire({
             "title": "¿Deseas desactivar esta cueta?",
             "text": "El espacio comun quedara con estado 'desactivada'",
@@ -110,7 +110,7 @@
                     // Cambiar a un método POST para eliminar el espacio
                     const form = document.createElement('form');
                     form.method = 'POST';
-                    form.action = "http://127.0.0.1:8000/desactivarCuenta/" + id + "/";
+                    form.action = "http://127.0.0.1:8000/desactivarFichaResidente/" + id + "/";
                     const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
                     const csrfInput = document.createElement('input');
                     csrfInput.type = 'hidden';
@@ -123,7 +123,7 @@
             });
     }
 
-    function activarCuenta(id) {
+    function activarFichaResidente(id) {
         Swal.fire({
             "title": "¿Deseas activar esta cuenta?",
             "text": "El espacio comun quedara con estado 'Activada'",
@@ -139,7 +139,7 @@
                     // Cambiar a un método POST para eliminar el espacio
                     const form = document.createElement('form');
                     form.method = 'POST';
-                    form.action = "http://127.0.0.1:8000/activarCuenta/" + id + "/";
+                    form.action = "http://127.0.0.1:8000/activarFichaResidente/" + id + "/";
                     const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
                     const csrfInput = document.createElement('input');
                     csrfInput.type = 'hidden';
@@ -189,10 +189,10 @@
                                         <th style="width:15%;">Apellido</th>
                                         <th style="width:15%;">Correo</th>
                                         <th style="width:15%;">RUT</th>
-                                        <th style="width:10%;">Dirección</th>
                                         <th style="width:10%;">Comuna</th>
                                         <th style="width:10%;">Est. Civil</th>
                                         <th style="width:10%;">Genero</th>
+                                        <th style="width:10%;">Est. Cuenta</th>
                                         <th style="width:10%;">Acciones</th>
                                     </tr>
                                 </thead>
@@ -231,10 +231,11 @@
                                         <td>{{r.apellido}}</td>
                                         <td>{{r.correo}}</td>
                                         <td>{{r.rut}}</td>
-                                        <td>{{r.direccion}}</td>
                                         <td>{{r.comuna}}</td>
                                         <td>{{r.estado_civil}}</td>
                                         <td>{{r.genero}}</td>
+                                        <td>{{r.estado}}</td>
+
 
 
                                         <td>
@@ -247,24 +248,21 @@
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
                                                     <li>
-                                                        <a class="dropdown-item action-item" href="http://127.0.0.1:8000/modificar_cuenta/{{cu.id}}">Modificar        
+                                                        <a class="dropdown-item action-item" href="http://127.0.0.1:8000/modificar_ficha_residente/{{r.id_residente}}">Modificar        
                                                     </a>
                                                     </li>
                                                     <li>
-                                                        {% if cu.is_active == 0 %}
-                                                            <a class="dropdown-item action-item" href="#" onclick="activarCuenta({{ cu.id }})">
-                                                            Activar
+                                                        {% if r.estado.descripcion == "Activa" %}
+                                                            <a class="dropdown-item action-item" href="#" onclick="desactivarFichaResidente({{ r.id_residente }})">
+                                                            Desactivar
                                                             </a>
                                                         {% else %}
-                                                            <a class="dropdown-item action-item" href="#" onclick="desactivarCuenta({{ cu.id }})">
-                                                                Desactivar
+                                                            <a class="dropdown-item action-item" href="#" onclick="activarFichaResidente({{ r.id_residente }})">
+                                                                Activar
                                                             </a>
                                                         {% endif %} 
                                                     </li>
-                                                    <li>
-                                                        <a class="dropdown-item action-item" href="#" data-bs-toggle="modal" data-bs-target="#verFichal" onclick="verMapadescripcion|escapejs }}')">
-                                                            Ver Ficha
-                                                    </li>
+                                                    
                                                     
                                                 </ul>
                                             </div>

@@ -6,9 +6,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
 from core.form import CrearMultaForm, GenerarMultaForm,CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
-    CrearReservaEspacioComunForm, ModificarTipoGastoComunForm,ModificarUsuarioForm, ModificarMultaForm, CrearTipoGastoComunForm
+    CrearReservaEspacioComunForm, ModificarFichaResidenteForm, ModificarTipoGastoComunForm,ModificarUsuarioForm, ModificarMultaForm, CrearTipoGastoComunForm
 from core.models import FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun,Multa,EstadoMulta,\
-TipoGastoComun,Estado_T_GC
+TipoGastoComun, Estado_residente
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .controller import Controller
@@ -552,3 +552,49 @@ def admin_ficha_residentes(request):
         'residentes': residentes
     }
     return render(request, 'core/admin_ficha_residentes.html',datos)
+
+def modificar_ficha_residente(request, id):
+    residente = FichaResidente.objects.get(id_residente=id)
+    datos = {
+        'form': ModificarFichaResidenteForm(instance=residente)
+    }
+    if request.method == 'POST':
+        formulario = ModificarFichaResidenteForm(data= request.POST, instance= residente)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Multa modificada correctamente")
+            return redirect(to="admin_ficha_residentes")
+        datos = {
+            'form': ModificarFichaResidenteForm(instance=residente),
+            'mensaje': "Modificado correctamente"
+        }
+    return render(request, 'core/modificar_ficha_residente.html', datos)
+
+def desactivarFichaResidente(request, id):
+    residente = get_object_or_404(FichaResidente, id_residente=id)
+    if request.method == 'POST':
+        # Cambiar el estado del espacio común a "eliminado"
+        estado_eliminado = get_object_or_404(Estado_residente, id_est_r=2)  # Get the Estado_EC instance with ID 4
+        residente.estado = estado_eliminado
+        residente.save()  # Guardar los cambios
+        messages.success(request, "Tipo de gasto comu desactivado")
+        return redirect(to="admin_ficha_residentes")
+
+    # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
+    return render(request, 'core/admin_ficha_residentes.html', {
+        'form': EspacioComunForm(instance=residente)})
+
+def activarFichaResidente(request, id):
+    residente = get_object_or_404(FichaResidente, id_residente=id)
+    if request.method == 'POST':
+        # Cambiar el estado del espacio común a "eliminado"
+        estado_activado = get_object_or_404(Estado_residente, id_est_r=1)  
+        residente.estado = estado_activado
+        residente.save()  # Guardar los cambios
+        messages.success(request, "Tipo de gasto comu activado")
+        return redirect(to="admin_ficha_residentes")
+
+    return render(request, 'core/admin_tipo_gasto_comun.html', {
+        'form': EspacioComunForm(instance=residente)
+    })
+    
