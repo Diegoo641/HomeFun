@@ -6,28 +6,21 @@ import mercadopago
 
 class Controller:
     
-    def pagar():
+    def pagar(self):
         # Agrega credenciales
-        sdk = mercadopago.SDK("TEST-3511773968506450-102717-8677de7085489db9d366c7d4281a0e4a-255638280")
+        sdk = mercadopago.SDK("")
 
         # Crea un ítem en la preferencia
         preference_data = {
-            "items": [
-                {
-                    "title": "Miproducto",
+      # the "purpose": "wallet_purchase", allows only logged in payments
+      # to allow guest payments, you can omit this property
+            "purpose": "wallet_purchase",
+            "items":[{
+                    "title": "My Item",
                     "quantity": 1,
-                    "unit_price": 100
-                },
-
-            ],
-                "back_urls": {
-                            "success": "http://127.0.0.1:8000/pagarDeuda",
-                            "failure": "http://127.0.0.1:8000/pagarDeuda",
-                            "pending": "http://127.0.0.1:8000/pagarDeuda"
-                            },
-                "auto_return": "approved"
-
-        }
+                    "unit_price": 75.56  
+                }]
+                }
         
         preference_response = sdk.preference().create(preference_data)
         #preference = preference_response["response"]
