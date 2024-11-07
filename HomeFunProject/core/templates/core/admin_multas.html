@@ -172,7 +172,7 @@
     <br>
     <br><br>
     <div class="container my-3 bg-dark text-white rounded-3">
-        <p class="text-md-center text-light fs-3">Tipos de Multas</p>
+        <p class="text-md-center text-light fs-3">Multas</p>
     </div>
     <br>
 
@@ -200,6 +200,7 @@
                                         <th style="width:15%;">Fecha Ingreso</th>
                                         <th style="width:10%;">Estado</th>
                                         <th style="width:10%;">Valor</th>
+                                        <th style="width:10%;">Tipo multa</th>
                                         <th style="width:10%;">Acciones</th>
                                     </tr>
                                 </thead>
@@ -210,10 +211,12 @@
                                     <tr>
                                         <td>{{m.id_multa}}</td>
                                         <td>{{m.descripcion}}</td>
-                                        <td>{{m.monto}}</td>
+                                        <td>{{m.tipo.monto}}</td>
                                         <td>{{m.fecha_ingreso}}</td>
                                         <td>{{m.estado_multa}}</td>
                                         <td>{{m.id_dpto}}</td>
+                                        <td>{{m.tipo.descripcion}}</td>
+
                                         <td>
                                             <div class="dropdown">
                                                 <button class="btn btn-secondary dropdown-toggle" type="button"

@@ -191,6 +191,9 @@ class TipoMulta(models.Model):
     monto = models.IntegerField(verbose_name='Monto de la Multa')
     estado_t_multa =models.ForeignKey('EstadoTipoMulta', on_delete=models.PROTECT, verbose_name='Estado de la Multa')
 
+    def __str__(self):
+        return self.descripcion
+
 
 # MULTA
 class Multa(models.Model):

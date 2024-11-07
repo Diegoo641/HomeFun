@@ -43,7 +43,7 @@ class CrearMultaForm(forms.ModelForm):
   fecha_ingreso = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
   class Meta:
     model = Multa
-    fields=['descripcion','fecha_ingreso','id_dpto','estado_multa']
+    fields=['descripcion','fecha_ingreso','id_dpto','estado_multa','tipo']
     
     
 class GenerarMultaForm(forms.ModelForm):
