@@ -5,7 +5,8 @@ from core.views import home , registro,agregar_administrador, modificar_res_espa
     admin_cuentas,crear_cuenta,desactivarCuenta,activarCuenta, modificar_cuenta, admin_multas , modificar_multa ,\
     crear_multa,cancelarMulta,pagarMulta,eliminarMulta,admin_tipo_gasto_comun, admin_ficha_residentes, visualizar_morosidad,\
     pagarDeuda,crear_tipo_gasto_comun,activarTipoGastoComun,desactivarTipoGastoComun, Multas, generar_multa,modificar_tipo_gasto_comun,\
-    admin_ficha_residentes,modificar_ficha_residente,activarFichaResidente,desactivarFichaResidente
+    admin_ficha_residentes,modificar_ficha_residente,activarFichaResidente,desactivarFichaResidente,admin_tipo_multas,\
+    crear_tipo_multa, modificar_tipo_multa, eliminarTipoMulta
 
 
 urlpatterns = [
@@ -50,6 +51,10 @@ urlpatterns = [
     path('modificar_ficha_residente/<id>/', modificar_ficha_residente, name="modificar_ficha_residente"),
     path('activarFichaResidente/<id>/',activarFichaResidente,name="activarFichaResidente"),
     path('desactivarFichaResidente/<id>/',desactivarFichaResidente,name="desactivarFichaResidente"),
+    path('admin_tipo_multas', admin_tipo_multas, name="admin_tipo_multas"),
+    path('crear_tipo_multa', crear_tipo_multa, name="crear_tipo_multa"),
+    path('modificar_tipo_multa/<id>/', modificar_tipo_multa, name="modificar_tipo_multa"),
+    path('eliminarTipoMulta/<id>/',eliminarTipoMulta,name="eliminarTipoMulta"),
 
 
 

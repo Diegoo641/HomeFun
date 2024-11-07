@@ -516,17 +516,13 @@ def desactivarTipoGastoComun(request, id):
 def activarTipoGastoComun(request, id):
     gasto_comun = get_object_or_404(TipoGastoComun, id_t_gc=id)
     if request.method == 'POST':
-        # Cambiar el estado del espacio común a "eliminado"
-        estado_activado = get_object_or_404(Estado_T_GC, id_est_t_gc=1)  # Get the Estado_EC instance with ID 4
+        estado_activado = get_object_or_404(Estado_T_GC, id_est_t_gc=1)  
         gasto_comun.estado_t_gc = estado_activado
-        gasto_comun.save()  # Guardar los cambios
+        gasto_comun.save() 
         messages.success(request, "Tipo de gasto comu activado")
         return redirect(to="admin_tipo_gasto_comun")
-
-    # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
     return render(request, 'core/admin_tipo_gasto_comun.html', {
-        'form': EspacioComunForm(instance=gasto_comun)
-    })
+        'form': EspacioComunForm(instance=gasto_comun)})
     
 def modificar_tipo_gasto_comun(request, id):
     tipo_gasto = TipoGastoComun.objects.get(id_t_gc=id)
@@ -573,8 +569,7 @@ def modificar_ficha_residente(request, id):
 def desactivarFichaResidente(request, id):
     residente = get_object_or_404(FichaResidente, id_residente=id)
     if request.method == 'POST':
-        # Cambiar el estado del espacio común a "eliminado"
-        estado_eliminado = get_object_or_404(Estado_residente, id_est_r=2)  # Get the Estado_EC instance with ID 4
+        estado_eliminado = get_object_or_404(Estado_residente, id_est_r=2)
         residente.estado = estado_eliminado
         residente.save()  # Guardar los cambios
         messages.success(request, "Tipo de gasto comu desactivado")
@@ -587,7 +582,6 @@ def desactivarFichaResidente(request, id):
 def activarFichaResidente(request, id):
     residente = get_object_or_404(FichaResidente, id_residente=id)
     if request.method == 'POST':
-        # Cambiar el estado del espacio común a "eliminado"
         estado_activado = get_object_or_404(Estado_residente, id_est_r=1)  
         residente.estado = estado_activado
         residente.save()  # Guardar los cambios
@@ -598,3 +592,61 @@ def activarFichaResidente(request, id):
         'form': EspacioComunForm(instance=residente)
     })
     
+
+@user_passes_test(es_superusuario_o_staff)
+def admin_tipo_multas(request):
+    multa = Multa.objects.all()
+    datos = {
+        'multa': multa
+    }
+    return render(request, 'core/admin_tipo_multas.html', datos)
+
+
+def crear_tipo_multa(request):
+    datos = {
+        'form': CrearMultaForm()
+    }
+    if request.method == 'POST':
+        formulario = CrearMultaForm(data= request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request,"Cuenta creada correctamente")
+            datos['mensaje'] = "Guardados Correctamente"
+            return redirect(to="admin_multas")
+        else:
+            print("Error")
+    return render(request, 'core/crear_multa.html',datos) 
+
+
+def modificar_tipo_multa(request, id):
+    multa = Multa.objects.get(id_multa=id)
+    datos = {
+        'form': ModificarMultaForm(instance=multa)
+    }
+    if request.method == 'POST':
+        formulario = ModificarMultaForm(data= request.POST, instance= multa)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Multa modificada correctamente")
+            return redirect(to="admin_multas")
+        datos = {
+            'form': ModificarMultaForm(instance=multa),
+            'mensaje': "Modificado correctamente"
+        }
+
+    return render(request, 'core/modificar_multa.html', datos)
+
+
+
+def eliminarTipoMulta(request, id):
+    multa = Multa.objects.get(id_multa=id)
+    print(multa)
+    if request.method == 'POST':
+        estado_pagado = get_object_or_404(EstadoMulta, id_est_multa=4)  
+        multa.estado_multa = estado_pagado
+        multa.save()
+        messages.success(request, "Multa Eliminada")
+        return redirect(to="admin_multas")
+
+    return render(request, 'core/admin_multas.html', {
+        'form': CrearMultaForm(instance=multa)})
