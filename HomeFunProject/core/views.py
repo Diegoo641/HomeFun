@@ -8,7 +8,7 @@ from django.contrib.auth.models import Permission
 from core.form import CrearMultaForm, GenerarMultaForm,CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
     CrearReservaEspacioComunForm, ModificarFichaResidenteForm, ModificarTipoGastoComunForm,ModificarUsuarioForm, ModificarMultaForm, CrearTipoGastoComunForm
 from core.models import Estado_T_GC, FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun,Multa,EstadoMulta,\
-TipoGastoComun, Estado_residente
+TipoGastoComun, Estado_residente, TipoMulta
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .controller import Controller
@@ -595,7 +595,7 @@ def activarFichaResidente(request, id):
 
 @user_passes_test(es_superusuario_o_staff)
 def admin_tipo_multas(request):
-    multa = Multa.objects.all()
+    multa = TipoMulta.objects.all()
     datos = {
         'multa': multa
     }

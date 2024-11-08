@@ -195,12 +195,9 @@
                                 <thead>
                                     <tr>
                                         <th style="width:5%;">ID</th>
-                                        <th style="width:15%;">Departamento</th>
+                                        <th style="width:15%;">Descripción</th>
                                         <th style="width:15%;">Valor</th>
-                                        <th style="width:15%;">Fecha Ingreso</th>
                                         <th style="width:10%;">Estado</th>
-                                        <th style="width:10%;">Valor</th>
-                                        <th style="width:10%;">Tipo multa</th>
                                         <th style="width:10%;">Acciones</th>
                                     </tr>
                                 </thead>
@@ -211,11 +208,8 @@
                                     <tr>
                                         <td>{{m.id_multa}}</td>
                                         <td>{{m.descripcion}}</td>
-                                        <td>{{m.tipo.monto}}</td>
-                                        <td>{{m.fecha_ingreso}}</td>
-                                        <td>{{m.estado_multa}}</td>
-                                        <td>{{m.id_dpto}}</td>
-                                        <td>{{m.tipo.descripcion}}</td>
+                                        <td>$ {{m.monto}}</td>
+                                        <td>{{m.estado_t_multa}}</td>
 
                                         <td>
                                             <div class="dropdown">

@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 from django import forms
 from .validators import TamañoImagenValidator
-from .models import FichaResidente , EspacioComun, ReservaEspComun, Multa, TipoGastoComun
+from .models import FichaResidente , EspacioComun, ReservaEspComun, Multa, TipoGastoComun, TipoMulta
 
 class CrearCuentaUsuario (forms.ModelForm):
    correo = forms.EmailField()
@@ -76,6 +76,18 @@ class ModificarFichaResidenteForm (forms.ModelForm):
    class Meta:
     model = FichaResidente
     fields=["nombre","apellido","correo","direccion","genero","comuna","estado_civil"]
+
+
+class CrearTipoMultaForm(forms.ModelForm):
+  class Meta:
+    model = TipoMulta
+    fields=['descripcion','monto','estado_t_multa']
+    
+
+class ModificarMultaForm(forms.ModelForm):
+  class Meta:
+    model = TipoMulta
+    fields=['descripcion']
 
 
 
