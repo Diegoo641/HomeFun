@@ -5,9 +5,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
-from core.form import CrearMultaForm, GenerarMultaForm,CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
-    CrearReservaEspacioComunForm, ModificarFichaResidenteForm, ModificarTipoGastoComunForm,ModificarUsuarioForm, ModificarMultaForm, CrearTipoGastoComunForm
-from core.models import Estado_T_GC, FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun,Multa,EstadoMulta,\
+from core.form import CrearMultaForm, CrearTipoMultaForm, GenerarMultaForm,CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
+    CrearReservaEspacioComunForm, ModificarFichaResidenteForm, ModificarTipoGastoComunForm, ModificarTipoMultaForm,ModificarUsuarioForm, ModificarMultaForm, CrearTipoGastoComunForm
+from core.models import Estado_T_GC, EstadoTipoMulta, FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun,Multa,EstadoMulta,\
 TipoGastoComun, Estado_residente, TipoMulta
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -595,58 +595,70 @@ def activarFichaResidente(request, id):
 
 @user_passes_test(es_superusuario_o_staff)
 def admin_tipo_multas(request):
-    multa = TipoMulta.objects.all()
+    tipo_multa = TipoMulta.objects.all()
     datos = {
-        'multa': multa
+        'tipo_multa': tipo_multa
     }
     return render(request, 'core/admin_tipo_multas.html', datos)
 
 
 def crear_tipo_multa(request):
     datos = {
-        'form': CrearMultaForm()
+        'form': CrearTipoMultaForm()
     }
     if request.method == 'POST':
-        formulario = CrearMultaForm(data= request.POST)
+        formulario = CrearTipoMultaForm(data= request.POST)
         if formulario.is_valid():
             formulario.save()
             messages.success(request,"Cuenta creada correctamente")
             datos['mensaje'] = "Guardados Correctamente"
-            return redirect(to="admin_multas")
+            return redirect(to="admin_tipo_multas")
         else:
             print("Error")
-    return render(request, 'core/crear_multa.html',datos) 
+    return render(request, 'core/crear_tipo_multa.html',datos) 
 
 
 def modificar_tipo_multa(request, id):
-    multa = Multa.objects.get(id_multa=id)
+    tipo_multa = TipoMulta.objects.get(id_t_multa=id)
     datos = {
-        'form': ModificarMultaForm(instance=multa)
+        'form': ModificarTipoMultaForm(instance=tipo_multa)
     }
     if request.method == 'POST':
-        formulario = ModificarMultaForm(data= request.POST, instance= multa)
+        formulario = ModificarMultaForm(data= request.POST, instance= tipo_multa)
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Multa modificada correctamente")
-            return redirect(to="admin_multas")
+            return redirect(to="admin_tipo_multas")
         datos = {
-            'form': ModificarMultaForm(instance=multa),
+            'form': ModificarTipoMultaForm(instance=tipo_multa),
             'mensaje': "Modificado correctamente"
         }
 
-    return render(request, 'core/modificar_multa.html', datos)
+    return render(request, 'core/modificar_tipo_multa.html', datos)
 
 
 
-def eliminarTipoMulta(request, id):
-    multa = Multa.objects.get(id_multa=id)
-    print(multa)
+def desactivarTipoMulta(request, id):
+    tipo_multa = get_object_or_404(TipoMulta, id_t_multa=id)
     if request.method == 'POST':
-        estado_pagado = get_object_or_404(EstadoMulta, id_est_multa=4)  
-        multa.estado_multa = estado_pagado
-        multa.save()
-        messages.success(request, "Multa Eliminada")
-        return redirect(to="admin_multas")
+        # Cambiar el estado del espacio común a "eliminado"
+        estado_desactivado = get_object_or_404(EstadoTipoMulta, id_est_t_multa=2)  # Get the Estado_EC instance with ID 4
+        tipo_multa.estado_t_multa = estado_desactivado
+        tipo_multa.save()  # Guardar los cambios
+        messages.success(request, "Tipo de multa desactivado")
+        return redirect(to="admin_tipo_multas")
 
-    return render(request, 'core/admin_multas.html', {
-        'form': CrearMultaForm(instance=multa)})
+    # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
+    return render(request, 'core/admin_tipo_multas.html', {
+        'form': CrearTipoMultaForm(instance=tipo_multa)})
+
+def activarTipoMulta(request, id):
+    tipo_multa = get_object_or_404(TipoMulta, id_t_multa=id)
+    if request.method == 'POST':
+        estado_activado = get_object_or_404(EstadoTipoMulta, id_est_t_multa=1)
+        tipo_multa.estado_t_multa = estado_activado
+        tipo_multa.save() 
+        messages.success(request, "Tipo de gasto comu activado")
+        return redirect(to="admin_tipo_gasto_comun")
+    return render(request, 'core/admin_tipo_gasto_comun.html', {
+        'form': CrearTipoMultaForm(instance=tipo_multa)})

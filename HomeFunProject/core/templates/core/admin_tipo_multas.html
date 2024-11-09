@@ -74,10 +74,11 @@
 
 
 <script>
-    function cancelarMulta(id) {
+
+    function desactivarTipoMulta(id) {
         Swal.fire({
-            "title": "¿Deseas cancelar la multa?",
-            "text": "El espacio comun quedara con estado 'Eliminado'",
+            "title": "¿Deseas eliminar este Tipo de multa?",
+            "text": "El Tipo de multa quedara con estado 'Desactivado'",
             "icon": "question",
             "showCancelButton": true,
             "cancelButtonText": "No, cancelar",
@@ -90,7 +91,7 @@
                     // Cambiar a un método POST para eliminar el espacio
                     const form = document.createElement('form');
                     form.method = 'POST';
-                    form.action = "http://127.0.0.1:8000/cancelarMulta/" + id + "/";
+                    form.action = "http://127.0.0.1:8000/desactivarTipoMulta/" + id + "/";
                     const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
                     const csrfInput = document.createElement('input');
                     csrfInput.type = 'hidden';
@@ -103,10 +104,10 @@
             });
     }
 
-    function pagarMulta(id) {
+    function activarTipoMulta(id) {
         Swal.fire({
-            "title": "¿Deseas habilitar este Espacio Comun?",
-            "text": "El espacio comun quedara con estado 'Eliminado'",
+            "title": "¿Deseas habilitar este Tipo de Multa?",
+            "text": "El Tipo de multa quedara con estado 'Activado'",
             "icon": "question",
             "showCancelButton": true,
             "cancelButtonText": "No, cancelar",
@@ -119,48 +120,21 @@
                     // Cambiar a un método POST para eliminar el espacio
                     const form = document.createElement('form');
                     form.method = 'POST';
-                    form.action = "http://127.0.0.1:8000/pagarMulta/" + id + "/";
-                    const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
+                    form.action = "http://127.0.0.1:8000/activarTipoMulta/" + id + "/";
+                    const csrfToken = '{{ csrf_token }}'; 
                     const csrfInput = document.createElement('input');
                     csrfInput.type = 'hidden';
                     csrfInput.name = 'csrfmiddlewaretoken';
                     csrfInput.value = csrfToken;
                     form.appendChild(csrfInput);
                     document.body.appendChild(form);
-                    form.submit(); // Enviar el formulario
-                }
-            });
-    }
-
-    function eliminarMulta(id) {
-        Swal.fire({
-            "title": "¿Deseas eliminar la multa?",
-            "text": "La multa quedara con estado 'Eliminado'",
-            "icon": "question",
-            "showCancelButton": true,
-            "cancelButtonText": "No, cancelar",
-            "confirmButtonText": "Si, Aceptar",
-            "reverseButtons": true,
-            "confirmButtonColor": "#dc3545"
-        })
-            .then(function (result) {
-                if (result.isConfirmed) {
-                    // Cambiar a un método POST para eliminar el espacio
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = "http://127.0.0.1:8000/eliminarMulta/" + id + "/";
-                    const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
-                    const csrfInput = document.createElement('input');
-                    csrfInput.type = 'hidden';
-                    csrfInput.name = 'csrfmiddlewaretoken';
-                    csrfInput.value = csrfToken;
-                    form.appendChild(csrfInput);
-                    document.body.appendChild(form);
-                    form.submit(); // Enviar el formulario
+                    form.submit(); 
                 }
             });
     }
 </script>
+
+
 
 {% endblock %}
 
@@ -183,7 +157,7 @@
                 <div class="title">
                     <div class="table-responsive text-end">
                         <button class="btn btn-primary">
-                            <a class="a text-light fs-6" href="http://127.0.0.1:8000/crear_multa">
+                            <a class="a text-light fs-6" href="http://127.0.0.1:8000/crear_tipo_multa">
                                 Crear Multa
                             </a>
                         </button>
@@ -203,13 +177,13 @@
                                 </thead>
                                 <tbody>
 
-                                    {% for m in multa %}
+                                    {% for tm in tipo_multa %}
 
                                     <tr>
-                                        <td>{{m.id_multa}}</td>
-                                        <td>{{m.descripcion}}</td>
-                                        <td>$ {{m.monto}}</td>
-                                        <td>{{m.estado_t_multa}}</td>
+                                        <td>{{tm.id_t_multa}}</td>
+                                        <td>{{tm.descripcion}}</td>
+                                        <td>$ {{tm.monto}}</td>
+                                        <td>{{tm.estado_t_multa}}</td>
 
                                         <td>
                                             <div class="dropdown">
@@ -220,42 +194,41 @@
                                                 </button>
 
                                                 <!-- Menú desplegable -->
-                                                {% if m.estado_multa.descripcion == "Pendiente" %}
+                                                {% if tm.estado_t_multa.descripcion == "Inactivo" %}
 
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
                                                     <li>
                                                         <a class="dropdown-item action-item"
-                                                            href="http://127.0.0.1:8000/modificar_multa/{{m.id_multa}}">Modificar
+                                                            href="http://127.0.0.1:8000/modificar_tipo_gasto_comun/{{tm.id_t_multa}}">Modificar
                                                         </a>
                                                     </li>
 
                                                     <li>
                                                         <a class="dropdown-item action-item" href="#"
-                                                            onclick="pagarMulta({{ m.id_multa }})">
-                                                            pagar
+                                                            onclick="activarTipoMulta({{ tm.id_t_multa }})">
+                                                            Activar
                                                         </a>
                                                     </li>
-                                                    <li>
-                                                        <a class="dropdown-item action-item" href="#"
-                                                            onclick="cancelarMulta({{ m.id_multa }})">
-                                                            Cancelar
-                                                        </a>
-                                                    </li>
-
-                                                    
+                                        
 
                                                 </ul>
                                                 {% else %}
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                                               
+                                                    <li>
+                                                        <a class="dropdown-item action-item"
+                                                            href="http://127.0.0.1:8000/modificar_tipo_gasto_comun/{{tm.id_t_multa}}">Modificar
+                                                        </a>
+                                                    </li>
+
                                                     <li>
                                                         <a class="dropdown-item action-item" href="#"
-                                                            onclick="eliminarMulta({{ m.id_multa }})">
-                                                            Eliminar
+                                                            onclick="desactivarTipoMulta({{ tm.id_t_multa}})">
+                                                            Desactivar
                                                         </a>
-                                               </li>
+                                                    </li>
+                                        
 
                                                 </ul>
                                                 {% endif %}

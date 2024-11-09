@@ -84,10 +84,10 @@ class CrearTipoMultaForm(forms.ModelForm):
     fields=['descripcion','monto','estado_t_multa']
     
 
-class ModificarMultaForm(forms.ModelForm):
+class ModificarTipoMultaForm(forms.ModelForm):
   class Meta:
     model = TipoMulta
-    fields=['descripcion']
+    fields=['descripcion','monto']
 
 
 
