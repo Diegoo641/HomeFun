@@ -161,6 +161,7 @@ class GastoComun(models.Model):
     nombre = models.CharField(max_length=100, verbose_name='Nombre del Gasto Común')
     fecha = models.DateField(verbose_name='Fecha del gasto comun.')
     total = models.IntegerField(verbose_name='Total')
+    consumo = models.IntegerField(verbose_name='Total', null=True,blank=True)
     id_dpto = models.ForeignKey(CasaDepto, on_delete=models.PROTECT, verbose_name='Departamento Asociado')
     estado_gc = models.ForeignKey('Estado_GC', on_delete=models.PROTECT, verbose_name='Estado del Gasto Común')
     tipo = models.ForeignKey('TipoGastoComun', on_delete=models.PROTECT, verbose_name='Tipo del Gasto Común')
