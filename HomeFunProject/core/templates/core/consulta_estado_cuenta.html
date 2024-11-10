@@ -285,7 +285,7 @@
                                         <th style="width:5%;">ID</th>
                                         <th style="width:15%;">Descricion</th>
                                         <th style="width:15%;">Servicio</th>
-                                        <th style="width:15%;">Monto</th>
+                                        <th style="width:15%;">Estado</th>
                                         <th style="width:10%;">RUT</th>
                                         <th style="width:10%;">Depto</th>
                                         <th style="width:10%;">Consumo</th>
@@ -328,12 +328,12 @@
 
                                     <tr>
                                         <td>{{gc.id_gc}}</td>
-                                        <td>{{gc.nombre}}</td>
-                                        <td>{{gc.tipo.nombre}}</td>
+                                        <td>{{gc.nombre}} {{ gc.fecha|date:"F" }}</td>
+                                        <td>{{gc.tipo.nombre}} </td>
                                         <td>{{gc.estado_gc}}</td>
                                         <td>{{gc.id_dpto.id_residente.rut}}</td>
                                         <td>{{gc.id_dpto}}</td>
-                                        <td>{{gc.consumo}}</td>
+                                        <td>{{gc.consumo}} {{gc.tipo.medida}}</td>
                                         <td>{{gc.total}}</td>
                                         <td>
                                             <div class="dropdown">
