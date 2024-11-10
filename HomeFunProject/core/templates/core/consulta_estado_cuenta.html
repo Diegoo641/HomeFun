@@ -163,7 +163,7 @@
     <br>
     <br><br>
     <div class="container my-3 bg-dark text-white rounded-3">
-        <p class="text-md-center text-light fs-3"> Administracion de espacios comunes</p>
+        <p class="text-md-center text-light fs-3"> Gastos comunes</p>
     </div>
     <br>
 
@@ -283,12 +283,13 @@
                                 <thead>
                                     <tr>
                                         <th style="width:5%;">ID</th>
-                                        <th style="width:15%;">Nombre</th>
-                                        <th style="width:15%;">Descripcion</th>
-                                        <th style="width:15%;">Ubicación</th>
-                                        <th style="width:10%;">Estado</th>
-                                        <th style="width:10%;">Valor</th>
-                                        <th style="width:15%;">Comunidad</th>
+                                        <th style="width:15%;">Descricion</th>
+                                        <th style="width:15%;">Servicio</th>
+                                        <th style="width:15%;">Monto</th>
+                                        <th style="width:10%;">RUT</th>
+                                        <th style="width:10%;">Depto</th>
+                                        <th style="width:10%;">Consumo</th>
+                                        <th style="width:15%;">Total</th>
                                         <th style="width:10%;">Acciones</th>
                                     </tr>
                                 </thead>
@@ -328,11 +329,12 @@
                                     <tr>
                                         <td>{{gc.id_gc}}</td>
                                         <td>{{gc.nombre}}</td>
-                                        <td>{{gc.monto}}</td>
-                                        <td>{{gc.estado_gc.descripcion}}</td>
+                                        <td>{{gc.tipo.nombre}}</td>
+                                        <td>{{gc.estado_gc}}</td>
                                         <td>{{gc.id_dpto.id_residente.rut}}</td>
                                         <td>{{gc.id_dpto}}</td>
-                                        <td>{{gc.id_comunidad.nombre}}</td>
+                                        <td>{{gc.consumo}}</td>
+                                        <td>{{gc.total}}</td>
                                         <td>
                                             <div class="dropdown">
                                                 <button class="btn btn-secondary dropdown-toggle" type="button"

@@ -150,6 +150,7 @@ class TipoGastoComun(models.Model):
     nombre = models.CharField(max_length=100, verbose_name='Nombre del Gasto Común')
     monto =models.IntegerField(verbose_name='Monto del gasto')
     reajuste = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Reajuste del Gasto Común')
+    medida =models.CharField(max_length=100, verbose_name='Medida',blank=True,null=True)
     estado_t_gc = models.ForeignKey('Estado_T_GC', on_delete=models.PROTECT, verbose_name='Estado del Tipo de Gasto Común')
 
     def __str__(self):
