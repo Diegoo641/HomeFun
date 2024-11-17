@@ -12,6 +12,12 @@ TipoGastoComun, Estado_residente, TipoMulta
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .controller import Controller
+
+
+total = 0
+pagar=[]
+
+
 def es_superusuario_o_staff(user):
     return user.is_superuser or user.is_staff
 
@@ -71,6 +77,7 @@ def admin_espacios_comunes(request):
     return render(request, 'core/admin_espacios_comunes.html', datos)
 
 def consulta_estado_cuenta(request):
+    seleccionados = request.session.get('seleccionados', [])
     rut_usuario = request.user.username  # Asumiendo que el nombre de usuario es el RUT
     # Filtrar los gastos comunes según el 'rut'
     residente = FichaResidente.objects.filter(rut=rut_usuario).first()
@@ -84,6 +91,8 @@ def consulta_estado_cuenta(request):
     datos = {
         'gasto_comun': gasto_comun,
         'preference_id':'',
+        'seleccionados': seleccionados,
+        'total': request.session.get('total', 0),
     }
     
 
@@ -662,3 +671,48 @@ def activarTipoMulta(request, id):
         return redirect(to="admin_tipo_gasto_comun")
     return render(request, 'core/admin_tipo_gasto_comun.html', {
         'form': CrearTipoMultaForm(instance=tipo_multa)})
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+@csrf_exempt
+def agregarPago(request, id):
+    if request.method == 'POST':
+        try:
+            gasto = GastoComun.objects.get(id_gc=id)
+            # Obtener la lista actual de seleccionados desde la sesión
+            seleccionados = request.session.get('seleccionados', [])
+            
+            # Añadir el gasto si no está en la lista
+            if id not in seleccionados:
+                seleccionados.append(id)
+                request.session['seleccionados'] = seleccionados
+                
+            total_actual = request.session.get('total', 0)
+            request.session['total'] = total_actual + gasto.total
+            return JsonResponse({'total': request.session['total']}, status=200)
+        except GastoComun.DoesNotExist:
+            return JsonResponse({'error': 'Gasto no encontrado'}, status=404)
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+@csrf_exempt
+def removerPago(request, id):
+    if request.method == 'POST':
+        try:
+            gasto = GastoComun.objects.get(id_gc=id)
+            # Obtener la lista actual de seleccionados desde la sesión
+            seleccionados = request.session.get('seleccionados', [])
+            
+            # Eliminar el gasto de la lista
+            if id in seleccionados:
+                seleccionados.remove(id)
+                request.session['seleccionados'] = seleccionados
+            
+            total_actual = request.session.get('total', 0)
+            request.session['total'] = max(0, total_actual - gasto.total)  # Evitar negativos
+            return JsonResponse({'total': request.session['total']}, status=200)
+        except GastoComun.DoesNotExist:
+            return JsonResponse({'error': 'Gasto no encontrado'}, status=404)
+    return JsonResponse({'error': 'Método no permitido'}, status=405)

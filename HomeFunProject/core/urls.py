@@ -6,7 +6,7 @@ from core.views import home , registro,agregar_administrador, modificar_res_espa
     crear_multa,cancelarMulta,pagarMulta,eliminarMulta,admin_tipo_gasto_comun, admin_ficha_residentes, visualizar_morosidad,\
     pagarDeuda,crear_tipo_gasto_comun,activarTipoGastoComun,desactivarTipoGastoComun, Multas, generar_multa,modificar_tipo_gasto_comun,\
     admin_ficha_residentes,modificar_ficha_residente,activarFichaResidente,desactivarFichaResidente,admin_tipo_multas,\
-    crear_tipo_multa, modificar_tipo_multa, activarTipoMulta, desactivarTipoMulta
+    crear_tipo_multa, modificar_tipo_multa, activarTipoMulta, desactivarTipoMulta, agregarPago,removerPago
 
 
 urlpatterns = [
@@ -56,6 +56,8 @@ urlpatterns = [
     path('modificar_tipo_multa/<id>/', modificar_tipo_multa, name="modificar_tipo_multa"),
     path('activarTipoMulta/<id>/',activarTipoMulta,name="activarTipoMulta"),
     path('desactivarTipoMulta/<id>/',desactivarTipoMulta,name="desaactivarTipoMulta"),
+    path('agregar_pago/<int:id>/', agregarPago, name='agregar_pago'),
+    path('remover_pago/<int:id>/', removerPago, name='remover_pago'),
 
 
 
