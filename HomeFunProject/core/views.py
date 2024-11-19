@@ -848,6 +848,20 @@ def cancelarReservaEspacioComunRes(request, id):
         estado_eliminado = get_object_or_404(Estado_R_EC, id_est_r_ec=2)  # Get the Estado_EC instance with ID 4
         resEspacioComun.estado_reserva = estado_eliminado
         resEspacioComun.save()  # Guardar los cambios
+        resEspacioComun = ReservaEspComun.objects.get(id_reserva_esp_comun=id)
+        messages.success(request,"Espacio comun registrado correctamente")
+        datos={}
+        datos['mensaje'] = "Guardados Correctamente"
+        rut_usuario = request.user.username  # Asumiendo que el nombre de usuario es el RUT
+        # Filtrar los gastos comunes según el 'rut'
+        residente = FichaResidente.objects.filter(rut=rut_usuario).first()
+        contenido = "¡¡¡Le informamos que su reserva se ha sido cancelada!!!\n\n Datos de reserva:\n Descripcion : {} \n Fecha : {} \n Hora: {}\n Espacio comun: {} \n Para revisar el detalle ingresar a la siguiente URL\n http://127.0.0.1:8000/res_espacios_comunes \nDesde ya muchas gracias.\nSaludos".format(resEspacioComun.descripcion,resEspacioComun.fecha,resEspacioComun.hora,resEspacioComun.id_espacio_comun)
+        email = EmailMessage("Reservas HomeFun",
+                             "Hola! {} :\n\n {}".format(residente.nombre, contenido),
+                             '',
+                             [residente.correo],
+                             reply_to=[residente.correo])
+        email.send()
         messages.success(request, "Espacio Común Eliminado")
         return redirect(to="res_espacios_comunes")
 
@@ -866,6 +880,20 @@ def modificar_res_espacio_comun_res(request, id):
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Reserva modificada correctamente")
+            formulario.save()
+            resEspacioComun = ReservaEspComun.objects.get(id_reserva_esp_comun=id)
+            messages.success(request,"Espacio comun registrado correctamente")
+            datos['mensaje'] = "Guardados Correctamente"
+            rut_usuario = request.user.username  # Asumiendo que el nombre de usuario es el RUT
+            # Filtrar los gastos comunes según el 'rut'
+            residente = FichaResidente.objects.filter(rut=rut_usuario).first()
+            contenido = "¡¡¡Le informamos que su reserva se ha Modificado de manera correcta!!!\n\n Datos de reserva:\n Descripcion : {} \n Fecha : {} \n Hora: {}\n Espacio comun: {} \n Para revisar el detalle ingresar a la siguiente URL\n http://127.0.0.1:8000/res_espacios_comunes \nDesde ya muchas gracias.\nSaludos".format(resEspacioComun.descripcion,resEspacioComun.fecha,resEspacioComun.hora,resEspacioComun.id_espacio_comun)
+            email = EmailMessage("Reservas HomeFun",
+                                 "Hola! {} :\n\n {}".format(residente.nombre, contenido),
+                                 '',
+                                 [residente.correo],
+                                 reply_to=[residente.correo])
+            email.send()
             return redirect(to="res_espacios_comunes")
         datos = {
             'form': ModReservaEspacioComunForm(instance=resEspacioComun),
@@ -882,15 +910,23 @@ def crear_res_espacio_comun_res(request):
         formulario = CrearReservaEspacioComunForm(data= request.POST)
         if formulario.is_valid():
             formulario.cleaned_data["estado_reserva"]
+            descripcion = formulario.cleaned_data["descripcion"]
+            fecha = formulario.cleaned_data["fecha"]
+            hora = formulario.cleaned_data["hora"]
+            espacio_comun = formulario.cleaned_data["id_espacio_comun"]
+
             formulario.save()
             messages.success(request,"Espacio comun registrado correctamente")
             datos['mensaje'] = "Guardados Correctamente"
-            contenido = "¡¡¡Le informamos que su postulación fue aceptada!!!\n\n Para continuar con el proceso, dirigase a nuestras oficinas en:\n  Av. Concha y Toro 1820, 8152857 Puente Alto, Región Metropolitana. \n\n\n ¡Estamos ansiosos de trabajar trabajar con usted! \n Ingrese al siuiente link :\n http://127.0.0.1:8000/accounts/login/ \n\nNombre de usuario : {} \n\n Contraseña : 12345\n\n\n Atte.,\n Dirección de Recursos Humanos. \n Puente Alto.".format('Diego')
-            email = EmailMessage("Municipalidad de Puente Alto",
-                                 "Hola! {} :\n\n {}".format('Diego', contenido),
+            rut_usuario = request.user.username  # Asumiendo que el nombre de usuario es el RUT
+            # Filtrar los gastos comunes según el 'rut'
+            residente = FichaResidente.objects.filter(rut=rut_usuario).first()
+            contenido = "¡¡¡Le informamos que su reserva se ha realizado de manera correcta!!!\n\n Datos de reserva:\n Descripcion : {} \n Fecha : {}\n Hora: {}\n Espacio comun: {} \n Para revisar el detalle ingresar a la siguiente URL\n http://127.0.0.1:8000/res_espacios_comunes \nDesde ya muchas gracias.\nSaludos".format(descripcion,fecha,hora,espacio_comun)
+            email = EmailMessage("Reservas HomeFun",
+                                 "Hola! {} :\n\n {}".format(residente.nombre, contenido),
                                  '',
-                                 ['diegoaraya641@gmail.com'],
-                                 reply_to=['diegoaraya641@gmail.com'])
+                                 [residente.correo],
+                                 reply_to=[residente.correo])
             email.send()
             return redirect(to="res_espacios_comunes")
         else:
