@@ -41,6 +41,7 @@
             transition: transform 0.3s ease;
             box-shadow: 0 0 20px rgba(18, 159, 211, 0.5);
             overflow-x: hidden;
+            
         }
 
         .card {
@@ -77,21 +78,22 @@
 
   
 <div class="row">
-    <div class="col-md-11">
+    <div class="col-md-12">
         <div class="container my-3 bg-dark text-white rounded-3">
             <div class="d-flex justify-content-between align-items-center">
                 <p class="text-light fs-3 mb-0 mx-auto text-center">Módulos Administrador</p>
+                <i class="fas fa-question-circle" style="color: white; font-size: 28px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#helpModal"></i>
             </div>
         </div>
     </div>
 
-    <div class="col-md-1">    
+    {% comment %} <div class="col-md-1">    
         <div class="d-flex justify-content-end align-items-center h-100">
             <div style="padding-right: 20px;"> <!-- Ajusta el padding según sea necesario -->
                 <i class="fas fa-question-circle" style="color: black; font-size: 28px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#helpModal"></i>
             </div>
         </div>
-    </div>
+    </div> {% endcomment %}
 </div>
 
 
@@ -177,8 +179,8 @@
           </div>
       </div>
   </div>
+  <br>
 </div>
-
 
 <div id="whatsapp-button" class="whatsapp-float">
     <a href="https://api.whatsapp.com/send?phone=56949052463&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Risi.cl." class="floatWapp" target="_blank">
@@ -187,6 +189,151 @@
     </a>
     <button class="close-btn" onclick="closeWhatsAppButton()">×</button>
   </div>
+
+<!-- Modal de ayuda -->
+<div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white"> <!-- Cambia bg-primary por el color que desees -->
+                <h5 class="modal-title text-center" id="helpModalLabel">
+                    <i class="fa-solid fa-users-gear me-2"></i> Fun Ayuda - Descripcion de cada tarjeta
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5 ms-auto">
+                        <div class="card w-75">
+                            <div class="card-body">
+                              {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                              <p class="card-text">
+                                <img src="{% static "core/img/T_Esp_comun.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ms-auto me-3">
+                        <div class="card w-90">
+                            <div class="card-body">
+                              <h5 class="card-title">Descripcion Tarjeta Espacios comunes</h5>
+                              <p class="card-text">Al dar clic sobre esta tarjeta en ver información, el sistema te dirigirá a la vista donde podrás visualizar/crear/editar/eliminar espacios comunes. También, descargar la información que ves por pantalla.</p>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-md-5 ms-auto">
+                        <div class="card w-75">
+                            <div class="card-body">
+                              {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                              <p class="card-text">
+                                <img src="{% static "core/img/T_Crear_usuario.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ms-auto me-3">
+                        <div class="card w-90">
+                            <div class="card-body">
+                              <h5 class="card-title">Descripcion Tarjeta Cuentas de usuarios</h5>
+                              <p class="card-text">Al dar clic sobre esta tarjeta en ver información, el sistema te dirigirá a la vista donde podrás visualizar/crear/editar/eliminar usuarios que tienen acceso a la aplicación. También, descargar la información que ves por pantalla.</p>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-md-5 ms-auto">
+                        <div class="card w-75">
+                            <div class="card-body">
+                              {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                              <p class="card-text">
+                                <img src="{% static "core/img/T_Multas.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ms-auto me-3">
+                        <div class="card w-90">
+                            <div class="card-body">
+                              <h5 class="card-title">Descripcion Tarjeta de Multas</h5>
+                              <p class="card-text">Al dar clic sobre esta tarjeta en ver información, el sistema te dirigirá a la vista donde podrás visualizara los departamentos que tienen cursada una multa y crear nuevos tipos de multas para cumplir con las reglas de negocio del condominio, así también podrás generar una o más multas a un departamento. EL sistema permitirá descargar la información que ves por pantalla.</p>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-md-5 ms-auto">
+                        <div class="card w-75">
+                            <div class="card-body">
+                              {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                              <p class="card-text">
+                                <img src="{% static "core/img/T_Gastos.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ms-auto me-3">
+                        <div class="card w-90">
+                            <div class="card-body">
+                              <h5 class="card-title">Descripcion Tarjeta gastos comunes</h5>
+                              <p class="card-text">Al dar clic sobre esta tarjeta en ver informació, el sistema te dirigirá a la vista donde podrás visualizar/crear/editar/eliminar Los espacios comunes que dispone el sistema. También, descargar la información que ves por pantalla.</p>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-md-5 ms-auto">
+                        <div class="card w-75">
+                            <div class="card-body">
+                              {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                              <p class="card-text">
+                                <img src="{% static "core/img/T_Residentes.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6 ms-auto me-3">
+                        <div class="card w-100">
+                            <div class="card-body">
+                              <h5 class="card-title">Descripcion Tarjeta de Residentes</h5>
+                              <p class="card-text">
+                                Al dar clic sobre esta tarjeta en ver información, el sistema te dirigirá a la vista donde podrás visualizar a los residentes que estan catalogados como morosos, ya sea por adeudar multas o gastos comunes. También, descargar la información que ves por pantalla.</p>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                <hr>
+                  <div class="row">
+                    <div class="col-md-5 ms-auto">
+                        <div class="card w-75">
+                            <div class="card-body">
+                              {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                              <p class="card-text">
+                                <img src="{% static "core/img/T_Visualizar_Morosos.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ms-auto me-3">
+                        
+                        <div class="card w-100">
+                            <div class="card-body">
+                              <h5 class="card-title">Descripcion Trjeta de Morosos</h5>
+                              <p class="card-text">El sistema en base a estadisticas de reservas, crea un gráfico con los espacios comunes que han sido más utilizado por los residentes en el mes en curso.</p>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+
+
   
 
 
