@@ -98,33 +98,21 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nombre</th>
-                                    <th>Deuda</th>
+                                    <th>Apellido</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <!-- Agregar más de 10 filas para mostrar la paginación -->
-                                <td> 
-                                    <span class="badge-custom bg-blue">1</span>
-                                </td>
+                                {% for r in residentes %}
 
-                                <td>
-                                    <span class="badge-custom bg-blue">Juan Pérez</span>
-                                </td>
-                                <td>
-                                    <span class="badge-custom bg-blue">$500</span>
-                                </td>
-                                <tr><td>2</td><td>María Gómez</td><td>$300</td></tr>
-                                <tr><td>3</td><td>Pedro Martínez</td><td>$450</td></tr>
-                                <tr><td>4</td><td>Ana López</td><td>$600</td></tr>
-                                <tr><td>5</td><td>Carlos Ruiz</td><td>$350</td></tr>
-                                <tr><td>6</td><td>Laura Sánchez</td><td>$700</td></tr>
-                                <tr><td>7</td><td>Oscar Díaz</td><td>$200</td></tr>
-                                <tr><td>8</td><td>Camila Torres</td><td>$400</td></tr>
-                                <tr><td>9</td><td>Martín Reyes</td><td>$500</td></tr>
-                                <tr><td>10</td><td>Sofía Núñez</td><td>$600</td></tr>
-                                <tr><td>11</td><td>Raúl Castro</td><td>$550</td></tr>
+                                <tr><td>2</td><td>{{r.nombre}}</td><td>{{r.apellido}}
+
+
+                                </td></tr>
+                                {% endfor %}
                             </tbody>
                         </table>
+                        
                         <!-- Botones para exportar -->
                         <button class="btn btn-success" onclick="exportExcel()">Exportar a Excel</button>
                         <button class="btn btn-danger" onclick="exportPDF()">Exportar a PDF</button>
@@ -157,29 +145,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Agregar más de 10 filas para mostrar la paginación -->
-                                    <tr>
-                                        <td> 
-                                            <span class="badge-custom bg-blue">1</span>
-                                        </td>
+                                    {% for m in morosos %}
 
-                                        <td>
-                                            <span class="badge-custom bg-blue">Juan Pérez</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge-custom bg-blue">$500</span>
-                                        </td>
-                                    </tr>
-                                    <tr><td>2</td><td>María Gómez</td><td>$300</td></tr>
-                                    <tr><td>3</td><td>Pedro Martínez</td><td>$450</td></tr>
-                                    <tr><td>4</td><td>Ana López</td><td>$600</td></tr>
-                                    <tr><td>5</td><td>Carlos Ruiz</td><td>$350</td></tr>
-                                    <tr><td>6</td><td>Laura Sánchez</td><td>$700</td></tr>
-                                    <tr><td>7</td><td>Oscar Díaz</td><td>$200</td></tr>
-                                    <tr><td>8</td><td>Camila Torres</td><td>$400</td></tr>
-                                    <tr><td>9</td><td>Martín Reyes</td><td>$500</td></tr>
-                                    <tr><td>10</td><td>Sofía Núñez</td><td>$600</td></tr>
-                                    <tr><td>11</td><td>Raúl Castro</td><td>$550</td></tr>
+                                    <tr><td>2</td><td>{{m.id_dpto__id_residente__rut}}</td><td>{{m.total_monto}}</td></tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                             <!-- Botones para exportar -->
@@ -210,7 +179,7 @@
                                     <i class="fa-solid fa-arrow-right"></i>
                                 </button>
                             </h3>
-                            <p class="card-text">Cantidad de Residentes : 250</p>
+                            <p class="card-text">Cantidad de Residentes : {{cant_activos}}</p>
                         </div>
                     </div>
                 </div>
@@ -225,7 +194,7 @@
                                     <i class="fa-solid fa-arrow-right"></i>
                                 </button>
                             </h3>
-                            <p class="card-text">Cantidad de Residentes : 10</p>
+                            <p class="card-text">Cantidad de Residentes : {{cant_morosos}}</p>
                         </div>
                     </div>
                 </div>
@@ -447,27 +416,25 @@
     
         <!-- Script para el gráfico de barras -->
         <script>
+            const labels = {{ labels|safe }};  // Datos JSON de etiquetas
+            const data = {{ data|safe }};      // Datos JSON de valores
+        
             const ctx = document.getElementById('barChart').getContext('2d');
             const barChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Dato 1', 'Dato 2', 'Dato 3', 'Dato 4', 'Dato 5', 'Dato 6', 'Dato 7', 'Dato 8', 'Dato 9', 'Dato 10'],
+                    labels: labels,
                     datasets: [{
-                        label: 'Datos de la gráfica',
-                        data: [12, 19, 3, 5, 2, 3, 7, 8, 14, 10],
+                        label: 'Total de Reservas',
+                        data: data,
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderColor: 'rgba(75, 192, 192, 1)',
                         borderWidth: 1
                     }]
                 },
                 options: {
-                    responsive: true,  // Hacemos el gráfico responsivo
-                    maintainAspectRatio: false,  // Evita que se mantenga el aspecto fijo
-                    plugins: {
-                        title: {
-                            display: false, // Ocultar el título del gráfico ya que se muestra arriba
-                        }
-                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
                         y: {
                             beginAtZero: true,
@@ -479,6 +446,8 @@
                 }
             });
         </script>
+        
+        
 
 
         <!-- Bootstrap JS (Opcional para interactividad adicional) -->

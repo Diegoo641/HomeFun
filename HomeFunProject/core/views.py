@@ -14,6 +14,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from .controller import Controller
 import mercadopago
 from django.core.mail import EmailMessage
+from django.db.models import Sum, Count
+
 
 
 
@@ -34,7 +36,25 @@ def inicio(request):
     return render(request, 'core/inicio.html')
 
 def panel_admin(request):
-    return render(request, 'core/panel_admin.html')
+    residentes = FichaResidente.objects.filter(estado_id=1)
+    cant_activos = residentes.count()
+    morosos = GastoComun.objects.filter(estado_gc=3).values('id_dpto__id_residente__rut').annotate(total_monto=Sum('total'))
+    cant_morosos = morosos.count()
+    reservas = ReservaEspComun.objects.filter(estado_reserva=3).values('id_espacio_comun__nombre').annotate(total_reservas=Count('id_reserva_esp_comun'))
+    labels = [reserva['id_espacio_comun__nombre'] for reserva in reservas]
+    data = [reserva['total_reservas'] for reserva in reservas]
+    
+  
+    data={
+       'residentes':residentes,
+       'morosos': morosos,
+       'cant_morosos': cant_morosos,
+       'cant_activos': cant_activos,
+       'reservas': reservas,
+       'labels': json.dumps(labels),
+       'data': json.dumps(data),
+    }
+    return render(request, 'core/panel_admin.html',data)
 
 def panel_residente(request):
     return render(request, 'core/panel_residente.html')
@@ -762,7 +782,7 @@ def crear_gasto_comun(request):
             formulario.save()
             messages.success(request,"Tipo de gasto comun creado correctamente")
             datos['mensaje'] = "Guardados Correctamente"
-            return redirect(to="admin__gasto_comun")
+            return redirect(to="admin_gastos_comunes")
         else:
             print("Error")
     return render(request, 'core/crear_gasto_comun.html',datos) 
