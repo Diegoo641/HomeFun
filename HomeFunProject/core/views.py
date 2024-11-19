@@ -826,3 +826,64 @@ def modificar_gasto_comun(request, id):
             'mensaje': "Modificado correctamente"
         }
     return render(request, 'core/modificar_gasto_comun.html', datos)
+
+def res_espacios_comunes(request):
+    rut_usuario = request.user.username  # Asumiendo que el nombre de usuario es el RUT
+    # Filtrar los gastos comunes según el 'rut'
+    residente = FichaResidente.objects.filter(rut=rut_usuario).first()
+    res_espacio_comun = ReservaEspComun.objects.filter(id_residente__rut=residente.rut)
+
+    datos = {
+        'res_espacio_comun': res_espacio_comun
+    }
+    return render(request, 'core/res_espacios_comunes.html', datos)
+
+
+def cancelarReservaEspacioComunRes(request, id):
+    resEspacioComun = get_object_or_404(ReservaEspComun, id_reserva_esp_comun=id)
+    if request.method == 'POST':
+        # Cambiar el estado del espacio común a "eliminado"
+        estado_eliminado = get_object_or_404(Estado_R_EC, id_est_r_ec=2)  # Get the Estado_EC instance with ID 4
+        resEspacioComun.estado_reserva = estado_eliminado
+        resEspacioComun.save()  # Guardar los cambios
+        messages.success(request, "Espacio Común Eliminado")
+        return redirect(to="res_espacios_comunes")
+
+    # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
+    return render(request, 'core/res_espacios_comunes.html', {
+        'form': EspacioComunForm(instance=resEspacioComun)
+    })
+
+def modificar_res_espacio_comun_res(request, id):
+    resEspacioComun = ReservaEspComun.objects.get(id_reserva_esp_comun=id)
+    datos = {
+        'form': ModReservaEspacioComunForm(instance=resEspacioComun)
+    }
+    if request.method == 'POST':
+        formulario = ModReservaEspacioComunForm(data= request.POST, instance= resEspacioComun)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Reserva modificada correctamente")
+            return redirect(to="res_espacios_comunes")
+        datos = {
+            'form': ModReservaEspacioComunForm(instance=resEspacioComun),
+            'mensaje': "Modificado correctamente"
+        }
+
+    return render(request, 'core/modificar_res_espacio_comun_res.html', datos)
+
+def crear_res_espacio_comun_res(request):
+    datos = {
+        'form': CrearReservaEspacioComunForm()
+    }
+    if request.method == 'POST':
+        formulario = CrearReservaEspacioComunForm(data= request.POST)
+        if formulario.is_valid():
+            formulario.cleaned_data["estado_reserva"]
+            formulario.save()
+            messages.success(request,"Espacio comun registrado correctamente")
+            datos['mensaje'] = "Guardados Correctamente"
+            return redirect(to="res_espacios_comunes")
+        else:
+            print("Error")
+    return render(request, 'core/crear_res_espacio_comun.html',datos)  

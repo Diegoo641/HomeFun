@@ -1,9 +1,9 @@
 from django.urls import path, include
-from core.views import activarGastoComun, crear_gasto_comun, desactivarGastoComun, home, modificar_gasto_comun , registro,agregar_administrador, modificar_res_espacio_comun,cancelarReservaEspacioComun,\
+from core.views import activarGastoComun, cancelarReservaEspacioComunRes, crear_gasto_comun, crear_res_espacio_comun_res, desactivarGastoComun, home, modificar_gasto_comun, modificar_res_espacio_comun_res , registro,agregar_administrador, modificar_res_espacio_comun,cancelarReservaEspacioComun,\
     panel_admin, admin_espacios_comunes, eliminarEspacioComun, modificar_espacio_comun, crear_espacio_comun, \
     habilitarEspacioComun,admin_res_espacios_comunes,consulta_estado_cuenta, panel_residente,crear_res_espacio_comun,\
     admin_cuentas,crear_cuenta,desactivarCuenta,activarCuenta, modificar_cuenta, admin_multas , modificar_multa ,\
-    crear_multa,cancelarMulta,pagarMulta,eliminarMulta,admin_tipo_gasto_comun, admin_ficha_residentes, visualizar_morosidad,\
+    crear_multa,cancelarMulta,pagarMulta,eliminarMulta,admin_tipo_gasto_comun, admin_ficha_residentes, res_espacios_comunes, visualizar_morosidad,\
     pagarDeuda,crear_tipo_gasto_comun,activarTipoGastoComun,desactivarTipoGastoComun, Multas, generar_multa,modificar_tipo_gasto_comun,\
     admin_ficha_residentes,modificar_ficha_residente,activarFichaResidente,desactivarFichaResidente,admin_tipo_multas,\
     crear_tipo_multa, modificar_tipo_multa, activarTipoMulta, desactivarTipoMulta, agregarPago,removerPago,admin_gastos_comunes
@@ -63,6 +63,11 @@ urlpatterns = [
     path('activarGastoComun/<id>/',activarGastoComun,name="activarGastoComun"),
     path('desactivarGastoComun/<id>/',desactivarGastoComun,name="desactivarGastoComun"),
     path('modificar_gasto_comun/<id>/', modificar_gasto_comun, name="modificar_gasto_comun"),
+    path('res_espacios_comunes', res_espacios_comunes, name="res_espacios_comunes"),
+    path('cancelarReservaEspacioComunRes/<id>/',cancelarReservaEspacioComunRes,name="habilitarEspacioComun"),
+    path('modificar_res_espacio_comun_res/<id>/', modificar_res_espacio_comun_res, name='modificar_res_espacio_comun'),
+    path('crear_res_espacio_comun_res', crear_res_espacio_comun_res, name="crear_res_espacio_comun"),
+
 
 
 
