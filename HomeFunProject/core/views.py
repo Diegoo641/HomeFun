@@ -870,7 +870,7 @@ def modificar_res_espacio_comun_res(request, id):
             'mensaje': "Modificado correctamente"
         }
 
-    return render(request, 'core/modificar_res_espacio_comun_res.html', datos)
+    return render(request, 'core/modificar_res_espacio_comun.html', datos)
 
 def crear_res_espacio_comun_res(request):
     datos = {
