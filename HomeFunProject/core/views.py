@@ -5,9 +5,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
-from core.form import CrearMultaForm, CrearTipoMultaForm, GenerarMultaForm,CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
-    CrearReservaEspacioComunForm, ModificarFichaResidenteForm, ModificarTipoGastoComunForm, ModificarTipoMultaForm,ModificarUsuarioForm, ModificarMultaForm, CrearTipoGastoComunForm
-from core.models import Estado_T_GC, EstadoTipoMulta, FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun,Multa,EstadoMulta,\
+from core.form import CrearGastoComunForm, CrearMultaForm, CrearTipoMultaForm, GenerarMultaForm,CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
+    CrearReservaEspacioComunForm, ModificarFichaResidenteForm, ModificarGastoComunForm, ModificarTipoGastoComunForm, ModificarTipoMultaForm,ModificarUsuarioForm, ModificarMultaForm, CrearTipoGastoComunForm
+from core.models import Estado_GC, Estado_T_GC, EstadoTipoMulta, FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun,Multa,EstadoMulta,\
 TipoGastoComun, Estado_residente, TipoMulta
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -738,3 +738,91 @@ def removerPago(request, id):
         except GastoComun.DoesNotExist:
             return JsonResponse({'error': 'Gasto no encontrado'}, status=404)
     return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+def admin_gastos_comunes(request):
+
+    gasto_comun = GastoComun.objects.all()
+
+    datos = {
+        'gasto_comun': gasto_comun,
+    }
+
+    return render(request, 'core/admin_gastos_comunes.html', datos)
+
+
+def crear_gasto_comun(request):
+    datos = {
+        'form': CrearGastoComunForm()
+    }
+    if request.method == 'POST':
+        formulario = CrearGastoComunForm(data= request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request,"Tipo de gasto comun creado correctamente")
+            datos['mensaje'] = "Guardados Correctamente"
+            return redirect(to="admin__gasto_comun")
+        else:
+            print("Error")
+    return render(request, 'core/crear_gasto_comun.html',datos) 
+
+
+def desactivarGastoComun(request, id):
+    gasto_comun = get_object_or_404(GastoComun, id_gc=id)
+    if request.method == 'POST':
+        # Cambiar el estado del espacio común a "eliminado"
+        estado_eliminado = get_object_or_404(Estado_GC, id_est_gc=4)  # Get the Estado_EC instance with ID 4
+        gasto_comun.estado_gc = estado_eliminado
+        gasto_comun.save()  # Guardar los cambios
+        messages.success(request, "Tipo de gasto comu desactivado")
+        return redirect(to="admin_gastos_comunes")
+
+    # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
+    return render(request, 'core/admin_gastos_comunes.html', {
+        'form': CrearGastoComunForm(instance=gasto_comun)
+    })
+
+def activarGastoComun(request, id):
+    gasto_comun = get_object_or_404(GastoComun, id_gc=id)
+    if request.method == 'POST':
+        estado_activado = get_object_or_404(Estado_GC, id_est_gc=2)  
+        gasto_comun.estado_gc = estado_activado
+        gasto_comun.save() 
+        messages.success(request, "Tipo de gasto comun activado")
+        return redirect(to="admin_gastos_comunes")
+    return render(request, 'core/admin_gastos_comunes.html', {
+        'form': CrearGastoComunForm(instance=gasto_comun)})
+    
+def modificar_gasto_comun(request, id):
+    gasto_comun = GastoComun.objects.get(id_gc=id)
+    datos = {
+        'form': ModificarGastoComunForm(instance=gasto_comun)
+    }
+    if request.method == 'POST':
+        formulario = ModificarGastoComunForm(data= request.POST, instance= gasto_comun)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Gasto comun modificada correctamente")
+            return redirect(to="admin_tipo_gasto_comun")
+        datos = {
+            'form': ModificarGastoComunForm(instance=gasto_comun),
+            'mensaje': "Modificado correctamente"
+        }
+    return render(request, 'core/modificar_tipo_gasto_comun.html', datos)
+
+    
+def modificar_gasto_comun(request, id):
+    gasto_comun = GastoComun.objects.get(id_gc=id)
+    datos = {
+        'form': ModificarGastoComunForm(instance=gasto_comun)
+    }
+    if request.method == 'POST':
+        formulario = ModificarGastoComunForm(data= request.POST, instance= gasto_comun)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Multa modificada correctamente")
+            return redirect(to="admin_gastos_comunes")
+        datos = {
+            'form': ModificarGastoComunForm(instance=gasto_comun),
+            'mensaje': "Modificado correctamente"
+        }
+    return render(request, 'core/modificar_gasto_comun.html', datos)

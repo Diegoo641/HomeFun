@@ -1,12 +1,12 @@
 from django.urls import path, include
-from core.views import home , registro,agregar_administrador, modificar_res_espacio_comun,cancelarReservaEspacioComun,\
+from core.views import activarGastoComun, crear_gasto_comun, desactivarGastoComun, home, modificar_gasto_comun , registro,agregar_administrador, modificar_res_espacio_comun,cancelarReservaEspacioComun,\
     panel_admin, admin_espacios_comunes, eliminarEspacioComun, modificar_espacio_comun, crear_espacio_comun, \
     habilitarEspacioComun,admin_res_espacios_comunes,consulta_estado_cuenta, panel_residente,crear_res_espacio_comun,\
     admin_cuentas,crear_cuenta,desactivarCuenta,activarCuenta, modificar_cuenta, admin_multas , modificar_multa ,\
     crear_multa,cancelarMulta,pagarMulta,eliminarMulta,admin_tipo_gasto_comun, admin_ficha_residentes, visualizar_morosidad,\
     pagarDeuda,crear_tipo_gasto_comun,activarTipoGastoComun,desactivarTipoGastoComun, Multas, generar_multa,modificar_tipo_gasto_comun,\
     admin_ficha_residentes,modificar_ficha_residente,activarFichaResidente,desactivarFichaResidente,admin_tipo_multas,\
-    crear_tipo_multa, modificar_tipo_multa, activarTipoMulta, desactivarTipoMulta, agregarPago,removerPago
+    crear_tipo_multa, modificar_tipo_multa, activarTipoMulta, desactivarTipoMulta, agregarPago,removerPago,admin_gastos_comunes
 
 
 urlpatterns = [
@@ -58,6 +58,12 @@ urlpatterns = [
     path('desactivarTipoMulta/<id>/',desactivarTipoMulta,name="desaactivarTipoMulta"),
     path('agregar_pago/<int:id>/', agregarPago, name='agregar_pago'),
     path('remover_pago/<int:id>/', removerPago, name='remover_pago'),
+    path('admin_gastos_comunes', admin_gastos_comunes, name="admin_gastos_comunes"),
+    path('crear_gasto_comun', crear_gasto_comun, name="crear_gasto_comun"),
+    path('activarGastoComun/<id>/',activarGastoComun,name="activarGastoComun"),
+    path('desactivarGastoComun/<id>/',desactivarGastoComun,name="desactivarGastoComun"),
+    path('modificar_gasto_comun/<id>/', modificar_gasto_comun, name="modificar_gasto_comun"),
+
 
 
 
