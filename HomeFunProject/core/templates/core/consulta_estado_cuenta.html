@@ -158,30 +158,29 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         // Obtener la lista de seleccionados desde el backend
-        const seleccionados = {{ seleccionados| safe
-    }}; // Lista de IDs de los gastos seleccionados en la sesión
+        const seleccionados = {{ seleccionados|safe }}; // Lista de IDs de los gastos seleccionados en la sesión
 
-    // Marcar los checkboxes correspondientes al cargar la página
-    document.querySelectorAll('.select-gasto').forEach(checkbox => {
-        const gastoId = parseInt(checkbox.getAttribute('data-id'));
-        if (seleccionados.includes(gastoId)) {
-            checkbox.checked = true;  // Marca los checkboxes que están en la lista de seleccionados
-        }
+        // Marcar los checkboxes correspondientes al cargar la página
+        document.querySelectorAll('.select-gasto').forEach(checkbox => {
+            const gastoId = parseInt(checkbox.getAttribute('data-id'));
+            if (seleccionados.includes(gastoId)) {
+                checkbox.checked = true;  // Marca los checkboxes que están en la lista de seleccionados
+            }
 
-        // Agregar el event listener para manejar el cambio en el checkbox
-        checkbox.addEventListener('change', function () {
-            const isChecked = this.checked;
-            const url = isChecked
-                ? `/agregar_pago/${gastoId}/`  // URL para agregar el pago
-                : `/remover_pago/${gastoId}/`; // URL para remover el pago
-
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}' // Asegúrate de que el token CSRF esté disponible
-                }
-            })
+            // Agregar el event listener para manejar el cambio en el checkbox
+            checkbox.addEventListener('change', function () {
+                const isChecked = this.checked;
+                const url = isChecked 
+                    ? `/agregar_pago/${gastoId}/`  // URL para agregar el pago
+                    : `/remover_pago/${gastoId}/`; // URL para remover el pago
+                
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}' // Asegúrate de que el token CSRF esté disponible
+                    }
+                })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Error al actualizar el total.');
@@ -195,10 +194,11 @@
                 .catch(error => {
                     console.error(error);
                 });
+            });
         });
     });
-    });
 </script>
+
 
 {% endblock %}
 
@@ -236,7 +236,7 @@
 
                             <div id="walletBrick_container"></div>
                             <script>
-                                const mp = new MercadoPago('', {
+                                const mp = new MercadoPago('TEST-143c7e46-0402-4482-8bf2-d61c3aa30d6e ', {
                                     locale: 'es-CL' // Cambia a tu localización
                                 });
                             
@@ -267,13 +267,6 @@
                             
                                 renderWalletBrick(bricksBuilder);
                             </script>
-                            
-
-
-
-                            <!-- FIN INTEGRACION -->
-
-
 
                         </div>
                         <div class="container mt-4">

@@ -91,7 +91,7 @@ def consulta_estado_cuenta(request):
         gasto_comun = GastoComun.objects.none()
 
    # Configurar Mercado Pago
-    sdk = mercadopago.SDK("")  # Reemplaza con tu token de acceso
+    sdk = mercadopago.SDK("TEST-799766335101209-102200-dc91acd07d20881aa5b98b60bf6e8129-2049276181")  # Reemplaza con tu token de acceso
     preference_data = {
         "purpose": "wallet_purchase",
         "items": [
