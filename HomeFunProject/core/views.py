@@ -13,6 +13,8 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .controller import Controller
 import mercadopago
+from django.core.mail import EmailMessage
+
 
 
 total = 0
@@ -883,6 +885,13 @@ def crear_res_espacio_comun_res(request):
             formulario.save()
             messages.success(request,"Espacio comun registrado correctamente")
             datos['mensaje'] = "Guardados Correctamente"
+            contenido = "¡¡¡Le informamos que su postulación fue aceptada!!!\n\n Para continuar con el proceso, dirigase a nuestras oficinas en:\n  Av. Concha y Toro 1820, 8152857 Puente Alto, Región Metropolitana. \n\n\n ¡Estamos ansiosos de trabajar trabajar con usted! \n Ingrese al siuiente link :\n http://127.0.0.1:8000/accounts/login/ \n\nNombre de usuario : {} \n\n Contraseña : 12345\n\n\n Atte.,\n Dirección de Recursos Humanos. \n Puente Alto.".format('Diego')
+            email = EmailMessage("Municipalidad de Puente Alto",
+                                 "Hola! {} :\n\n {}".format('Diego', contenido),
+                                 '',
+                                 ['diegoaraya641@gmail.com'],
+                                 reply_to=['diegoaraya641@gmail.com'])
+            email.send()
             return redirect(to="res_espacios_comunes")
         else:
             print("Error")
