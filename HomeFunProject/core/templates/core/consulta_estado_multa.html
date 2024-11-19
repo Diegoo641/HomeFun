@@ -156,47 +156,48 @@
     }
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Obtener la lista de seleccionados desde el backend
-        const seleccionados = {{ seleccionados|safe }}; // Lista de IDs de los gastos seleccionados en la sesión
+  document.addEventListener('DOMContentLoaded', () => {
+    // Obtener la lista de seleccionados desde el backend
+    const seleccionados = {{ seleccionados|safe }}; // Lista de IDs de las multas seleccionadas en la sesión
 
-        // Marcar los checkboxes correspondientes al cargar la página
-        document.querySelectorAll('.select-gasto').forEach(checkbox => {
-            const gastoId = parseInt(checkbox.getAttribute('data-id'));
-            if (seleccionados.includes(gastoId)) {
-                checkbox.checked = true;  // Marca los checkboxes que están en la lista de seleccionados
-            }
+    // Marcar los checkboxes correspondientes al cargar la página
+    document.querySelectorAll('.select-gasto').forEach(checkbox => {
+        const multaId = parseInt(checkbox.getAttribute('data-id'));
+        if (seleccionados.includes(multaId)) {
+            checkbox.checked = true;
+        }
 
-            // Agregar el event listener para manejar el cambio en el checkbox
-            checkbox.addEventListener('change', function () {
-                const isChecked = this.checked;
-                const url = isChecked 
-                    ? `/agregar_pago/${gastoId}/`  // URL para agregar el pago
-                    : `/remover_pago/${gastoId}/`; // URL para remover el pago
-                
-                fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': '{{ csrf_token }}' // Asegúrate de que el token CSRF esté disponible
-                    }
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error al actualizar el total.');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Actualiza el total en la interfaz
-                    document.getElementById('total-display').innerText = `El total a pagar es: $${data.total}`;
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+        // Agregar el event listener para manejar el cambio en el checkbox
+        checkbox.addEventListener('change', function () {
+            const isChecked = this.checked;
+            const url = isChecked 
+                ? `/agregar_pago_multa/${multaId}/`
+                : `/remover_pago_multa/${multaId}/`;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al actualizar el total.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Actualiza el total en la interfaz
+                document.getElementById('total-display').innerText = `El total a pagar es: $${data.total}`;
+            })
+            .catch(error => {
+                console.error(error);
             });
         });
     });
+});
+
 </script>
 
 <script>
@@ -241,7 +242,7 @@
     <br>
     <br><br>
     <div class="container my-3 bg-dark text-white rounded-3">
-        <p class="text-md-center text-light fs-3"> Gastos comunes</p>
+        <p class="text-md-center text-light fs-3"> Multas</p>
     </div>
     <br>
 
@@ -271,18 +272,16 @@
                                     <tr>
                                         <th style="width:5%;">ID</th>
                                         <th style="width:15%;">Descricion</th>
-                                        <th style="width:15%;">Servicio</th>
                                         <th style="width:15%;">Estado</th>
-                                        <th style="width:10%;">RUT</th>
+                                        <th style="width:10%;">Fecha</th>
                                         <th style="width:10%;">Depto</th>
-                                        <th style="width:10%;">Consumo</th>
-                                        <th style="width:15%;">Total</th>
+                                        <th style="width:10%;">Monto</th>
                                         <th style="width:10%;">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    {% for gc in gasto_comun %}
+                                    {% for m in multa %}
 
 
                                     <!-- Modal para ver la imagen del mapa -->
@@ -314,18 +313,18 @@
                                     </div>
 
                                     <tr>
-                                        <td>{{gc.id_gc}}</td>
-                                        <td>{{gc.nombre}} {{ gc.fecha|date:"F" }}</td>
-                                        <td>{{gc.tipo.nombre}} </td>
-                                        <td>{{gc.estado_gc}}</td>
-                                        <td>{{gc.id_dpto.id_residente.rut}}</td>
-                                        <td>{{gc.id_dpto}}</td>
-                                        <td>{{gc.consumo}} {{gc.tipo.medida}}</td>
-                                        <td>{{gc.total}}</td>
+                                        <td>{{m.id_multa}}</td>
+                                        <td>{{m.nombre}} {{ gc.fecha|date:"F" }}</td>
+                                        <td>{{m.id_dpto.id_residente.rut}}</td>
+                                        <td>{{m.id_dpto}}</td>
+                                        <td>{{m.tipo.descripcion}} </td>
+                                        <td>{{m.tipo.monto}} </td>
+                                        
+                                        
                                         <td style="text-align: center; vertical-align: middle;">
                                             <input type="checkbox" class="select-gasto styled-checkbox"
-                                                data-id="{{ gc.id_gc }}" data-total="{{ gc.total }}"
-                                                {% if gc.id_gc in seleccionados %}checked{% endif %} />
+                                                data-id="{{ m.id_multa }}" data-total="{{m.tipo.monto}}"
+                                                {% if m.id_multa in seleccionados %}checked{% endif %} />
                                         </td>
                                     </tr>
                                     {% endfor %}
