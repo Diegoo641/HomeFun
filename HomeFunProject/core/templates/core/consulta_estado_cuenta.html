@@ -199,7 +199,38 @@
     });
 </script>
 
+<script>
+    const mp = new MercadoPago('TEST-143c7e46-0402-4482-8bf2-d61c3aa30d6e', {
+        locale: 'es-CL' // Cambia a tu localización
+    });
 
+    const bricksBuilder = mp.bricks();
+
+    const renderWalletBrick = async (bricksBuilder) => {
+        const settings = {
+            initialization: {
+                preferenceId: "{{ preference_id }}", // Usa el ID generado en el backend
+                redirectMode: 'blank',
+            },
+            callbacks: {
+                onReady: () => {
+                    console.log("Wallet Brick listo");
+                },
+                onError: (error) => {
+                    console.error("Error en Wallet Brick", error);
+                },
+            },
+        };
+
+        window.walletBrickController = await bricksBuilder.create(
+            'wallet',
+            'walletBrick_container',
+            settings
+        );
+    };
+
+    renderWalletBrick(bricksBuilder);
+</script>
 {% endblock %}
 
 <body>
@@ -235,38 +266,7 @@
 
 
                             <div id="walletBrick_container"></div>
-                            <script>
-                                const mp = new MercadoPago('TEST-143c7e46-0402-4482-8bf2-d61c3aa30d6e ', {
-                                    locale: 'es-CL' // Cambia a tu localización
-                                });
-                            
-                                const bricksBuilder = mp.bricks();
-                            
-                                const renderWalletBrick = async (bricksBuilder) => {
-                                    const settings = {
-                                        initialization: {
-                                            preferenceId: "{{ preference_id }}", // Usa el ID generado en el backend
-                                            redirectMode: 'blank',
-                                        },
-                                        callbacks: {
-                                            onReady: () => {
-                                                console.log("Wallet Brick listo");
-                                            },
-                                            onError: (error) => {
-                                                console.error("Error en Wallet Brick", error);
-                                            },
-                                        },
-                                    };
-                            
-                                    window.walletBrickController = await bricksBuilder.create(
-                                        'wallet',
-                                        'walletBrick_container',
-                                        settings
-                                    );
-                                };
-                            
-                                renderWalletBrick(bricksBuilder);
-                            </script>
+                           
 
                         </div>
                         <div class="container mt-4">
