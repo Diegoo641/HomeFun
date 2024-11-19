@@ -1,0 +1,17 @@
+.card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 20px rgba(18, 159, 211, 0.5);
+    overflow-x: hidden;
+    
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Asegura que el contenido se distribuya */
+  height: 200px; /* Altura fija para las tarjetas */
+}
+.card-body {
+  flex: 1; /* Esto permite que el cuerpo de la tarjeta ocupe el espacio disponible */
+}

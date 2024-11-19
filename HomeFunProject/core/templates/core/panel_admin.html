@@ -25,6 +25,7 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <!-- FontAwesome para el ícono de ayuda -->
         <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{% static 'core/css/whatsapp.css' %}">
         <style>
             body {
                 padding-top: 70px; /* Ajusta este valor según la altura de tu navbar */
@@ -73,7 +74,7 @@
         <div class="container my-3 bg-dark text-white rounded-3">
             <div class="d-flex justify-content-between align-items-center">
                 <p class="text-light fs-3 mb-0 mx-auto text-center">Administración de espacios comunes</p>
-                <i class="fas fa-question-circle" style="color: red; font-size: 28px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#helpModal"></i>
+                <i class="fas fa-question-circle" style="color: white; font-size: 28px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#helpModal"></i>
             </div>
         </div>
         
@@ -246,6 +247,14 @@
         </div>
     
 
+        <div id="whatsapp-button" class="whatsapp-float">
+            <a href="https://api.whatsapp.com/send?phone=56949052463&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Risi.cl." class="floatWapp" target="_blank">
+              <img src="{% static 'core/img/WhatsApp.svg.webp' %}" alt="Chatea con nosotros" class="whatsapp-icon">
+              
+            </a>
+            <button class="close-btn" onclick="closeWhatsAppButton()">×</button>
+          </div>        
+
        <!-- Modal de ayuda -->
        <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
@@ -327,7 +336,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- jQuery -->
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
