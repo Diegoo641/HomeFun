@@ -6,9 +6,9 @@ import mercadopago
 
 class Controller:
     
-    def pagar(self):
+    def pagar(self,total):
         # Agrega credenciales
-        sdk = mercadopago.SDK("TEST-799766335101209-102200-dc91acd07d20881aa5b98b60bf6e8129-2049276181")
+        sdk = mercadopago.SDK("")
 
         # Crea un ítem en la preferencia
         preference_data = {
@@ -18,7 +18,7 @@ class Controller:
             "items":[{
                     "title": "My Item",
                     "quantity": 1,
-                    "unit_price": 75.56  
+                    "unit_price": total  
                 }]
                 }
         

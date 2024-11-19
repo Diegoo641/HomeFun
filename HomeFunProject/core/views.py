@@ -12,6 +12,7 @@ TipoGastoComun, Estado_residente, TipoMulta
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .controller import Controller
+import mercadopago
 
 
 total = 0
@@ -88,13 +89,34 @@ def consulta_estado_cuenta(request):
         print(gasto_comun)
     else:
         gasto_comun = GastoComun.objects.none()
+
+   # Configurar Mercado Pago
+    sdk = mercadopago.SDK("")  # Reemplaza con tu token de acceso
+    preference_data = {
+        "purpose": "wallet_purchase",
+        "items": [
+            {
+                "title": "Gasto Común",
+                "quantity": 1,
+                "unit_price": 100,  # Asegúrate de que `total` sea un número válido
+            }
+        ]
+    }
+
+    # Crear preferencia en Mercado Pago
+    try:
+        preference_response = sdk.preference().create(preference_data)
+        preference_id = preference_response["response"]["id"]
+    except Exception as e:
+        preference_id = None
+        print(f"Error creando preferencia: {e}")
+
     datos = {
         'gasto_comun': gasto_comun,
-        'preference_id':'',
         'seleccionados': seleccionados,
-        'total': request.session.get('total', 0),
+        'total': total,
+        'preference_id': preference_id,  # Pasar el ID de la preferencia al template
     }
-    
 
     return render(request, 'core/consulta_estado_cuenta.html', datos)
 

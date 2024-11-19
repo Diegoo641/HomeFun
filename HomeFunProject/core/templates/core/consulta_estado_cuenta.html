@@ -25,6 +25,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
         integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+
 </head>
 <!-- NAV -->
 {% block content %}
@@ -155,29 +158,30 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         // Obtener la lista de seleccionados desde el backend
-        const seleccionados = {{ seleccionados|safe }}; // Lista de IDs de los gastos seleccionados en la sesión
+        const seleccionados = {{ seleccionados| safe
+    }}; // Lista de IDs de los gastos seleccionados en la sesión
 
-        // Marcar los checkboxes correspondientes al cargar la página
-        document.querySelectorAll('.select-gasto').forEach(checkbox => {
-            const gastoId = parseInt(checkbox.getAttribute('data-id'));
-            if (seleccionados.includes(gastoId)) {
-                checkbox.checked = true;  // Marca los checkboxes que están en la lista de seleccionados
-            }
+    // Marcar los checkboxes correspondientes al cargar la página
+    document.querySelectorAll('.select-gasto').forEach(checkbox => {
+        const gastoId = parseInt(checkbox.getAttribute('data-id'));
+        if (seleccionados.includes(gastoId)) {
+            checkbox.checked = true;  // Marca los checkboxes que están en la lista de seleccionados
+        }
 
-            // Agregar el event listener para manejar el cambio en el checkbox
-            checkbox.addEventListener('change', function () {
-                const isChecked = this.checked;
-                const url = isChecked 
-                    ? `/agregar_pago/${gastoId}/`  // URL para agregar el pago
-                    : `/remover_pago/${gastoId}/`; // URL para remover el pago
-                
-                fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': '{{ csrf_token }}' // Asegúrate de que el token CSRF esté disponible
-                    }
-                })
+        // Agregar el event listener para manejar el cambio en el checkbox
+        checkbox.addEventListener('change', function () {
+            const isChecked = this.checked;
+            const url = isChecked
+                ? `/agregar_pago/${gastoId}/`  // URL para agregar el pago
+                : `/remover_pago/${gastoId}/`; // URL para remover el pago
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}' // Asegúrate de que el token CSRF esté disponible
+                }
+            })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Error al actualizar el total.');
@@ -191,8 +195,8 @@
                 .catch(error => {
                     console.error(error);
                 });
-            });
         });
+    });
     });
 </script>
 
@@ -223,101 +227,47 @@
                                     Crear Espacio Común
                                 </a>
                             </button>
-                            
+
                             <!-- Texto a la derecha -->
                             <h1 id="total-display">El total a pagar es: ${{ request.session.total|default:0 }}</h1>
-                            </div>
+                        </div>
                         <div class="d-grid gap-2 col-12 mx-auto">
 
-                            <script src="https://sdk.mercadopago.com/js/v2"></script>
 
                             <div id="walletBrick_container"></div>
                             <script>
                                 const mp = new MercadoPago('', {
-                                    locale: 'es-AR'
+                                    locale: 'es-CL' // Cambia a tu localización
                                 });
+                            
                                 const bricksBuilder = mp.bricks();
+                            
                                 const renderWalletBrick = async (bricksBuilder) => {
                                     const settings = {
                                         initialization: {
+                                            preferenceId: "{{ preference_id }}", // Usa el ID generado en el backend
                                             redirectMode: 'blank',
-                                        },
-                                        customization: {
-                                            texts: {
-                                                action: 'pay',
-                                                valueProp: 'security_safety',
-                                            },
-                                            visual: {
-                                                hideValueProp: false,
-                                                buttonBackground: 'default', // default, black, blue, white
-                                                valuePropColor: 'grey', // grey, white
-                                                buttonHeight: '48px', // min 48px - max free
-                                                borderRadius: '6px',
-                                                verticalPadding: '16px', // min 16px - max free
-                                                horizontalPadding: '0px', // min 0px - max free
-                                            },
-                                            checkout: {
-                                                theme: {
-                                                    elementsColor: '#4287F5', // color hex code
-                                                    headerColor: '#4287F5', // color hex code
-                                                },
-                                            },
                                         },
                                         callbacks: {
                                             onReady: () => {
-                                                /*
-                                                Callback called when Brick is ready.
-                                                Here you can hide loadings from your site, for example.
-                                                */
+                                                console.log("Wallet Brick listo");
                                             },
-                                            onSubmit: (formData) => {
-                                                /*
-                                                Callback called when clicking Wallet Brick
-                                                this is possible because the brick is a button
-                                                at this time of submit, you must create the preference
-                                                */
-                                                const yourRequestBodyHere = {
-                                                    items: [
-                                                        {
-                                                            id: 'YOUR_PRODUCT_ID',
-                                                            title: 'YOUR_PRODUCT_TITLE',
-                                                            description: 'YOUR_PRODUCT_DESCRIPTION',
-                                                            quantity: YOUR_PRODUCT_QUANTITY,
-                                                            unit_price: YOUR_PRODUCT_UNIT_PRICE, // item unit price, must be an integer.
-                                                        },
-                                                    ],
-                                                    purpose: 'wallet_purchase',
-                                                };
-                                                return new Promise((resolve, reject) => {
-                                                    fetch('/create_preference', {
-                                                        method: 'POST',
-                                                        headers: {
-                                                            'Content-Type': 'application/json',
-                                                        },
-                                                        body: JSON.stringify(formData),
-                                                    })
-                                                        .then((response) => response.json())
-                                                        .then((response) => {
-                                                            // resolve the promise with the ID of the preference
-                                                            resolve(response.preference_id);
-                                                        })
-                                                        .catch((error) => {
-                                                            // handle error response when trying to create preference
-                                                            reject();
-                                                        });
-                                                });
+                                            onError: (error) => {
+                                                console.error("Error en Wallet Brick", error);
                                             },
                                         },
                                     };
+                            
                                     window.walletBrickController = await bricksBuilder.create(
                                         'wallet',
                                         'walletBrick_container',
-                                        settings,
+                                        settings
                                     );
                                 };
+                            
                                 renderWalletBrick(bricksBuilder);
                             </script>
-
+                            
 
 
 
@@ -385,11 +335,9 @@
                                         <td>{{gc.consumo}} {{gc.tipo.medida}}</td>
                                         <td>{{gc.total}}</td>
                                         <td style="text-align: center; vertical-align: middle;">
-                                            <input type="checkbox" 
-                                                   class="select-gasto styled-checkbox" 
-                                                   data-id="{{ gc.id_gc }}" 
-                                                   data-total="{{ gc.total }}" 
-                                                   {% if gc.id_gc in seleccionados %}checked{% endif %} />
+                                            <input type="checkbox" class="select-gasto styled-checkbox"
+                                                data-id="{{ gc.id_gc }}" data-total="{{ gc.total }}"
+                                                {% if gc.id_gc in seleccionados %}checked{% endif %} />
                                         </td>
                                     </tr>
                                     {% endfor %}
