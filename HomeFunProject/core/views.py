@@ -74,15 +74,19 @@ def pagarDeuda(request):
 
     
 def Multas(request):
-        return render(request, 'core/Multas.html')
+    multa = Multa.objects.all()
+    datos = {
+        'multa': multa
+    }
+    return render(request, 'core/Multas.html',datos)
 
 
 def generar_multa(request):
     datos = {
-        'form': GenerarMultaForm()
+        'form': CrearMultaForm()
     }
     if request.method == 'POST':
-        formulario = GenerarMultaForm(request.POST , request.FILES)
+        formulario = CrearMultaForm(request.POST , request.FILES)
 
         if formulario.is_valid():
             formulario.save()
@@ -480,7 +484,7 @@ def crear_multa(request):
             formulario.save()
             messages.success(request,"Cuenta creada correctamente")
             datos['mensaje'] = "Guardados Correctamente"
-            return redirect(to="admin_multas")
+            return redirect(to="Multas")
         else:
             print("Error")
     return render(request, 'core/crear_multa.html',datos) 
@@ -513,10 +517,10 @@ def cancelarMulta(request, id):
         multa.estado_multa = estado_cancelado
         multa.save()  # Guardar los cambios
         messages.success(request, "Multa Cancelada")
-        return redirect(to="admin_multas")
+        return redirect(to="Multas")
 
     # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
-    return render(request, 'core/admin_multas.html', {
+    return render(request, 'core/Multas.html', {
         'form': CrearMultaForm(instance=multa)
     })
 
@@ -529,10 +533,10 @@ def pagarMulta(request, id):
         multa.estado_multa = estado_pagado
         multa.save()  # Guardar los cambios
         messages.success(request, "Multa pagada")
-        return redirect(to="admin_multas")
+        return redirect(to="Multas")
 
     # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
-    return render(request, 'core/admin_multas.html', {
+    return render(request, 'core/Multas.html', {
         'form': CrearMultaForm(instance=multa)
     })
 
@@ -545,10 +549,10 @@ def eliminarMulta(request, id):
         multa.estado_multa = estado_pagado
         multa.save()  # Guardar los cambios
         messages.success(request, "Multa Eliminada")
-        return redirect(to="admin_multas")
+        return redirect(to="Multas")
 
     # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
-    return render(request, 'core/admin_multas.html', {
+    return render(request, 'core/Multas.html', {
         'form': CrearMultaForm(instance=multa)
     })
 
@@ -1026,7 +1030,7 @@ def consulta_estado_multa(request):
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import Multa
+from .models import CasaDepto, Multa
 
 @csrf_exempt
 def agregarPagoMulta(request, id):
@@ -1100,3 +1104,13 @@ def modificar_morosidad(request, id):
             'mensaje': "Modificado correctamente"
         }
     return render(request, 'core/modificar_tipo_gasto_comun.html', datos)
+
+def admin_departamento(request):
+    dept = CasaDepto.objects.all()
+    datos={
+        'dept':dept,
+    }
+
+    
+    return(request,'core/admin_departamento.html',datos)
+

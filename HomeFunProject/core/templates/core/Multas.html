@@ -85,30 +85,9 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    function evaluarPostulacion(id) {
+    function cancelarMulta(id) {
         Swal.fire({
-            "title": "¿Desea rechazar la postulación?",
-            "text": "Enviaras un correo al postulante con la no aceptación de su postulación",
-            "icon": "question",
-            "showCancelButton": true,
-            "cancelButtonText": "No, cancelar",
-            "confirmButtonText": "Si, rechazar",
-            "reverseButtons": true,
-            "confirmButtonColor": "#dc3545"
-        })
-            .then(function (result) {
-                if (result.isConfirmed) {
-                    window.location.href = "http://127.0.0.1:8000/EvaluarPostulacion/" + id + "/"
-                }
-            })
-    }
-</script>
-
-
-<script>
-    function eliminarEspacioComun(id) {
-        Swal.fire({
-            "title": "¿Deseas eliminar este Espacio Comun?",
+            "title": "¿Deseas cancelar la multa?",
             "text": "El espacio comun quedara con estado 'Eliminado'",
             "icon": "question",
             "showCancelButton": true,
@@ -122,7 +101,7 @@
                     // Cambiar a un método POST para eliminar el espacio
                     const form = document.createElement('form');
                     form.method = 'POST';
-                    form.action = "http://127.0.0.1:8000/eliminarEspacioComun/" + id + "/";
+                    form.action = "http://127.0.0.1:8000/cancelarMulta/" + id + "/";
                     const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
                     const csrfInput = document.createElement('input');
                     csrfInput.type = 'hidden';
@@ -135,7 +114,7 @@
             });
     }
 
-    function habilitarEspacioComun(id) {
+    function pagarMulta(id) {
         Swal.fire({
             "title": "¿Deseas habilitar este Espacio Comun?",
             "text": "El espacio comun quedara con estado 'Eliminado'",
@@ -151,7 +130,36 @@
                     // Cambiar a un método POST para eliminar el espacio
                     const form = document.createElement('form');
                     form.method = 'POST';
-                    form.action = "http://127.0.0.1:8000/habilitarEspacioComun/" + id + "/";
+                    form.action = "http://127.0.0.1:8000/pagarMulta/" + id + "/";
+                    const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = 'csrfmiddlewaretoken';
+                    csrfInput.value = csrfToken;
+                    form.appendChild(csrfInput);
+                    document.body.appendChild(form);
+                    form.submit(); // Enviar el formulario
+                }
+            });
+    }
+
+    function eliminarMulta(id) {
+        Swal.fire({
+            "title": "¿Deseas eliminar la multa?",
+            "text": "La multa quedara con estado 'Eliminado'",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "No, cancelar",
+            "confirmButtonText": "Si, Aceptar",
+            "reverseButtons": true,
+            "confirmButtonColor": "#dc3545"
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    // Cambiar a un método POST para eliminar el espacio
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = "http://127.0.0.1:8000/eliminarMulta/" + id + "/";
                     const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
                     const csrfInput = document.createElement('input');
                     csrfInput.type = 'hidden';
@@ -209,62 +217,82 @@
                         </button>
 
                         <div class="container mt-4">                    
-                            <table id="myTable" class="display nowrap dt-responsive table text-start" style="width:100%;">
+                            <table id="myTable" class="display nowrap dt-responsive table text-start"
+                                style="width:100%;">
                                 <thead>
                                     <tr>
                                         <th style="width:5%;">ID</th>
-                                        <th style="width:15%;">Departamento</th>
-                                        <th style="width:15%;">Tipo Multa</th>
-                                        {% comment %} <th style="width:15%;">Ubicación</th> {% endcomment %}
-                                        <th style="width:10%;">Valor</th>
+                                        <th style="width:15%;">Descripción</th>
+                                        <th style="width:15%;">Valor</th>
+                                        <th style="width:15%;">Fecha Ingreso</th>
                                         <th style="width:10%;">Estado</th>
-                                        
-                                        {% comment %} <th style="width:15%;">Comunidad</th> {% endcomment %}
+                                        <th style="width:10%;">Valor</th>
+                                        <th style="width:10%;">Tipo multa</th>
                                         <th style="width:10%;">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    {% for ec in espacio_comun %}
-  
+                                    {% for m in multa %}
+
                                     <tr>
-                                        <td>{{ec.id_espacio_comun}}</td>
-                                        <td>{{ec.nombre}}</td>
-                                        <td>{{ec.descripcion}}</td>
-                                        <td>{{ec.ubicacion}}</td>
-                                        <td>{{ec.estado_ec.descripcion}}</td>
-                                        <td>{{ec.valor}}</td>
-                                        <td>{{ec.id_comunidad.nombre}}</td>
+                                        <td>{{m.id_multa}}</td>
+                                        <td>{{m.descripcion}}</td>
+                                        <td>{{m.tipo.monto}}</td>
+                                        <td>{{m.fecha_ingreso}}</td>
+                                        <td>{{m.estado_multa}}</td>
+                                        <td>{{m.id_dpto}}</td>
+                                        <td>{{m.tipo.descripcion}}</td>
+
                                         <td>
                                             <div class="dropdown">
-                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
                                                     Acciones
                                                 </button>
-                                                
+
                                                 <!-- Menú desplegable -->
+                                                {% if m.estado_multa.descripcion == "Pendiente" %}
+
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
                                                     <li>
-                                                        <a class="dropdown-item action-item" href="http://127.0.0.1:8000/modificar_espacio_comun/{{ec.id_espacio_comun}}">Modificar        
-                                                    </a>
+                                                        <a class="dropdown-item action-item"
+                                                            href="http://127.0.0.1:8000/modificar_multa/{{m.id_multa}}">Modificar
+                                                        </a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a class="dropdown-item action-item" href="#"
+                                                            onclick="pagarMulta({{ m.id_multa }})">
+                                                            pagar
+                                                        </a>
                                                     </li>
                                                     <li>
-                                                        {% if ec.estado_ec.descripcion == "Eliminado" %}
-                                                            <a class="dropdown-item action-item" href="#" onclick="habilitarEspacioComun({{ ec.id_espacio_comun }})">
-                                                            Recuperar
-                                                            </a>
-                                                        {% else %}
-                                                            <a class="dropdown-item action-item" href="#" onclick="eliminarEspacioComun({{ ec.id_espacio_comun }})">
-                                                                Eliminar
-                                                            </a>
-                                                        {% endif %} 
+                                                        <a class="dropdown-item action-item" href="#"
+                                                            onclick="cancelarMulta({{ m.id_multa }})">
+                                                            Cancelar
+                                                        </a>
                                                     </li>
-                                                    <li>
-                                                        <a class="dropdown-item action-item" href="#" data-bs-toggle="modal" data-bs-target="#verMapaModal" onclick="verMapa('media/{{ ec.imagen }}', '{{ ec.descripcion|escapejs }}')">
-                                                            Ver Mapa
-                                                    </li>
+
                                                     
+
                                                 </ul>
+                                                {% else %}
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                               
+                                                    <li>
+                                                        <a class="dropdown-item action-item" href="#"
+                                                            onclick="eliminarMulta({{ m.id_multa }})">
+                                                            Eliminar
+                                                        </a>
+                                               </li>
+
+                                                </ul>
+                                                {% endif %}
+
                                             </div>
                                         </td>
                                     </tr>

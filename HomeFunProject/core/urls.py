@@ -1,5 +1,5 @@
 from django.urls import path, include
-from core.views import activarGastoComun, agregarPagoMulta, cancelarReservaEspacioComunRes, consulta_estado_multa, crear_gasto_comun, crear_res_espacio_comun_res, desactivarGastoComun, home, modificar_gasto_comun, modificar_morosidad, modificar_res_espacio_comun_res , registro,agregar_administrador, modificar_res_espacio_comun,cancelarReservaEspacioComun,\
+from core.views import activarGastoComun, admin_departamento, agregarPagoMulta, cancelarReservaEspacioComunRes, consulta_estado_multa, crear_gasto_comun, crear_res_espacio_comun_res, desactivarGastoComun, home, modificar_gasto_comun, modificar_morosidad, modificar_res_espacio_comun_res , registro,agregar_administrador, modificar_res_espacio_comun,cancelarReservaEspacioComun,\
     panel_admin, admin_espacios_comunes, eliminarEspacioComun, modificar_espacio_comun, crear_espacio_comun, \
     habilitarEspacioComun,admin_res_espacios_comunes,consulta_estado_cuenta, panel_residente,crear_res_espacio_comun,\
     admin_cuentas,crear_cuenta,desactivarCuenta,activarCuenta, modificar_cuenta, admin_multas , modificar_multa ,\
@@ -71,6 +71,7 @@ urlpatterns = [
     path('agregar_pago_multa/<int:id>/', agregarPagoMulta, name='agregar_pago_multa'),
     path('remover_pago_multa/<int:id>/', removerPagoMulta, name='remover_pago_multa'),
     path('modificar_morosidad/<id>/', modificar_morosidad, name="modificar_morosidad"),
+
 
 
 
