@@ -420,27 +420,29 @@ def activarCuenta(request, id):
     return render(request, 'core/admin_cuentas.html', {
         'form': CrearUsuario(instance=user)
     })
-
 def crear_cuenta(request):
     datos = {
-        'form': CrearUsuario()
+        'form': CrearUsuario()  # Crear una instancia vacía del formulario
     }
+
     if request.method == 'POST':
-        formulario = CrearUsuario(data= request.POST)
+        formulario = CrearUsuario(request.POST)  # Pasar los datos del formulario al POST
         if formulario.is_valid():
+            # Guardar el usuario si el formulario es válido
             formulario.save()
             username = formulario.cleaned_data['username']
-            print(username)
             usuario = User.objects.get(username=username)
-            usuario.is_superuser= 1
+            usuario.is_superuser = 1
             usuario.save()
-            messages.success(request,"Cuenta creada correctamente")
+            messages.success(request, "Cuenta creada correctamente")
             datos['mensaje'] = "Guardados Correctamente"
             return redirect(to="admin_cuentas")
         else:
-            print("Error")
-    return render(request, 'core/crear_cuenta.html',datos) 
+            # Si el formulario no es válido, pasamos el formulario con los errores
+            datos['form'] = formulario  # Aquí se pasan los errores al formulario
+            # No es necesario hacer nada más porque Django Crispy Forms maneja la visualización de errores
 
+    return render(request, 'core/crear_cuenta.html', datos)
 def modificar_cuenta(request, id):
     cuenta_user = User.objects.get(id=id)
     datos = {
