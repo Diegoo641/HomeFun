@@ -7,6 +7,12 @@ from .models import FichaResidente , EspacioComun, ReservaEspComun, Multa, TipoG
 
 class CrearCuentaUsuario (forms.ModelForm):
    correo = forms.EmailField()
+   password = forms.CharField(
+        widget=forms.PasswordInput,
+        label="Contraseña",
+        required=True,
+        help_text="Introduce una contraseña segura."
+    )
    class Meta:
     model = FichaResidente
     fields=["id_residente","nombre","apellido","correo","direccion","rut","genero","comuna","estado_civil"]
