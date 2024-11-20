@@ -13,7 +13,7 @@ class CrearCuentaUsuario (forms.ModelForm):
         widget=forms.PasswordInput,
         label="Contraseña",
         required=True,
-        help_text="Introduce una contraseña segura."
+        help_text="Introduce una contraseña segura.",min_length=7,max_length=10
     )
    class Meta:
     model = FichaResidente
