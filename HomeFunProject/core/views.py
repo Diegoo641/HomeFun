@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
 from core.form import CrearGastoComunForm, CrearMultaForm, CrearTipoMultaForm, GenerarMultaForm,CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
-    CrearReservaEspacioComunForm, ModificarFichaResidenteForm, ModificarGastoComunForm, ModificarTipoGastoComunForm, ModificarTipoMultaForm,ModificarUsuarioForm, ModificarMultaForm, CrearTipoGastoComunForm
+    CrearReservaEspacioComunForm, ModificarDepartamentoForm, ModificarFichaResidenteForm, ModificarGastoComunForm, ModificarTipoGastoComunForm, ModificarTipoMultaForm,ModificarUsuarioForm, ModificarMultaForm, CrearTipoGastoComunForm
 from core.models import Estado_GC, Estado_T_GC, EstadoTipoMulta, FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun,Multa,EstadoMulta,\
 TipoGastoComun, Estado_residente, TipoMulta
 from django.shortcuts import get_object_or_404
@@ -1110,7 +1110,22 @@ def admin_departamento(request):
     datos={
         'dept':dept,
     }
+    return render(request,'core/admin_departamento.html',datos)
 
-    
-    return(request,'core/admin_departamento.html',datos)
+def modificar_departamento(request, id):
+    depto = CasaDepto.objects.get(id_dpto=id)
+    datos = {
+        'form': ModificarDepartamentoForm(instance=depto)
+    }
+    if request.method == 'POST':
+        formulario = ModificarDepartamentoForm(data= request.POST, instance= depto)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Multa modificada correctamente")
+            return redirect(to="admin_departamento")
+        datos = {
+            'form': ModificarDepartamentoForm(instance=depto),
+            'mensaje': "Modificado correctamente"
+        }
 
+    return render(request, 'core/modificar_departamento.html', datos)

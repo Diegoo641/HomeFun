@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 from django import forms
 from .validators import TamañoImagenValidator
-from .models import FichaResidente , EspacioComun, ReservaEspComun, Multa, TipoGastoComun, TipoMulta, GastoComun
+from .models import CasaDepto, FichaResidente , EspacioComun, ReservaEspComun, Multa, TipoGastoComun, TipoMulta, GastoComun
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 
@@ -151,7 +151,15 @@ class ModificarGastoComunForm(forms.ModelForm):
     model= GastoComun
     fields=['nombre','fecha','total','consumo','estado_gc','tipo','id_dpto']
 
+class ModificarDepartamentoForm(forms.ModelForm):
+  class Meta:
+    model = CasaDepto
+    fields=['nro','id_residente']
 
+  def __init__(self, *args, **kwargs):
+      super().__init__(*args, **kwargs)
+      # Hacer el campo 'nro' no editable (solo de lectura)
+      self.fields['nro'].disabled = True
 
 
 
