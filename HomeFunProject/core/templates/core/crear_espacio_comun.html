@@ -15,7 +15,7 @@
 
 
 
-    <title>Registro de colaborador</title>
+    <title>Registro de espacio común</title>
 </head>
 <header>
     {%block content %}
@@ -78,27 +78,29 @@
     {% load crispy_forms_tags %}
     <div class="container">
         <br><br><br><br>
-        <div class="row">
-            <div class="col-12 ">
+        <div class="row justify-content-center">
+            <div class="col-6">
                 <div class="card">
                     <div class="card-body">
-                        <h2 style="text-align: center;">Modificar Espacio Comun</h2>
+                        <h2 style="text-align: center;">Crear Espacio Común</h2>
                         <hr>
-                        <div class="formulario row">
+                        <div class="formulario row justify-content-center">
                             <!-- Primera sección del formulario -->
-                            <div class="col-md-6">
+                            <div class="col-md-6 text-center">
                                 <form id="formulario" method="POST" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     {{ form | crispy }}
                                   
                                     <br>
-                                    <div class="col-md-12">
-                                        <center>
-                                            <input type="submit" value="Registrar" class="btn btn-success btn-block">
-        
-                                        </center>
-                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <input 
+                                            type="submit" 
+                                            value="Registrar" 
+                                            class="btn btn-success" 
+                                            style="min-width: 150px; white-space: nowrap; font-size: 16px;">
 
+                                    </div>
+                                    <br>
                                 </form>
 
                             </div>
