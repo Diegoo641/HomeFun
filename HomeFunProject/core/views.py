@@ -40,7 +40,12 @@ def panel_admin(request):
     cant_activos = residentes.count()
     morosos = GastoComun.objects.filter(estado_gc=3).values('id_dpto__id_residente__rut').annotate(total_monto=Sum('total'))
     cant_morosos = morosos.count()
-    reservas = ReservaEspComun.objects.filter(estado_reserva=3).values('id_espacio_comun__nombre').annotate(total_reservas=Count('id_reserva_esp_comun'))
+    reservas = (ReservaEspComun.objects
+            .filter(estado_reserva=3)
+            .values('id_espacio_comun__nombre')
+            .annotate(total_reservas=Count('id_reserva_esp_comun'))
+            .order_by('-total_reservas')[:5])
+    print(reservas)
     labels = [reserva['id_espacio_comun__nombre'] for reserva in reservas]
     data = [reserva['total_reservas'] for reserva in reservas]
     
@@ -328,13 +333,12 @@ def modificar_res_espacio_comun(request, id):
         if formulario.is_valid():
             reserva = formulario.save()
             messages.success(request,"Espacio comun registrado correctamente")
-            print(formulario)
             residente = reserva.id_residente  # Esto te da acceso al objeto FichaResidente
             rut_residente = residente.rut
-            descripcion = formulario.cleaned_data["descripcion"]
-            fecha = formulario.cleaned_data["fecha"]
-            hora = formulario.cleaned_data["hora"]
-            espacio_comun = formulario.cleaned_data["id_espacio_comun"]
+            descripcion = resEspacioComun.descripcion
+            hora = resEspacioComun.hora
+            espacio_comun = resEspacioComun.id_espacio_comun
+            fecha= resEspacioComun.fecha
             datos['mensaje'] = "Guardados Correctamente"
             # Filtrar los gastos comunes según el 'rut'
             residente = FichaResidente.objects.filter(rut=rut_residente).first()
