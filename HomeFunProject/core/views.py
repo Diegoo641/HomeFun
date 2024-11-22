@@ -250,10 +250,13 @@ def registro(request):
             password = request.POST.get('password')
             usuario.set_password(password)
             usuario.save()
-            #asignar_permisos_administrador(usuario)
-            # user = authenticate(
-            #     username=formulario.cleaned_data["nom_usuario"], password=formulario.cleaned_data["password"])
-            # login(request, user)
+            contenido = "¡¡¡Le informamos que su reserva se ha creado su cuenta de manera correcya!!!\n\n Datos de cueta:\n Nombre usuario : {} \n Pass : {}\n  Para ingresar al sistema ingrese a la siguiente URL\n http://127.0.0.1:8000/accounts/login/ \nDesde ya muchas gracias.\nSaludos".format(usuario.username,password)
+            email = EmailMessage("Reservas HomeFun",
+                                 "Hola! {} :\n\n {}".format(usuario.first_name, contenido),
+                                 '',
+                                 [usuario.email],
+                                 reply_to=[usuario.email])
+            email.send()
             return redirect(to="home")
         data["form"] = formulario
     return render(request, 'registration/registro.html', data)
