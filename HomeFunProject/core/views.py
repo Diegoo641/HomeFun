@@ -369,8 +369,7 @@ def crear_res_espacio_comun(request):
             reserva = formulario.save()
             messages.success(request,"Espacio comun registrado correctamente")
             print(formulario)
-            residente = reserva.id_residente  # Esto te da acceso al objeto FichaResidente
-            rut_residente = residente.rut
+            rut_residente = formulario.cleaned_data["descripcion"]
             descripcion = formulario.cleaned_data["descripcion"]
             fecha = formulario.cleaned_data["fecha"]
             hora = formulario.cleaned_data["hora"]
@@ -439,11 +438,19 @@ def crear_cuenta(request):
             # Guardar el usuario si el formulario es válido
             formulario.save()
             username = formulario.cleaned_data['username']
+            password = formulario.cleaned_data['password1']
             usuario = User.objects.get(username=username)
             usuario.is_superuser = 1
             usuario.save()
             messages.success(request, "Cuenta creada correctamente")
             datos['mensaje'] = "Guardados Correctamente"
+            contenido = "¡¡¡Le informamos que su reserva se ha creado su cuenta de manera correcya!!!\n\n Datos de cueta:\n Nombre usuario : {} \n Pass : {}\n  Para ingresar al sistema ingrese a la siguiente URL\n http://127.0.0.1:8000/accounts/login/ \nDesde ya muchas gracias.\nSaludos".format(usuario.username,password)
+            email = EmailMessage("Reservas HomeFun",
+                                 "Hola! {} :\n\n {}".format(usuario.first_name, contenido),
+                                 '',
+                                 [usuario.email],
+                                 reply_to=[usuario.email])
+            email.send()
             return redirect(to="admin_cuentas")
         else:
             # Si el formulario no es válido, pasamos el formulario con los errores

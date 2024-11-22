@@ -19,7 +19,7 @@ class CrearCuentaUsuario (forms.ModelForm):
     model = FichaResidente
     fields=["id_residente","nombre","apellido","correo","direccion","rut","genero","comuna","estado_civil"]
 
-class CrearUsuario(forms.ModelForm):
+class CrearUsuario(UserCreationForm):
     password1 = forms.CharField(
         widget=forms.PasswordInput,
         label="Contraseña",
@@ -41,17 +41,6 @@ class CrearUsuario(forms.ModelForm):
         model = User
         fields = ['username', "first_name", "last_name", "email", "password1", "password2"]
 
-    def clean(self):
-        cleaned_data = super().clean()
-        password1 = cleaned_data.get('password1')
-        password2 = cleaned_data.get('password2')
-
-        # Validación para las contraseñas
-        if password1 and password2:
-            if password1 != password2:
-                self.add_error('password2', "Las contraseñas no coinciden.")
-
-        return cleaned_data
 
     def clean_password1(self):
         password = self.cleaned_data.get('password1')
