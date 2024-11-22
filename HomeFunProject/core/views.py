@@ -20,6 +20,7 @@ from django.db.models import Sum, Count
 
 
 total = 0
+total_g = 0
 pagar=[]
 
 
@@ -110,7 +111,7 @@ def admin_espacios_comunes(request):
     return render(request, 'core/admin_espacios_comunes.html', datos)
 
 def consulta_estado_cuenta(request):
-    seleccionados = request.session.get('seleccionados', [])
+    seleccionados_gc = request.session.get('seleccionados_gc', [])
     rut_usuario = request.user.username  # Asumiendo que el nombre de usuario es el RUT
     # Filtrar los gastos comunes según el 'rut'
     residente = FichaResidente.objects.filter(rut=rut_usuario).first()
@@ -145,8 +146,8 @@ def consulta_estado_cuenta(request):
 
     datos = {
         'gasto_comun': gasto_comun,
-        'seleccionados': seleccionados,
-        'total': total,
+        'seleccionados_gc': seleccionados_gc,
+        'total_g': total_g,
         'preference_id': preference_id,  # Pasar el ID de la preferencia al template
     }
 
@@ -766,16 +767,16 @@ def agregarPago(request, id):
         try:
             gasto = GastoComun.objects.get(id_gc=id)
             # Obtener la lista actual de seleccionados desde la sesión
-            seleccionados = request.session.get('seleccionados', [])
+            seleccionados_gc = request.session.get('seleccionados_gc', [])
             
             # Añadir el gasto si no está en la lista
-            if id not in seleccionados:
-                seleccionados.append(id)
-                request.session['seleccionados'] = seleccionados
+            if id not in seleccionados_gc:
+                seleccionados_gc.append(id)
+                request.session['seleccionados_gc'] = seleccionados_gc
                 
-            total_actual = request.session.get('total', 0)
-            request.session['total'] = total_actual + gasto.total
-            return JsonResponse({'total': request.session['total']}, status=200)
+            total_actual = request.session.get('total_g', 0)
+            request.session['total_g'] = total_actual + gasto.total
+            return JsonResponse({'total_g': request.session['total_g']}, status=200)
         except GastoComun.DoesNotExist:
             return JsonResponse({'error': 'Gasto no encontrado'}, status=404)
     return JsonResponse({'error': 'Método no permitido'}, status=405)
@@ -787,16 +788,16 @@ def removerPago(request, id):
         try:
             gasto = GastoComun.objects.get(id_gc=id)
             # Obtener la lista actual de seleccionados desde la sesión
-            seleccionados = request.session.get('seleccionados', [])
+            seleccionados_gc = request.session.get('seleccionados_gc', [])
             
             # Eliminar el gasto de la lista
-            if id in seleccionados:
-                seleccionados.remove(id)
-                request.session['seleccionados'] = seleccionados
+            if id in seleccionados_gc:
+                seleccionados_gc.remove(id)
+                request.session['seleccionados_gc'] = seleccionados_gc
             
-            total_actual = request.session.get('total', 0)
-            request.session['total'] = max(0, total_actual - gasto.total)  # Evitar negativos
-            return JsonResponse({'total': request.session['total']}, status=200)
+            total_actual = request.session.get('total_g', 0)
+            request.session['total_g'] = max(0, total_actual - gasto.total)  # Evitar negativos
+            return JsonResponse({'total_g': request.session['total_g']}, status=200)
         except GastoComun.DoesNotExist:
             return JsonResponse({'error': 'Gasto no encontrado'}, status=404)
     return JsonResponse({'error': 'Método no permitido'}, status=405)

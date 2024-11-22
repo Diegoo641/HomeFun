@@ -158,12 +158,12 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         // Obtener la lista de seleccionados desde el backend
-        const seleccionados = {{ seleccionados|safe }}; // Lista de IDs de los gastos seleccionados en la sesión
+        const seleccionados_gc = {{ seleccionados_gc|safe }}; // Lista de IDs de los gastos seleccionados en la sesión
 
         // Marcar los checkboxes correspondientes al cargar la página
         document.querySelectorAll('.select-gasto-comun').forEach(checkbox => {
             const gastoId = parseInt(checkbox.getAttribute('data-id'));
-            if (seleccionados.includes(gastoId)) {
+            if (seleccionados_gc.includes(gastoId)) {
                 checkbox.checked = true;  // Marca los checkboxes que están en la lista de seleccionados
             }
 
@@ -189,7 +189,7 @@
                 })
                 .then(data => {
                     // Actualiza el total en la interfaz
-                    document.getElementById('total-display').innerText = `El total a pagar es: $${data.total}`;
+                    document.getElementById('total-display').innerText = `El total a pagar es: $${data.total_g}`;
                 })
                 .catch(error => {
                     console.error(error);
@@ -255,7 +255,7 @@
                             <!-- Botón a la izquierda -->
                             
                             <!-- Texto a la derecha -->
-                            <h1 id="total-display">El total a pagar es: ${{ request.session.total|default:0 }}</h1>
+                            <h1 id="total-display">El total a pagar es: ${{ request.session.total_g|default:0 }}</h1>
                         </div>
                         <div class="d-grid gap-2 col-12 mx-auto">
 
@@ -323,7 +323,7 @@
                                         <td style="text-align: center; vertical-align: middle;">
                                             <input type="checkbox" class="select-gasto-comun styled-checkbox"
                                                 data-id="{{ gc.id_gc }}" data-total="{{ gc.total }}"
-                                                {% if gc.id_gc in seleccionados %}checked{% endif %} />
+                                                {% if gc.id_gc in seleccionados_gc %}checked{% endif %} />
                                         </td>
                                     </tr>
                                     {% endfor %}
