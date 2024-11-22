@@ -221,7 +221,6 @@
                                 style="width:100%;">
                                 <thead>
                                     <tr>
-                                        <th style="width:5%;">ID</th>
                                         <th style="width:15%;">Descripción</th>
                                         <th style="width:15%;">Valor</th>
                                         <th style="width:15%;">Fecha Ingreso</th>
@@ -236,7 +235,6 @@
                                     {% for m in multa %}
 
                                     <tr>
-                                        <td>{{m.id_multa}}</td>
                                         <td>{{m.descripcion}}</td>
                                         <td>{{m.tipo.monto}}</td>
                                         <td>{{m.fecha_ingreso}}</td>

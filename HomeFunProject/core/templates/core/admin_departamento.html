@@ -198,7 +198,6 @@
                                 style="width:100%;">
                                 <thead>
                                     <tr>
-                                        <th style="width:5%;">ID</th>
                                         <th style="width:15%;">Nro</th>
                                         <th style="width:15%;">Dueño</th>
                                         <th style="width:15%;">Rut</th>
@@ -210,7 +209,6 @@
                                     {% for d in dept %}
 
                                     <tr>
-                                        <td>{{d.id_dpto}}</td>
                                         <td>{{d.nro}}</td>
                                         <td>{{d.id_residente.nombre}} {{d.id_residente.apellido}}</td>
                                         <td>{{d.id_residente.rut}}</td>
