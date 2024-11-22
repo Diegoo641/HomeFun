@@ -82,6 +82,11 @@ class CrearMultaForm(forms.ModelForm):
   class Meta:
     model = Multa
     fields=['descripcion','fecha_ingreso','id_dpto','estado_multa','tipo']
+  def __init__(self, *args, **kwargs):
+      super().__init__(*args, **kwargs)
+      # Configurar el valor inicial para estado_multa
+      self.fields['estado_multa'].initial = 1
+      self.fields['estado_multa'].disabled = True
     
     
 class GenerarMultaForm(forms.ModelForm):
