@@ -26,9 +26,6 @@ pagar=[]
 def es_superusuario_o_staff(user):
     return user.is_superuser or user.is_staff
 
-@login_required
-
-
 def home(request):
     return render(request, 'core/home.html')
 
@@ -988,7 +985,6 @@ def crear_res_espacio_comun_res(request):
             fecha = formulario.cleaned_data["fecha"]
             hora = formulario.cleaned_data["hora"]
             espacio_comun = formulario.cleaned_data["id_espacio_comun"]
-
             formulario.save()
             messages.success(request,"Espacio comun registrado correctamente")
             datos['mensaje'] = "Guardados Correctamente"

@@ -161,7 +161,7 @@
         const seleccionados = {{ seleccionados|safe }}; // Lista de IDs de los gastos seleccionados en la sesión
 
         // Marcar los checkboxes correspondientes al cargar la página
-        document.querySelectorAll('.select-gasto').forEach(checkbox => {
+        document.querySelectorAll('.select-gasto-comun').forEach(checkbox => {
             const gastoId = parseInt(checkbox.getAttribute('data-id'));
             if (seleccionados.includes(gastoId)) {
                 checkbox.checked = true;  // Marca los checkboxes que están en la lista de seleccionados
@@ -321,7 +321,7 @@
                                         <td>{{gc.consumo}} {{gc.tipo.medida}}</td>
                                         <td>{{gc.total}}</td>
                                         <td style="text-align: center; vertical-align: middle;">
-                                            <input type="checkbox" class="select-gasto styled-checkbox"
+                                            <input type="checkbox" class="select-gasto-comun styled-checkbox"
                                                 data-id="{{ gc.id_gc }}" data-total="{{ gc.total }}"
                                                 {% if gc.id_gc in seleccionados %}checked{% endif %} />
                                         </td>
