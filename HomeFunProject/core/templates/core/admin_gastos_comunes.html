@@ -134,6 +134,35 @@
                 }
             });
     }
+
+    function pagarGastoComun(id) {
+        Swal.fire({
+            "title": "¿Deseas Pagar el gasto comun?",
+            "text": "El gasto comun quedara con estado 'Pagado'",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "No, cancelar",
+            "confirmButtonText": "Si, Aceptar",
+            "reverseButtons": true,
+            "confirmButtonColor": "#dc3545"
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    // Cambiar a un método POST para eliminar el espacio
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = "http://127.0.0.1:8000/pagarGastoComun/" + id + "/";
+                    const csrfToken = '{{ csrf_token }}'; // Asegúrate de que estás pasando el token CSRF correctamente
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = 'csrfmiddlewaretoken';
+                    csrfInput.value = csrfToken;
+                    form.appendChild(csrfInput);
+                    document.body.appendChild(form);
+                    form.submit(); // Enviar el formulario
+                }
+            });
+    }
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -273,7 +302,7 @@
                                                 </button>
                                                 
                                                 <!-- Menú deplegable -->
-                                                {% if gc.estado_gc.descripcion == "Eliminado" %}
+                                                {% if gc.estado_gc.descripcion == "Pendiente" %}
 
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
@@ -283,10 +312,15 @@
                                                         </a>
                                                     </li>
 
+                                                    
+                                                    <a class="dropdown-item action-item" href="#"
+                                                            onclick="desactivarGastoComun({{ gc.id_gc }})">
+                                                            Desactivar
+                                                        </a>
                                                     <li>
                                                         <a class="dropdown-item action-item" href="#"
-                                                            onclick="activarGastoComun({{ gc.id_gc }})">
-                                                            Activar
+                                                            onclick="pagarGastoComun({{gc.id_gc}})">
+                                                            pagar
                                                         </a>
                                                     </li>
                                         
@@ -303,8 +337,8 @@
 
                                                     <li>
                                                         <a class="dropdown-item action-item" href="#"
-                                                            onclick="desactivarGastoComun({{ gc.id_gc }})">
-                                                            Desactivar
+                                                            onclick="activarGastoComun({{ gc.id_gc }})">
+                                                            Activar
                                                         </a>
                                                     </li>
                                         

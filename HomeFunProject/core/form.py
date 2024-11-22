@@ -140,10 +140,9 @@ class CrearGastoComunForm(forms.ModelForm):
 
 
 class ModificarGastoComunForm(forms.ModelForm):
-  fecha = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
   class  Meta:
     model= GastoComun
-    fields=['nombre','fecha','total','consumo','estado_gc','tipo','id_dpto']
+    fields=['total','consumo','estado_gc']
 
 class ModificarDepartamentoForm(forms.ModelForm):
   class Meta:

@@ -856,7 +856,18 @@ def activarGastoComun(request, id):
         return redirect(to="admin_gastos_comunes")
     return render(request, 'core/admin_gastos_comunes.html', {
         'form': CrearGastoComunForm(instance=gasto_comun)})
-    
+
+def pagarGastoComun(request, id):
+    gasto_comun = get_object_or_404(GastoComun, id_gc=id)
+    if request.method == 'POST':
+        estado_activado = get_object_or_404(Estado_GC, id_est_gc=1)  
+        gasto_comun.estado_gc = estado_activado
+        gasto_comun.save() 
+        messages.success(request, "Tipo de gasto comun activado")
+        return redirect(to="admin_gastos_comunes")
+    return render(request, 'core/admin_gastos_comunes.html', {
+        'form': CrearGastoComunForm(instance=gasto_comun)})
+
 def modificar_gasto_comun(request, id):
     gasto_comun = GastoComun.objects.get(id_gc=id)
     datos = {
