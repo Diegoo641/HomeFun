@@ -331,7 +331,13 @@
                                         <td>{{gc.id_dpto.id_residente.rut}}</td>
                                         <td>{{gc.id_dpto}}</td>
                                         <td>{{gc.consumo}} {{gc.tipo.medida}}</td>
+                                        {% if gc.total is not None %}
+                                        <!-- El valor no es nulo -->
                                         <td>{{gc.total}}</td>
+                                        {% else %}
+                                        <!-- El valor es nulo -->
+                                        <td>0</td>
+                                        {% endif %}
                                         <td style="text-align: center; vertical-align: middle;">
                                             <input type="checkbox" class="select-gasto-comun styled-checkbox"
                                                 data-id="{{ gc.id_gc }}" data-total="{{ gc.total }}"
