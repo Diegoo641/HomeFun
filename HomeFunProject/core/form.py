@@ -170,6 +170,13 @@ class CrearGastoComunForm(forms.ModelForm):
     model= GastoComun
     fields=['nombre','fecha','total','consumo','estado_gc','tipo','id_dpto']
 
+  def __init__(self, *args, **kwargs):
+      super().__init__(*args, **kwargs)
+      # Hacer el campo 'nro' no editable (solo de lectura)
+      self.fields['total'].disabled = True
+      self.fields['estado_gc'].initial = 2
+      self.fields['estado_gc'].disabled = True
+
 
 class ModificarGastoComunForm(forms.ModelForm):
   class  Meta:
