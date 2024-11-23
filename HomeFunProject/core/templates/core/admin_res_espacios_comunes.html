@@ -224,15 +224,24 @@
                                         <td>{{rec.hora}}</td>
                                         <td>{{rec.estado_reserva.descripcion}}</td>
                                         <td>{{rec.id_residente.nombre}}</td>
-                                        <td>
+                                        <td>                                            
+                                            {% if rec.estado_reserva.descripcion == "Cancelado" %}
+
+                                            <a class="dropdown-item action-item fw-bold" 
+                                            href="#">
+                                            Editar Reserva
+                                            </a> 
+                                            {% else %}
                                             <a class="dropdown-item action-item fw-bold" 
                                             href="http://127.0.0.1:8000/modificar_res_espacio_comun/{{rec.id_reserva_esp_comun}}">
                                             Editar Reserva
                                             </a> 
+                                            {% endif %}
+
                                         </td>
                                         <td>    
                                             {% if rec.estado_reserva.descripcion == "Cancelado" %}
-                                                        <a class="dropdown-item action-item text-danger fw-bold" href="#" onclick="cancelarResEspacioComun({{ rec.id_reserva_esp_comun }})" disabled>
+                                                        <a class="dropdown-item action-item text-danger fw-bold" href="#">
                                                                 Reserva Cancelada
                                                             </a>
                                                         
