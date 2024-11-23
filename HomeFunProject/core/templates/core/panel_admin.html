@@ -26,40 +26,7 @@
         <!-- FontAwesome para el ícono de ayuda -->
         <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="{% static 'core/css/whatsapp.css' %}">
-        <style>
-            body {
-                padding-top: 40px; /* Ajusta este valor según la altura de tu navbar */
-            }
-    
-            /* Estilo para asegurar que el contenedor del gráfico sea fluido */
-            .chart-container {
-                position: relative;
-                height: 50vh; /* Puedes ajustar la altura a tus necesidades */
-                width: 100%;
-            }
 
-                /* Estilos personalizados para las etiquetas */
-            .badge-custom {
-                padding: 0.5em 1em;
-                border-radius: 0.25rem;
-                font-size: 0.875rem;
-                font-weight: 500;
-            }
-
-            .bg-lavender { background-color: #e5d1ff; color: #6c757d; }
-            .bg-pink { background-color: #ffcccc; color: #6c757d; }
-            .bg-yellow { background-color: #fff3cd; color: #6c757d; }
-            .bg-orange { background-color: #ffc107; color: #fff; }
-            .bg-green { background-color: #d4edda; color: #155724; }
-            .bg-blue { background-color: #cfe2ff; color: #084298; }
-
-            thead th {
-                text-align: center;
-                vertical-align: middle; 
-            }
-    
-            
-        </style>
     </head>
 
 <!-- NAV -->
@@ -67,20 +34,57 @@
 {% include 'nav_bar.html'%}
 {% endblock %}
 <!-- FIN NAV -->
+<style>
+    body {
+        background-image: url("{% static 'core/img/Condominio2.jpg'%}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding-top: 0px;  /* Ajusta este valor a lo que necesites */
+        margin-top: 70px;  /* Ajusta este valor para pegar el contenido aún más */
+        overflow-x: hidden;
+    }
+    .container {
+        margin-top: -100px;  /* Ajusta el valor según lo necesario */
+    }
+
+    /* Estilo para asegurar que el contenedor del gráfico sea fluido */
+    .chart-container {
+        position: relative;
+        height: 50vh; /* Puedes ajustar la altura a tus necesidades */
+        width: 100%;
+    }
+
+        /* Estilos personalizados para las etiquetas */
+    .badge-custom {
+        padding: 0.5em 1em;
+        border-radius: 0.25rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    .bg-lavender { background-color: #e5d1ff; color: #6c757d; }
+    .bg-pink { background-color: #ffcccc; color: #6c757d; }
+    .bg-yellow { background-color: #fff3cd; color: #6c757d; }
+    .bg-orange { background-color: #ffc107; color: #fff; }
+    .bg-green { background-color: #d4edda; color: #155724; }
+    .bg-blue { background-color: #cfe2ff; color: #084298; }
+
+    thead th {
+        text-align: center;
+        vertical-align: middle; 
+    }
+
+    
+</style>
     <body>
 
-        
-<br>
         <div class="container my-3 bg-dark text-white rounded-3">
             <div class="d-flex justify-content-between align-items-center">
                 <p class="text-light fs-4 mb-0 mx-auto text-center">Administración de espacios comunes</p>
                 <i class="fas fa-question-circle" style="color: white; font-size: 28px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#helpModal"></i>
             </div>
         </div>
-        
 
-        <hr class="my-4">
-               
 <!-- Modal Activos -->
         <div>
             <div class="modal fade " id="Activos" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -117,10 +121,6 @@
                         <button class="btn btn-success" onclick="exportExcel()">Exportar a Excel</button>
                         <button class="btn btn-danger" onclick="exportPDF()">Exportar a PDF</button>
                     </div>
-                    {% comment %} <div class="modal-footer">
-                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Understood</button> 
-                    </div> {% endcomment %}
                   </div>
                 </div>
               </div>  
@@ -133,7 +133,6 @@
                         <h1 class="modal-title fs-6" id="staticBackdropLabel">Residentes Morosos
                             
                         </h1>
-                        {% comment %} <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> {% endcomment %}
                         </div>
                         <div class="modal-body">
                             <table class="table table-bordered table-striped table text-start" id="data-table2">
@@ -155,10 +154,6 @@
                             <button class="btn btn-success" onclick="exportExcel()">Exportar a Excel</button>
                             <button class="btn btn-danger" onclick="exportPDF()">Exportar a PDF</button>
                         </div>
-                        {% comment %} <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Understood</button>
-                        </div> {% endcomment %}
                     </div>
                     </div>
                 </div>
@@ -207,7 +202,6 @@
                 <div class="col-12">
                     <div class="chart-container">
                         <h3 class="text-center fs-4">Espacios comunes más utilizados 
-                            {% comment %} <i class="fas fa-question-circle help-icon" data-bs-toggle="modal" data-bs-target="#helpModal"></i> {% endcomment %}
                         </h3>
                         <canvas id="barChart"></canvas>
                     </div>
@@ -305,6 +299,13 @@
                 </div>
             </div>
         </div>
+        <script>
+            function closeWhatsAppButton() {
+                // Ocultar el botón flotante añadiendo la clase "hidden"
+                const whatsappButton = document.getElementById('whatsapp-button');
+                whatsappButton.classList.add('hidden');
+            }
+        </script>
 
         <!-- jQuery -->
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -454,12 +455,3 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     </body>
     </html>
-    
-
-
-
-{% comment %} <!-- NAV -->
-{% block content %}
-{% include 'nav_bar.html'%}
-{% endblock %}
-<!-- FIN NAV --> {% endcomment %}

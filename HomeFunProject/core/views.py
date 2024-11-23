@@ -1178,7 +1178,7 @@ def modificar_departamento(request, id):
         formulario = ModificarDepartamentoForm(data= request.POST, instance= depto)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, "Multa modificada correctamente")
+            messages.success(request, "Residente de departamento modificado correctamente")
             return redirect(to="admin_departamento")
         datos = {
             'form': ModificarDepartamentoForm(instance=depto),

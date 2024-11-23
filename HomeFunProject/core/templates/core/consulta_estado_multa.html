@@ -27,6 +27,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <link rel="stylesheet" href="{% static 'core/css/whatsapp.css' %}">
 
 </head>
 <!-- NAV -->
@@ -37,6 +38,15 @@
 
 
 <Style>
+    body {
+        background-image: url("{% static 'core/img/Condominio2.jpg'%}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding-top: 80px; /* Ajusta este valor según la altura de tu navbar */
+        overflow-x: hidden;
+        
+
+        }
     .right {
         text-align: right !important;
     }
@@ -239,9 +249,16 @@
     <!-- ----------------------- -->
 
     <!-- BOTON AGREGAR TALLER -->
-    <br>
-    <div class="container my-3 bg-dark text-white rounded-3">
-        <p class="text-md-center text-light fs-3"> Multas</p>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="container my-3 bg-dark text-white rounded-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <p class="text-light fs-4 mb-0 mx-auto text-center"> Centro pago de Multas</p>
+                    <i class="fas fa-question-circle" style="color: white; font-size: 28px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#helpModal"></i>
+                </div>
+            </div>
+        </div>
     </div>
     <br>
 
@@ -270,8 +287,8 @@
                                 <thead>
                                     <tr>
                                         <th style="width:15%;">Descricion</th>
-                                        <th style="width:15%;">Estado</th>
-                                        <th style="width:10%;">Fecha</th>
+                                        {% comment %} <th style="width:15%;">Estado</th> {% endcomment %}
+                                        {% comment %} <th style="width:10%;">Fecha</th> {% endcomment %}
                                         <th style="width:10%;">Depto</th>
                                         <th style="width:10%;">Monto</th>
                                         <th style="width:10%;">Acciones</th>
@@ -311,10 +328,11 @@
                                     </div>
 
                                     <tr>
-                                        <td>{{m.nombre}} {{ gc.fecha|date:"F" }}</td>
-                                        <td>{{m.id_dpto.id_residente.rut}}</td>
-                                        <td>{{m.id_dpto}}</td>
                                         <td>{{m.tipo.descripcion}} </td>
+                                        {% comment %} <td>{{m.nombre}} {{ gc.fecha|date:"F" }}</td> {% endcomment %}
+                                        {% comment %} <td>{{m.id_dpto.id_residente.rut}}</td> {% endcomment %}
+                                        <td>{{m.id_dpto}}</td>
+                                        
                                         <td>{{m.tipo.monto}} </td>
                                         
                                         
@@ -335,11 +353,123 @@
         </div>
         <br>
 
+        <div id="whatsapp-button" class="whatsapp-float">
+            <a href="https://api.whatsapp.com/send?phone=56949052463&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%HomeFun.cl." class="floatWapp" target="_blank">
+              <img src="{% static 'core/img/WhatsApp.svg.webp' %}" alt="Chatea con nosotros" class="whatsapp-icon">
+              
+            </a>
+            <button class="close-btn" onclick="closeWhatsAppButton()">×</button>
+          </div>
+        
+          <!-- Modal de ayuda -->
+          <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white"> <!-- Cambia bg-primary por el color que desees -->
+                        <h5 class="modal-title text-center" id="helpModalLabel">
+                            <i class="fa-solid fa-users-gear me-2"></i> Fun Ayuda - Descripcion de cada tarjeta
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-5 ms-auto">
+                                <div class="card w-75">
+                                    <div class="card-body">
+                                      {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                                      <p class="card-text">
+                                        <img src="{% static "core/img/Noticias_comunidad.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ms-auto me-3">
+                                <div class="card w-90">
+                                    <div class="card-body">
+                                      <h5 class="card-title">Descripcion Carrusel de noticias</h5>
+                                      <p class="card-text">En esta sección, los administardores del sistemas permiten que visualices información importante para la comunidad a objeto que siempre tengas conocimiento de los acontencimientos de tu residencia.</p>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="row">
+                            <div class="col-md-5 ms-auto">
+                                <div class="card w-75">
+                                    <div class="card-body">
+                                      {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                                      <p class="card-text">
+                                        <img src="{% static "core/img/Reservar_Espacios.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ms-auto me-3">
+                                <div class="card w-90">
+                                    <div class="card-body">
+                                      <h5 class="card-title">Descripcion Tarjeta Reservar espacios comunes</h5>
+                                      <p class="card-text">Al dar clic sobre esta tarjeta en ver información, el sistema te dirigirá a la vista donde podrás visualizar los espacios comunes que has reservado, para que puedas cancelar o editar la reserva. También permite crear nuevas reservas de espacios cunes. Po último, podras descargar la información de las reservas realizadas.</p>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="row">
+                            <div class="col-md-5 ms-auto">
+                                <div class="card w-75">
+                                    <div class="card-body">
+                                      {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                                      <p class="card-text">
+                                        <img src="{% static "core/img/Ver_perfil.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ms-auto me-3">
+                                <div class="card w-90">
+                                    <div class="card-body">
+                                      <h5 class="card-title">Descripcion Tarjeta Ver perfil</h5>
+                                      <p class="card-text">Al dar clic sobre esta tarjeta en ver información, el sistema te dirigirá a la vista donde podrás visualizara los datos de tú perfil a objeto que puedas modificar cierta información relevante para tu reconocimiento frente a la comunidad.</p>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="row">
+                            <div class="col-md-5 ms-auto">
+                                <div class="card w-75">
+                                    <div class="card-body">
+                                      {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                                      <p class="card-text">
+                                        <img src="{% static "core/img/Pagar.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ms-auto me-3">
+                                <div class="card w-90">
+                                    <div class="card-body">
+                                      <h5 class="card-title">Descripcion Tarjeta Pagas Gastos comunes</h5>
+                                      <p class="card-text">Al dar clic sobre esta tarjeta en ver informació, el sistema te dirigirá a la vista donde podrás visualizar las deudas que tienes con respecto a gastos comunes o multas. También, descargar la información que ves por pantalla.</p>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                          
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
 
         {% comment %} <!-- Footer -->
         {% include 'Footer.html'%}
         <!-- Footer FIN--> {% endcomment %}
-
+        <script>
+            function closeWhatsAppButton() {
+                // Ocultar el botón flotante añadiendo la clase "hidden"
+                const whatsappButton = document.getElementById('whatsapp-button');
+                whatsappButton.classList.add('hidden');
+            }
+        </script>
         <!-- Bootstrap-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"

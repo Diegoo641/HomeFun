@@ -22,7 +22,7 @@
             background-image: url("{% static 'core/img/Condominio2.jpg'%}");
             background-repeat: no-repeat;
             background-size: cover;
-            padding-top: 80px; /* Ajusta este valor según la altura de tu navbar */
+            padding-top: 70px; /* Ajusta este valor según la altura de tu navbar */
             overflow-x: hidden;
             
 
@@ -150,12 +150,14 @@
 
 
 <div id="whatsapp-button" class="whatsapp-float">
-    <a href="https://api.whatsapp.com/send?phone=56949052463&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Risi.cl." class="floatWapp" target="_blank">
-      <img src="{% static 'core/img/WhatsApp.svg.webp' %}" alt="Chatea con nosotros" class="whatsapp-icon">
-      
+    <a href="https://api.whatsapp.com/send?phone=56949052463&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20HomeFun.cl." 
+       class="floatWapp" 
+       target="_blank">
+        <img src="{% static 'core/img/WhatsApp.svg.webp' %}" alt="Chatea con nosotros" class="whatsapp-icon">
     </a>
     <button class="close-btn" onclick="closeWhatsAppButton()">×</button>
-  </div>
+</div>
+
 
   <!-- Modal de ayuda -->
   <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
@@ -255,8 +257,16 @@
             </div>
         </div>
     </div>
+    <script>
+        function closeWhatsAppButton() {
+            // Ocultar el botón flotante añadiendo la clase "hidden"
+            const whatsappButton = document.getElementById('whatsapp-button');
+            whatsappButton.classList.add('hidden');
+        }
+    </script>
+    
 </body>
-  
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>

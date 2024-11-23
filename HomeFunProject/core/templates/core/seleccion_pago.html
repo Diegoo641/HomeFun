@@ -14,7 +14,10 @@
     <title>Panel Administración</title>
 
 
-
+    {% block content %}
+    {% include 'nav_bar.html'%}
+    {% endblock %}
+</head>
     <style>
       
         {% comment %} /* Estilo de fondo con la imagen */ {% endcomment %}
@@ -68,12 +71,10 @@
 
       
     </style>
-</head>
+
 
 <body>
-    {% block content %}
-    {% include 'nav_bar.html'%}
-    {% endblock %}
+
   <!-- Botón de ayuda -->
 
 <div class="row">
@@ -238,6 +239,7 @@
             </div>
         </div>
     </div>
+    <script src="{% static 'core/js/whatsapp.js' %}"></script>
 </body>
   
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

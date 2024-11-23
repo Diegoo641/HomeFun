@@ -1,5 +1,10 @@
 // whatsapp.js
 function closeWhatsAppButton() {
-    const whatsappButton = document.getElementById("whatsapp-button");
-    whatsappButton.classList.add("hidden");
-  }
+  // Ocultar el botón flotante añadiendo la clase "hidden"
+  const whatsappButton = document.getElementById('whatsapp-button');
+  whatsappButton.classList.add('hidden');
+}
+
+  <script>
+
+</script>
