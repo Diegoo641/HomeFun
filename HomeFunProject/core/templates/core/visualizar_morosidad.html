@@ -232,7 +232,6 @@
                                         <th style="width:10%;">Depto</th>
                                         <th style="width:10%;">Consumo</th>
                                         <th style="width:15%;">Total</th>
-                                        <th style="width:10%;">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -276,53 +275,7 @@
                                         <td>{{gc.id_dpto}}</td>
                                         <td>{{gc.consumo}} {{gc.tipo.medida}}</td>
                                         <td>{{gc.total}}</td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Acciones
-                                                </button>
-                                                
-                                                <!-- Menú deplegable -->
-                                                {% if gc.estado_gc.descripcion == "Eliminado" %}
-
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                                                    <li>
-                                                        <a class="dropdown-item action-item"
-                                                            href="http://127.0.0.1:8000/modificar_morosidad/{{gc.id_gc}}">Modificar
-                                                        </a>
-                                                    </li>
-
-                                                    <li>
-                                                        <a class="dropdown-item action-item" href="#"
-                                                            onclick="activarGastoComun({{ gc.id_gc }})">
-                                                            Activar
-                                                        </a>
-                                                    </li>
-                                        
-
-                                                </ul>
-                                                {% else %}
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                                                    <li>
-                                                        <a class="dropdown-item action-item"
-                                                            href="http://127.0.0.1:8000/modificar_morosidad/{{gc.id_gc}}">Modificar
-                                                        </a>
-                                                    </li>
-
-                                                    <li>
-                                                        <a class="dropdown-item action-item" href="#"
-                                                            onclick="desactivarGastoComun({{ gc.id_gc }})">
-                                                            Desactivar
-                                                        </a>
-                                                    </li>
-                                        
-
-                                                </ul>
-                                                {% endif %}
-                                            </div>
-                                        </td>
+                                       
                                     </tr>
                                     {% endfor %}
                                 </tbody>
