@@ -116,6 +116,9 @@ def consulta_estado_cuenta(request):
     # Filtrar los gastos comunes según el 'rut'
     residente = FichaResidente.objects.filter(rut=rut_usuario).first()
     print(residente.rut)
+    controler = Controller()
+
+    
 
     if residente:
         gasto_comun = GastoComun.objects.filter(id_dpto__id_residente__rut=residente.rut)
@@ -123,33 +126,28 @@ def consulta_estado_cuenta(request):
     else:
         gasto_comun = GastoComun.objects.none()
 
-   # Configurar Mercado Pago
-    sdk = mercadopago.SDK("TEST-799766335101209-102200-dc91acd07d20881aa5b98b60bf6e8129-2049276181")  # Reemplaza con tu token de acceso
-    preference_data = {
-        "purpose": "wallet_purchase",
-        "items": [
-            {
-                "title": "Gasto Común",
-                "quantity": 1,
-                "unit_price": 100,  # Asegúrate de que `total` sea un número válido
-            }
-        ]
-    }
-
-    # Crear preferencia en Mercado Pago
-    try:
-        preference_response = sdk.preference().create(preference_data)
-        preference_id = preference_response["response"]["id"]
-    except Exception as e:
-        preference_id = None
-        print(f"Error creando preferencia: {e}")
-
     datos = {
         'gasto_comun': gasto_comun,
         'seleccionados_gc': seleccionados_gc,
         'total_g': total_g,
-        'preference_id': preference_id,  # Pasar el ID de la preferencia al template
     }
+    preferencias = controler.pagar(datos['total_g'])
+
+    try:
+         url = ""
+         url = str(request)
+         aprovado="status=approved"
+         if(aprovado in url):
+             return redirect(to="panel_residente")
+         else:
+             print("No hay pago")
+         print("la url es : " , url)
+         preferencias = controler.pagar(total_g)
+         datos['preference_id']=preferencias["response"]["id"]
+         
+    except:
+         datos['mensaje'] = 'Error productos no encontrados'
+
 
     return render(request, 'core/consulta_estado_cuenta.html', datos)
 
@@ -766,20 +764,28 @@ def agregarPago(request, id):
     if request.method == 'POST':
         try:
             gasto = GastoComun.objects.get(id_gc=id)
-            # Obtener la lista actual de seleccionados desde la sesión
             seleccionados_gc = request.session.get('seleccionados_gc', [])
             
-            # Añadir el gasto si no está en la lista
             if id not in seleccionados_gc:
                 seleccionados_gc.append(id)
                 request.session['seleccionados_gc'] = seleccionados_gc
                 
-            total_actual = request.session.get('total_g', 0)
-            request.session['total_g'] = total_actual + gasto.total
-            return JsonResponse({'total_g': request.session['total_g']}, status=200)
+                total_actual = request.session.get('total_g', 0)
+                request.session['total_g'] = total_actual + gasto.total
+
+                # Regenerar la preferencia con el nuevo total
+                controler = Controller()
+                preference = controler.pagar(request.session['total_g'])
+
+                return JsonResponse({
+                    'total_g': request.session['total_g'],
+                    'preference_id': preference["response"]["id"]
+                }, status=200)
+            return JsonResponse({'error': 'Gasto ya agregado'}, status=400)
         except GastoComun.DoesNotExist:
             return JsonResponse({'error': 'Gasto no encontrado'}, status=404)
     return JsonResponse({'error': 'Método no permitido'}, status=405)
+
 
 
 @csrf_exempt
