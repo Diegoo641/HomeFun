@@ -76,6 +76,12 @@ class CrearReservaEspacioComunForm(forms.ModelForm):
   class Meta:
     model = ReservaEspComun
     fields=['descripcion','fecha','hora','id_espacio_comun','id_residente','estado_reserva']
+  
+  def __init__(self, *args, **kwargs):
+      super().__init__(*args, **kwargs)
+      # Configurar el valor inicial para estado_multa
+      self.fields['estado_reserva'].initial = 1
+      self.fields['estado_reserva'].disabled = True
 
 class CrearReservaEspacioComunResForm(forms.ModelForm):
   hora = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))
@@ -95,6 +101,8 @@ class CrearReservaEspacioComunResForm(forms.ModelForm):
             if residente:
                 self.fields['id_residente'].initial = residente.id_residente  # Usamos el id del residente
                 self.fields['id_residente'].disabled = True  # Deshabilitamos el campo
+                self.fields['estado_reserva'].initial = 1
+                self.fields['estado_reserva'].disabled = True
 
 class CrearMultaForm(forms.ModelForm):
   fecha_ingreso = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
