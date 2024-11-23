@@ -361,7 +361,7 @@
                                                 </button>
 
                                                 <!-- Menú deplegable -->
-                                                {% if gc.estado_gc.descripcion == "Pendiente" %}
+                                                {% if gc.estado_gc.descripcion == "Pendiente" or gc.estado_gc.descripcion == "Atrasado" %}
 
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
@@ -377,10 +377,18 @@
                                                         Desactivar
                                                     </a>
                                                     <li>
+                                                        {% if gc.total is None or gc.total == 0  %}
+
+                                                        <a class="dropdown-item action-item" href="#" aria-disabled="true">
+                                                            pagar
+                                                        </a>
+                                                        {% else %}
+                                                        
                                                         <a class="dropdown-item action-item" href="#"
                                                             onclick="pagarGastoComun({{gc.id_gc}})">
                                                             pagar
                                                         </a>
+                                                        {% endif %}
                                                     </li>
 
                                                     <li>
