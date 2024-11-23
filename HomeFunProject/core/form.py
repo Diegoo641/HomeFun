@@ -77,6 +77,13 @@ class CrearReservaEspacioComunForm(forms.ModelForm):
     model = ReservaEspComun
     fields=['descripcion','fecha','hora','id_espacio_comun','id_residente','estado_reserva']
 
+class CrearReservaEspacioComunResForm(forms.ModelForm):
+  hora = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))
+  fecha = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+  class Meta:
+    model = ReservaEspComun
+    fields=['descripcion','fecha','hora','id_espacio_comun','id_residente','estado_reserva']
+
 class CrearMultaForm(forms.ModelForm):
   fecha_ingreso = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
   class Meta:

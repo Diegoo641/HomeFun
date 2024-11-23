@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Permission
-from core.form import CrearGastoComunForm, CrearMultaForm, CrearTipoMultaForm, GenerarMultaForm,CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
+from core.form import CrearGastoComunForm, CrearMultaForm, CrearReservaEspacioComunResForm, CrearTipoMultaForm, GenerarMultaForm,CrearUsuario, CrearCuentaUsuario , EspacioComunForm, ModReservaEspacioComunForm, \
     CrearReservaEspacioComunForm, ModificarDepartamentoForm, ModificarFichaResidenteForm, ModificarGastoComunForm, ModificarTipoGastoComunForm, ModificarTipoMultaForm,ModificarUsuarioForm, ModificarMultaForm, CrearTipoGastoComunForm
 from core.models import Estado_GC, Estado_T_GC, EstadoTipoMulta, FichaResidente, EspacioComun, Estado_EC, ReservaEspComun, Estado_R_EC,GastoComun,Multa,EstadoMulta,\
 TipoGastoComun, Estado_residente, TipoMulta
@@ -982,33 +982,50 @@ def modificar_res_espacio_comun_res(request, id):
 
 def crear_res_espacio_comun_res(request):
     datos = {
-        'form': CrearReservaEspacioComunForm()
+        'form': CrearReservaEspacioComunResForm()
     }
     if request.method == 'POST':
-        formulario = CrearReservaEspacioComunForm(data= request.POST)
+        formulario = CrearReservaEspacioComunResForm(data=request.POST)
         if formulario.is_valid():
-            formulario.cleaned_data["estado_reserva"]
-            descripcion = formulario.cleaned_data["descripcion"]
-            fecha = formulario.cleaned_data["fecha"]
-            hora = formulario.cleaned_data["hora"]
-            espacio_comun = formulario.cleaned_data["id_espacio_comun"]
-            formulario.save()
-            messages.success(request,"Espacio comun registrado correctamente")
-            datos['mensaje'] = "Guardados Correctamente"
             rut_usuario = request.user.username  # Asumiendo que el nombre de usuario es el RUT
-            # Filtrar los gastos comunes según el 'rut'
+            # Filtrar el residente usando el 'rut' del usuario
             residente = FichaResidente.objects.filter(rut=rut_usuario).first()
-            contenido = "¡¡¡Le informamos que su reserva se ha realizado de manera correcta!!!\n\n Datos de reserva:\n Descripcion : {} \n Fecha : {}\n Hora: {}\n Espacio comun: {} \n Para revisar el detalle ingresar a la siguiente URL\n http://127.0.0.1:8000/res_espacios_comunes \nDesde ya muchas gracias.\nSaludos".format(descripcion,fecha,hora,espacio_comun)
-            email = EmailMessage("Reservas HomeFun",
-                                 "Hola! {} :\n\n {}".format(residente.nombre, contenido),
-                                 '',
-                                 [residente.correo],
-                                 reply_to=[residente.correo])
+            
+            if not residente:
+                messages.error(request, "No se encontró un residente asociado con este usuario.")
+                return render(request, 'core/crear_res_espacio_comun_res.html', datos)
+            
+            # Asignar el residente a la reserva
+            formulario.instance.id_residente = residente  # Asignamos el objeto FichaResidente a id_residente
+            formulario.instance.estado_reserva = formulario.cleaned_data.get('estado_reserva')  # Si es necesario asignar el estado
+            
+            # Guardamos la reserva
+            formulario.save()
+            messages.success(request, "Espacio común registrado correctamente")
+            datos['mensaje'] = "Guardado correctamente"
+            
+            # Enviar correo al residente
+            contenido = f"¡¡¡Le informamos que su reserva se ha realizado de manera correcta!!!\n\n" \
+                        f"Datos de reserva:\nDescripcion: {formulario.cleaned_data['descripcion']}\nFecha: {formulario.cleaned_data['fecha']}\nHora: {formulario.cleaned_data['hora']}\nEspacio común: {formulario.cleaned_data['id_espacio_comun']}\n" \
+                        "Para revisar el detalle, ingrese a la siguiente URL: http://127.0.0.1:8000/res_espacios_comunes\n" \
+                        "¡Desde ya muchas gracias!\nSaludos"
+            
+            email = EmailMessage(
+                "Reservas HomeFun",
+                f"Hola! {residente.nombre} :\n\n {contenido}",
+                '',
+                [residente.correo],
+                reply_to=[residente.correo]
+            )
             email.send()
+
+            # Redirigir a la página de reservas
             return redirect(to="res_espacios_comunes")
         else:
-            print("Error")
-    return render(request, 'core/crear_res_espacio_comun.html',datos)  
+            print("Error: el formulario no es válido.")
+            # Aquí puedes agregar un mensaje de error para el usuario si es necesario
+    return render(request, 'core/crear_res_espacio_comun_res.html', datos)
+
 
 
 
