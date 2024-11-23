@@ -34,6 +34,15 @@ def home(request):
 def inicio(request):
     return render(request, 'core/inicio.html')
 
+
+@login_required
+def seleccion_tipo_usuario(request):
+    return render(request, 'core/seleccion_tipo_usuario.html')
+
+def seleccion_pago(request):
+    return render(request, 'core/seleccion_pago.html')
+
+
 def panel_admin(request):
     residentes = FichaResidente.objects.filter(estado_id=1)
     cant_activos = residentes.count()

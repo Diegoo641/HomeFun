@@ -1,4 +1,5 @@
 from django.urls import path, include
+from core import views
 from core.views import activarGastoComun, admin_departamento, agregarPagoMulta, cancelarReservaEspacioComunRes, consulta_estado_multa, crear_gasto_comun, crear_res_espacio_comun_res, desactivarGastoComun, home, modificar_departamento, modificar_gasto_comun, modificar_morosidad, modificar_res_espacio_comun_res, pagarGastoComun , registro,agregar_administrador, modificar_res_espacio_comun,cancelarReservaEspacioComun,\
     panel_admin, admin_espacios_comunes, eliminarEspacioComun, modificar_espacio_comun, crear_espacio_comun, \
     habilitarEspacioComun,admin_res_espacios_comunes,consulta_estado_cuenta, panel_residente,crear_res_espacio_comun,\
@@ -7,10 +8,11 @@ from core.views import activarGastoComun, admin_departamento, agregarPagoMulta, 
     pagarDeuda,crear_tipo_gasto_comun,activarTipoGastoComun,desactivarTipoGastoComun, Multas, generar_multa,modificar_tipo_gasto_comun,\
     admin_ficha_residentes,modificar_ficha_residente,activarFichaResidente,desactivarFichaResidente,admin_tipo_multas,\
     crear_tipo_multa, modificar_tipo_multa, activarTipoMulta, desactivarTipoMulta, agregarPago,removerPago,admin_gastos_comunes,\
-    perfil,calcularGasto
+    perfil,calcularGasto, seleccion_tipo_usuario, seleccion_pago
 
 urlpatterns = [
-    path('', home, name="home"),
+    path('',seleccion_tipo_usuario, name='seleccion_tipo_usuario'), 
+    path('seleccion_tipo_usuario',seleccion_tipo_usuario,name="seleccion_tipo_usuario"),
     path('home', home, name="home"),
     path('registro',registro, name="registro"),
     path('agregar_administrador', agregar_administrador, name="agregar_administrador"),
@@ -76,6 +78,8 @@ urlpatterns = [
     path('pagarGastoComun/<id>/',pagarGastoComun,name="pagarGastoComun"),
     path('perfil', perfil, name="perfil"),
     path('calcularGasto/<id>/',calcularGasto,name="calcularGasto"),
+    path('seleccion_pago',seleccion_pago,name="seleccion_pago"),
+    
 
 
 
