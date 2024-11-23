@@ -91,7 +91,7 @@
     <div class="col-md-12">
         <div class="container my-3 bg-dark text-white rounded-3">
             <div class="d-flex justify-content-between align-items-center">
-                <p class="text-light fs-4 mb-0 mx-auto text-center">Bienvenido a tu portal, selecciona el tipo de usuario</p>
+                <p class="text-light fs-4 mb-0 mx-auto text-center">Bienvenido a tu portal, {{ user.username }}</p>
                 <i class="fas fa-question-circle" style="color: white; font-size: 28px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#helpModal"></i>
             </div>
         </div>
@@ -109,6 +109,7 @@
             <div class="card bg-primary text-white shadow-lg rounded-4" style="height: 400px;">
                 <div class="card-body text-center d-flex flex-column justify-content-between">
                     <div>
+                        <br><br><br>
                         <i class="fa-solid fa-building fa-5x mb-3"></i>
                         <h4 class="card-title">Administrador</h4>
                         <p class="card-text mt-2">
@@ -128,6 +129,7 @@
             <div class="card bg-info text-white shadow-lg rounded-4" style="height: 400px;">
                 <div class="card-body text-center d-flex flex-column justify-content-between">
                     <div>
+                        <br><br><br>
                         <i class="fa-solid fa-users fa-5x mb-3"></i>
                         <h4 class="card-title">Residentes</h4>
                         <p class="card-text mt-2">
@@ -137,6 +139,7 @@
                     <a href="{% url 'panel_residente' %}" class="btn btn-outline-light btn-sm mt-3">Ingresar como residente</a>
                 </div>
             </div>
+            <br>
         </div>
         {% endif %}
 
