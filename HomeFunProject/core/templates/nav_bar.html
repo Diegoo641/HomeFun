@@ -95,11 +95,11 @@
               <a class="nav-link active" href="{% url 'panel_residente' %}">  Panel de Residente</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'admin_res_espacios_comunes' %}">Reservar
+              <a class="nav-link active" aria-current="page" href="{% url 'res_espacios_comunes' %}">Reservar
                 Espacios Comunes</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'consulta_estado_cuenta' %}">gastos comunes</a>
+              <a class="nav-link active" aria-current="page" href="{% url 'seleccion_pago' %}">Pagos</a>
             </li>
             {%elif user.is_staff%}
             <li class="nav-item dropdown">
