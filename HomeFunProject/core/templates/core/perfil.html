@@ -26,21 +26,17 @@
     {% endfor %}
     {% endif %}
     <title>Registro de usuario</title>
-</head>
-<header>
-    {%block content %}
-    <div>
-        {% include "nav_bar.html " %}
-    </div>
-    {%endblock%}
-
+    {% include "nav_bar.html " %}
 </header>
 <style>
-        /* Estilo de fondo con la imagen */
-        body {
-            background-image: url("{% static 'core/img/fondo4.jpg'%}");
-            background-repeat: no-repeat;
-            background-size: cover;
+    body {
+        background-image: url("{% static 'core/img/Condominio2.jpg'%}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding-top: 60px; /* Ajusta este valor según la altura de tu navbar */
+        overflow-x: hidden;
+        
+
         }
     .formulario form {
         width: 100%;
@@ -75,7 +71,6 @@
 
     {% load crispy_forms_tags %}
     <div class="container ">
-        <br><br><br><br>
         <div class="row">
             <div class="col-12">
 
