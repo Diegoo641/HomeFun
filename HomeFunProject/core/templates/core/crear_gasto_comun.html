@@ -26,6 +26,15 @@
 
 </header>
 <style>
+    body {
+        background-image: url("{% static 'core/img/Condominio2.jpg'%}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding-top: 60px; /* Ajusta este valor según la altura de tu navbar */
+        overflow-x: hidden;
+        
+
+        }
     /* Estilo de fondo con la imagen */
     body {
         background-image: url("{% static 'core/img/fondo4.jpg'%}");
@@ -72,12 +81,19 @@
         /* Cambia el cursor al pasar el ratón */
 
     }
+
+    .btn-custom {
+        width: 100px; /* Ajusta este valor según el tamaño deseado */
+        padding: 10px;
+        font-size: 16px;
+    }
+
 </style>
 
 <body>
     {% load crispy_forms_tags %}
     <div class="container">
-        <br><br><br><br>
+        <br>
         <div class="row">
             <div class="col-10 mx-auto">
                 <div class="card">
@@ -97,15 +113,20 @@
                                         <div class="col-md-12">
                                             <center>
                                                 <input type="submit" value="Registrar" class="btn btn-success btn-block">
+                                                <button type="button" class="btn btn-danger btn-custom" onclick="location.href='{% url 'admin_gastos_comunes' %}'">
+                                                    Cancelar
+                                                </button>
                                             </center>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                            <hr>
+                            
+                            <br>
                             
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
