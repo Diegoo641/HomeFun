@@ -178,7 +178,7 @@ def crear_espacio_comun(request):
 
         if formulario.is_valid():
             formulario.save()
-            messages.success(request,"Espacio comun registrado correctamente")
+            messages.success(request,"Espacio común registrado correctamente")
             datos['mensaje'] = "Guardados Correctamente"
             return redirect(to="admin_espacios_comunes")
         else:
@@ -194,7 +194,7 @@ def modificar_espacio_comun(request, id):
         formulario = EspacioComunForm(data=request.POST,files=request.FILES, instance= espacioComun)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, "Producto modificado correctamente")
+            messages.success(request, "Espacio común modificado correctamente")
             return redirect(to="admin_espacios_comunes")
         datos = {
             'form': EspacioComunForm(instance=espacioComun),
@@ -234,7 +234,7 @@ def agregar_administrador (request):
         formulario = CrearUsuario(data= request.POST)
         if formulario.is_valid:
             formulario.save()
-            messages.success(request,"Te has registrado correctamente")
+            messages.success(request,"Registro creado correctamente")
             return redirect(to="home")
         data["form"] = formulario
     return render(request, 'registration/registro.html',data)
@@ -277,7 +277,7 @@ def eliminarEspacioComun(request, id):
         estado_eliminado = get_object_or_404(Estado_EC, id_est_ec=4)  # Get the Estado_EC instance with ID 4
         espacioComun.estado_ec = estado_eliminado
         espacioComun.save()  # Guardar los cambios
-        messages.success(request, "Espacio Común Eliminado")
+        messages.success(request, "Espacio común eliminado correctamente")
         return redirect(to="admin_espacios_comunes")
 
     # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
@@ -292,7 +292,7 @@ def habilitarEspacioComun(request, id):
         estado_eliminado = get_object_or_404(Estado_EC, id_est_ec=1)  # Get the Estado_EC instance with ID 4
         espacioComun.estado_ec = estado_eliminado
         espacioComun.save()  # Guardar los cambios
-        messages.success(request, "Espacio Común Habillitado")
+        messages.success(request, "Espacio común habillitado")
         return redirect(to="admin_espacios_comunes")
 
     # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
@@ -307,7 +307,7 @@ def cancelarReservaEspacioComun(request, id):
         estado_eliminado = get_object_or_404(Estado_R_EC, id_est_r_ec=2)  # Get the Estado_EC instance with ID 4
         resEspacioComun.estado_reserva = estado_eliminado
         resEspacioComun.save()  # Guardar los cambios
-        messages.success(request,"Espacio comun registrado correctamente")
+        messages.success(request,"Reserva de espacio común cancelada correctamente")
         residente = resEspacioComun.id_residente  # Esto te da acceso al objeto FichaResidente
         rut_residente = residente.rut
         descripcion = resEspacioComun.descripcion
@@ -317,14 +317,14 @@ def cancelarReservaEspacioComun(request, id):
         # Filtrar los gastos comunes según el 'rut'
         residente = FichaResidente.objects.filter(rut=rut_residente).first()
         print(residente)
-        contenido = "¡¡¡Le informamos que su reserva se cancelado!!!\n\n Datos de reserva:\n Descripcion : {} \n Fecha : {}\n Hora: {}\n Espacio comun: {} \n Para revisar el detalle ingresar a la siguiente URL\n http://127.0.0.1:8000/res_espacios_comunes \nDesde ya muchas gracias.\nSaludos".format(descripcion,fecha,hora,espacio_comun)
+        contenido = "Le informamos que su reserva se ha cancelado.\n\n Los datos de reserva son:\n Descripcion : {} \n Fecha : {}\n Hora: {}\n Espacio común: {} \n Para revisar el detalle ingresar a la siguiente URL\n http://127.0.0.1:8000/res_espacios_comunes \nQue tengas un excelente día.\nSaluda afectuosamente la administración".format(descripcion,fecha,hora,espacio_comun)
         email = EmailMessage("Reservas HomeFun",
                              "Hola! {} :\n\n {}".format(residente.nombre, contenido),
                              '',
                              [residente.correo],
                              reply_to=[residente.correo])
         email.send()
-        messages.success(request, "Espacio Común Eliminado")
+        messages.success(request, "Reserva cancelada")
         return redirect(to="admin_res_espacios_comunes")
 
     # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
@@ -341,7 +341,7 @@ def modificar_res_espacio_comun(request, id):
         formulario = ModReservaEspacioComunForm(data= request.POST, instance= resEspacioComun)
         if formulario.is_valid():
             reserva = formulario.save()
-            messages.success(request,"Espacio comun registrado correctamente")
+            messages.success(request,"Espacio común modificado correctamente")
             residente = reserva.id_residente  # Esto te da acceso al objeto FichaResidente
             rut_residente = residente.rut
             descripcion = resEspacioComun.descripcion
@@ -352,7 +352,7 @@ def modificar_res_espacio_comun(request, id):
             # Filtrar los gastos comunes según el 'rut'
             residente = FichaResidente.objects.filter(rut=rut_residente).first()
             print(residente)
-            contenido = "¡¡¡Le informamos que su reserva se ha modificado de manera correcta!!!\n\n Datos de reserva:\n Descripcion : {} \n Fecha : {}\n Hora: {}\n Espacio comun: {} \n Para revisar el detalle ingresar a la siguiente URL\n http://127.0.0.1:8000/res_espacios_comunes \nDesde ya muchas gracias.\nSaludos".format(descripcion,fecha,hora,espacio_comun)
+            contenido = "Le informamos que su reserva se ha modificado de manera correcta\n\n Datos de reserva:\n Descripción : {} \n Fecha : {}\n Hora: {}\n Espacio común: {} \n Para revisar el detalle ingresar a la siguiente URL\n http://127.0.0.1:8000/res_espacios_comunes \nDesde ya muchas gracias.\nSaludos".format(descripcion,fecha,hora,espacio_comun)
             email = EmailMessage("Reservas HomeFun",
                                  "Hola! {} :\n\n {}".format(residente.nombre, contenido),
                                  '',
@@ -376,20 +376,20 @@ def crear_res_espacio_comun(request):
         if formulario.is_valid():
             formulario.cleaned_data["estado_reserva"]
             reserva = formulario.save()
-            messages.success(request,"Espacio comun registrado correctamente")
+            messages.success(request,"Espacio común reservado correctamente")
             print(formulario)
             rut_residente = formulario.cleaned_data["descripcion"]
             descripcion = formulario.cleaned_data["descripcion"]
             fecha = formulario.cleaned_data["fecha"]
             hora = formulario.cleaned_data["hora"]
             espacio_comun = formulario.cleaned_data["id_espacio_comun"]
-            datos['mensaje'] = "Guardados Correctamente"
+            datos['mensaje'] = "Guardados correctamente"
             # Filtrar los gastos comunes según el 'rut'
             residente = FichaResidente.objects.filter(rut=rut_residente).first()
             print(residente)
-            contenido = "¡¡¡Le informamos que su reserva se ha realizado de manera correcta!!!\n\n Datos de reserva:\n Descripcion : {} \n Fecha : {}\n Hora: {}\n Espacio comun: {} \n Para revisar el detalle ingresar a la siguiente URL\n http://127.0.0.1:8000/res_espacios_comunes \nDesde ya muchas gracias.\nSaludos".format(descripcion,fecha,hora,espacio_comun)
+            contenido = "Le informamos que su reserva se ha realizado de manera correcta\n\n Datos de reserva:\n Descripción : {} \n Fecha : {}\n Hora: {}\n Espacio común: {} \n Para revisar el detalle ingresar a la siguiente URL\n http://127.0.0.1:8000/res_espacios_comunes \nDesde ya muchas gracias.\nSaludos".format(descripcion,fecha,hora,espacio_comun)
             email = EmailMessage("Reservas HomeFun",
-                                 "Hola! {} :\n\n {}".format(residente.nombre, contenido),
+                                 "¡Hola! {} :\n\n {}".format(residente.nombre, contenido),
                                  '',
                                  [residente.correo],
                                  reply_to=[residente.correo])
@@ -453,7 +453,7 @@ def crear_cuenta(request):
             usuario.save()
             messages.success(request, "Cuenta creada correctamente")
             datos['mensaje'] = "Guardados Correctamente"
-            contenido = "¡¡¡Le informamos que su reserva se ha creado su cuenta de manera correcya!!!\n\n Datos de cueta:\n Nombre usuario : {} \n Pass : {}\n  Para ingresar al sistema ingrese a la siguiente URL\n http://127.0.0.1:8000/accounts/login/ \nDesde ya muchas gracias.\nSaludos".format(usuario.username,password)
+            contenido = "Le informamos que su cuenta se ha craedo correctamente\n\n Datos de cueta:\n Nombre usuario : {} \n Contraseña : {}\n  Para ingresar al sistema ingrese a la siguiente URL\n http://127.0.0.1:8000/accounts/login/ \nDesde ya muchas gracias.\nSaludos".format(usuario.username,password)
             email = EmailMessage("Reservas HomeFun",
                                  "Hola! {} :\n\n {}".format(usuario.first_name, contenido),
                                  '',
@@ -502,7 +502,7 @@ def crear_multa(request):
         formulario = CrearMultaForm(data= request.POST)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request,"Cuenta creada correctamente")
+            messages.success(request,"Multa creada correctamente")
             datos['mensaje'] = "Guardados Correctamente"
             return redirect(to="Multas")
         else:
@@ -592,7 +592,7 @@ def crear_tipo_gasto_comun(request):
         formulario = CrearTipoGastoComunForm(data= request.POST)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request,"Tipo de gasto comun creado correctamente")
+            messages.success(request,"Tipo de gasto común creado correctamente")
             datos['mensaje'] = "Guardados Correctamente"
             return redirect(to="admin_tipo_gasto_comun")
         else:
@@ -607,7 +607,7 @@ def desactivarTipoGastoComun(request, id):
         estado_eliminado = get_object_or_404(Estado_T_GC, id_est_t_gc=2)  # Get the Estado_EC instance with ID 4
         gasto_comun.estado_t_gc = estado_eliminado
         gasto_comun.save()  # Guardar los cambios
-        messages.success(request, "Tipo de gasto comu desactivado")
+        messages.success(request, "Tipo de gasto común desactivado")
         return redirect(to="admin_tipo_gasto_comun")
 
     # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
@@ -621,7 +621,7 @@ def activarTipoGastoComun(request, id):
         estado_activado = get_object_or_404(Estado_T_GC, id_est_t_gc=1)  
         gasto_comun.estado_t_gc = estado_activado
         gasto_comun.save() 
-        messages.success(request, "Tipo de gasto comu activado")
+        messages.success(request, "Tipo de gasto común activado")
         return redirect(to="admin_tipo_gasto_comun")
     return render(request, 'core/admin_tipo_gasto_comun.html', {
         'form': EspacioComunForm(instance=gasto_comun)})
@@ -660,7 +660,7 @@ def modificar_ficha_residente(request, id):
         formulario = ModificarFichaResidenteForm(data= request.POST, instance= residente)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, "Multa modificada correctamente")
+            messages.success(request, "Ficha de residente modificada correctamente")
             return redirect(to="admin_ficha_residentes")
         datos = {
             'form': ModificarFichaResidenteForm(instance=residente),
@@ -674,7 +674,7 @@ def desactivarFichaResidente(request, id):
         estado_eliminado = get_object_or_404(Estado_residente, id_est_r=2)
         residente.estado = estado_eliminado
         residente.save()  # Guardar los cambios
-        messages.success(request, "Tipo de gasto comu desactivado")
+        messages.success(request, "Ficha de residente desactivada correctamente")
         return redirect(to="admin_ficha_residentes")
 
     # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
@@ -687,7 +687,7 @@ def activarFichaResidente(request, id):
         estado_activado = get_object_or_404(Estado_residente, id_est_r=1)  
         residente.estado = estado_activado
         residente.save()  # Guardar los cambios
-        messages.success(request, "Tipo de gasto comu activado")
+        messages.success(request, "Ficha de residente activada correctamente")
         return redirect(to="admin_ficha_residentes")
 
     return render(request, 'core/admin_tipo_gasto_comun.html', {
@@ -712,7 +712,7 @@ def crear_tipo_multa(request):
         formulario = CrearTipoMultaForm(data= request.POST)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request,"Cuenta creada correctamente")
+            messages.success(request,"Tipo de multa creada correctamente")
             datos['mensaje'] = "Guardados Correctamente"
             return redirect(to="admin_tipo_multas")
         else:
@@ -760,7 +760,7 @@ def activarTipoMulta(request, id):
         estado_activado = get_object_or_404(EstadoTipoMulta, id_est_t_multa=1)
         tipo_multa.estado_t_multa = estado_activado
         tipo_multa.save() 
-        messages.success(request, "Tipo de gasto comu activado")
+        messages.success(request, "Tipo de multa activado")
         return redirect(to="admin_tipo_gasto_comun")
     return render(request, 'core/admin_tipo_gasto_comun.html', {
         'form': CrearTipoMultaForm(instance=tipo_multa)})
@@ -791,7 +791,7 @@ def agregarPago(request, id):
                     'total_g': request.session['total_g'],
                     'preference_id': preference["response"]["id"]
                 }, status=200)
-            return JsonResponse({'error': 'Gasto ya agregado'}, status=400)
+            return JsonResponse({'error': 'Gasto existente'}, status=400)
         except GastoComun.DoesNotExist:
             return JsonResponse({'error': 'Gasto no encontrado'}, status=404)
     return JsonResponse({'error': 'Método no permitido'}, status=405)
@@ -837,7 +837,7 @@ def crear_gasto_comun(request):
         formulario = CrearGastoComunForm(data= request.POST)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request,"Tipo de gasto comun creado correctamente")
+            messages.success(request,"Tipo de gasto común creado correctamente")
             datos['mensaje'] = "Guardados Correctamente"
             return redirect(to="admin_gastos_comunes")
         else:
@@ -852,7 +852,7 @@ def desactivarGastoComun(request, id):
         estado_eliminado = get_object_or_404(Estado_GC, id_est_gc=4)  # Get the Estado_EC instance with ID 4
         gasto_comun.estado_gc = estado_eliminado
         gasto_comun.save()  # Guardar los cambios
-        messages.success(request, "Tipo de gasto comu desactivado")
+        messages.success(request, "Tipo de gasto común desactivado")
         return redirect(to="admin_gastos_comunes")
 
     # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
@@ -866,7 +866,7 @@ def activarGastoComun(request, id):
         estado_activado = get_object_or_404(Estado_GC, id_est_gc=2)  
         gasto_comun.estado_gc = estado_activado
         gasto_comun.save() 
-        messages.success(request, "Tipo de gasto comun activado")
+        messages.success(request, "Tipo de gasto común activado")
         return redirect(to="admin_gastos_comunes")
     return render(request, 'core/admin_gastos_comunes.html', {
         'form': CrearGastoComunForm(instance=gasto_comun)})
@@ -877,7 +877,7 @@ def pagarGastoComun(request, id):
         estado_activado = get_object_or_404(Estado_GC, id_est_gc=1)  
         gasto_comun.estado_gc = estado_activado
         gasto_comun.save() 
-        messages.success(request, "Tipo de gasto comun activado")
+        messages.success(request, "Gasto común pagado")
         return redirect(to="admin_gastos_comunes")
     return render(request, 'core/admin_gastos_comunes.html', {
         'form': CrearGastoComunForm(instance=gasto_comun)})
@@ -891,7 +891,7 @@ def modificar_gasto_comun(request, id):
         formulario = ModificarGastoComunForm(data= request.POST, instance= gasto_comun)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, "Gasto comun modificada correctamente")
+            messages.success(request, "Gasto común modificada correctamente")
             return redirect(to="admin_tipo_gasto_comun")
         datos = {
             'form': ModificarGastoComunForm(instance=gasto_comun),
@@ -909,7 +909,7 @@ def modificar_gasto_comun(request, id):
         formulario = ModificarGastoComunForm(data= request.POST, instance= gasto_comun)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, "Multa modificada correctamente")
+            messages.success(request, "Gasto común modificado correctamente")
             return redirect(to="admin_gastos_comunes")
         datos = {
             'form': ModificarGastoComunForm(instance=gasto_comun),
@@ -943,14 +943,14 @@ def cancelarReservaEspacioComunRes(request, id):
         rut_usuario = request.user.username  # Asumiendo que el nombre de usuario es el RUT
         # Filtrar los gastos comunes según el 'rut'
         residente = FichaResidente.objects.filter(rut=rut_usuario).first()
-        contenido = "¡¡¡Le informamos que su reserva se ha sido cancelada!!!\n\n Datos de reserva:\n Descripcion : {} \n Fecha : {} \n Hora: {}\n Espacio comun: {} \n Para revisar el detalle ingresar a la siguiente URL\n http://127.0.0.1:8000/res_espacios_comunes \nDesde ya muchas gracias.\nSaludos".format(resEspacioComun.descripcion,resEspacioComun.fecha,resEspacioComun.hora,resEspacioComun.id_espacio_comun)
+        contenido = "Le informamos que su reserva se ha sido cancelada\n\n Datos de reserva:\n Descripción : {} \n Fecha : {} \n Hora: {}\n Espacio común: {} \n Para revisar el detalle ingresar a la siguiente URL\n http://127.0.0.1:8000/res_espacios_comunes \nDesde ya muchas gracias.\nSaludos".format(resEspacioComun.descripcion,resEspacioComun.fecha,resEspacioComun.hora,resEspacioComun.id_espacio_comun)
         email = EmailMessage("Reservas HomeFun",
                              "Hola! {} :\n\n {}".format(residente.nombre, contenido),
                              '',
                              [residente.correo],
                              reply_to=[residente.correo])
         email.send()
-        messages.success(request, "Espacio Común Eliminado")
+        messages.success(request, "Reserva cancelada")
         return redirect(to="res_espacios_comunes")
 
     # En caso de que no sea una solicitud POST, se podría redirigir o mostrar un formulario
@@ -970,14 +970,14 @@ def modificar_res_espacio_comun_res(request, id):
             messages.success(request, "Reserva modificada correctamente")
             formulario.save()
             resEspacioComun = ReservaEspComun.objects.get(id_reserva_esp_comun=id)
-            messages.success(request,"Espacio comun registrado correctamente")
+            messages.success(request,"Espacio común modificado correctamente")
             datos['mensaje'] = "Guardados Correctamente"
             rut_usuario = request.user.username  # Asumiendo que el nombre de usuario es el RUT
             # Filtrar los gastos comunes según el 'rut'
             residente = FichaResidente.objects.filter(rut=rut_usuario).first()
-            contenido = "¡¡¡Le informamos que su reserva se ha Modificado de manera correcta!!!\n\n Datos de reserva:\n Descripcion : {} \n Fecha : {} \n Hora: {}\n Espacio comun: {} \n Para revisar el detalle ingresar a la siguiente URL\n http://127.0.0.1:8000/res_espacios_comunes \nDesde ya muchas gracias.\nSaludos".format(resEspacioComun.descripcion,resEspacioComun.fecha,resEspacioComun.hora,resEspacioComun.id_espacio_comun)
+            contenido = "Le informamos que su reserva se ha Modificado correctamente\n\n Datos de reserva:\n Descripción : {} \n Fecha : {} \n Hora: {}\n Espacio común: {} \n Para revisar el detalle ingresar a la siguiente URL\n http://127.0.0.1:8000/res_espacios_comunes \nDesde ya muchas gracias.\nSaludos".format(resEspacioComun.descripcion,resEspacioComun.fecha,resEspacioComun.hora,resEspacioComun.id_espacio_comun)
             email = EmailMessage("Reservas HomeFun",
-                                 "Hola! {} :\n\n {}".format(residente.nombre, contenido),
+                                 "¡Hola! {} :\n\n {}".format(residente.nombre, contenido),
                                  '',
                                  [residente.correo],
                                  reply_to=[residente.correo])
@@ -1003,7 +1003,7 @@ def crear_res_espacio_comun_res(request):
             residente = FichaResidente.objects.filter(rut=rut_usuario).first()
             
             if not residente:
-                messages.error(request, "No se encontró un residente asociado con este usuario.")
+                messages.error(request, "No se encontró una reserva asociada con este usuario.")
                 return render(request, 'core/crear_res_espacio_comun_res.html', datos)
             
             # Asignar el residente a la reserva
@@ -1012,12 +1012,12 @@ def crear_res_espacio_comun_res(request):
             
             # Guardamos la reserva
             formulario.save()
-            messages.success(request, "Espacio común registrado correctamente")
+            messages.success(request, "Reserva registrada correctamente")
             datos['mensaje'] = "Guardado correctamente"
             
             # Enviar correo al residente
-            contenido = f"¡¡¡Le informamos que su reserva se ha realizado de manera correcta!!!\n\n" \
-                        f"Datos de reserva:\nDescripcion: {formulario.cleaned_data['descripcion']}\nFecha: {formulario.cleaned_data['fecha']}\nHora: {formulario.cleaned_data['hora']}\nEspacio común: {formulario.cleaned_data['id_espacio_comun']}\n" \
+            contenido = f"Le informamos que su reserva se ha realizado correctamente\n\n" \
+                        f"Datos de reserva:\nDescripción: {formulario.cleaned_data['descripcion']}\nFecha: {formulario.cleaned_data['fecha']}\nHora: {formulario.cleaned_data['hora']}\nEspacio común: {formulario.cleaned_data['id_espacio_comun']}\n" \
                         "Para revisar el detalle, ingrese a la siguiente URL: http://127.0.0.1:8000/res_espacios_comunes\n" \
                         "¡Desde ya muchas gracias!\nSaludos"
             
@@ -1153,7 +1153,7 @@ def modificar_morosidad(request, id):
         formulario = ModificarGastoComunForm(data= request.POST, instance= gasto_comun)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, "Gasto comun modificada correctamente")
+            messages.success(request, "Morosidad modificada correctamente")
             return redirect(to="visualizar_morosidad")
         datos = {
             'form': ModificarGastoComunForm(instance=gasto_comun),
