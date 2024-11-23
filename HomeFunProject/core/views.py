@@ -27,6 +27,7 @@ pagar=[]
 def es_superusuario_o_staff(user):
     return user.is_superuser or user.is_staff
 
+@login_required
 def home(request):
     return render(request, 'core/home.html')
 
