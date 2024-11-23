@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'core/css/whatsapp.css' %}">
+    <title>Panel Administración</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-X8TZRa0FSGLAtvBlTsQ05mC6h54gXP+2i2+kl3DVoQeTQuu/dxU0Fjlzv8QqXdQ4"
+        crossorigin="anonymous"></script>
+ 
+
+    {% block content %}
+    {% include 'nav_bar.html'%}
+    {% endblock %}
+    <style>
+
+        {% comment %} /* Estilo de fondo con la imagen */ {% endcomment %}
+        body {
+            background-image: url("{% static 'core/img/Condominio2.jpg'%}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding-top: 60px; /* Ajusta este valor según la altura de tu navbar */
+            overflow-x: hidden;
+            
+
+            }
+        
+
+        .card:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 20px rgba(18, 159, 211, 0.5);
+            overflow-x: hidden;
+            
+        }
+
+        .card {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between; /* Asegura que el contenido se distribuya */
+          height: 200px; /* Altura fija para las tarjetas */
+        }
+        .card-body {
+          flex: 1; /* Esto permite que el cuerpo de la tarjeta ocupe el espacio disponible */
+        }
+
+        html {
+            min-height: 90%;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+   
+        .content {
+            flex: 1;
+            padding-bottom: 90px;
+            /* Ajusta el espacio para el footer */
+        }
+
+
+      
+    </style>
+</head>
+
+<body>
+
+  <!-- Botón de ayuda -->
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="container my-3 bg-dark text-white rounded-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="text-light fs-3 mb-0 mx-auto text-center">Selecciona el tipo de usuario</p>
+                <i class="fas fa-question-circle" style="color: white; font-size: 28px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#helpModal"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<hr class="my-4">
+
+<div class="container mt-3">
+  <div class="row">
+      <div class="col-md-4">
+          <div class="card bg-primary text-white rounded-4">
+              <div class="card-body text-center">
+                  <i class="fa-solid fa-building fa-5x"></i>             
+                  <h4 class="card-text mt-3">Administrador</h4>
+                  
+                  <p class="card-text">
+                    <a href="{% url 'admin_espacios_comunes' %}" class="btn btn-outline-light btn-sm ms-auto">Ver Información</a>
+                </p>            
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-4">
+          <div class="card bg-info text-white rounded-4">
+              <div class="card-body text-center">
+                  <i class="fa-solid fa-users fa-5x"></i>             
+                  <h4 class="card-text mt-3">Residentes</h4>
+                  <p class="card-text">
+                    <a href="{% url 'admin_cuentas' %}" class="btn btn-outline-light btn-sm ms-auto">Ver Información</a>
+                </p>           
+              </div>
+          </div>
+      </div>
+
+
+  </div>
+  <br>
+</div>
+
+<div id="whatsapp-button" class="whatsapp-float">
+    <a href="https://api.whatsapp.com/send?phone=56949052463&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Risi.cl." class="floatWapp" target="_blank">
+      <img src="{% static 'core/img/WhatsApp.svg.webp' %}" alt="Chatea con nosotros" class="whatsapp-icon">
+      
+    </a>
+    <button class="close-btn" onclick="closeWhatsAppButton()">×</button>
+  </div>
+
+
+</body>
+  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+
+</html>
