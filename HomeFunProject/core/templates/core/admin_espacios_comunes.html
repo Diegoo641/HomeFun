@@ -198,6 +198,11 @@
                                 Crear Espacio comun
                             </a>
                         </button>
+                        <button class="btn btn-success">
+                            <a class="a text-light fs-6" href="http://127.0.0.1:8000/crear_res_espacio_comun">
+                                Solicitar reserva
+                            </a>
+                        </button>
 
                         <div class="container mt-4">                    
                             <table id="myTable" class="display nowrap dt-responsive table text-start" style="width:100%;">
@@ -270,6 +275,7 @@
                                                             <a class="dropdown-item action-item" href="#" onclick="eliminarEspacioComun({{ ec.id_espacio_comun }})">
                                                                 Eliminar
                                                             </a>
+                                                            
                                                         {% endif %} 
                                                     </li>
                                                     <li>

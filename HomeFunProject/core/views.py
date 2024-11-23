@@ -378,7 +378,8 @@ def crear_res_espacio_comun(request):
             reserva = formulario.save()
             messages.success(request,"Espacio común reservado correctamente")
             print(formulario)
-            rut_residente = formulario.cleaned_data["descripcion"]
+            rut_residente = formulario.cleaned_data["id_residente"].rut
+            print(rut_residente)
             descripcion = formulario.cleaned_data["descripcion"]
             fecha = formulario.cleaned_data["fecha"]
             hora = formulario.cleaned_data["hora"]
