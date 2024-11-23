@@ -27,11 +27,14 @@
         background-image: url("{% static 'core/img/Condominio2.jpg'%}");
         background-repeat: no-repeat;
         background-size: cover;
-        padding-top: 50px; /* Ajusta este valor según la altura de tu navbar */
+        padding-top: 0px;  /* Ajusta este valor a lo que necesites */
+        margin-top: 70px;  /* Ajusta este valor para pegar el contenido aún más */
         overflow-x: hidden;
-        
+    }
+    .container {
+        margin-top: -100px;  /* Ajusta el valor según lo necesario */
+    }
 
-        }
     .formulario form {
         width: 400%;
         max-width: 400px;
@@ -74,6 +77,7 @@
 </style>
 
 <body>
+    <br><br><br><br>
     {% load crispy_forms_tags %}
     <div class="container">
         <div class="row">
