@@ -65,7 +65,7 @@
                                     {% csrf_token %}
                                     {{ form | crispy }}
                                     <br>
-                                    <a href="#" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+                                    {% comment %} <a href="#" class="text-decoration-none">¿Olvidaste tu contraseña?</a> {% endcomment %}
                                     <div class="mt-4">
                                         <button class="btn btn-primary w-100" type="submit">Iniciar Sesión</button>
                                     </div>

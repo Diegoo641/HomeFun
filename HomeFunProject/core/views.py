@@ -341,7 +341,7 @@ def modificar_res_espacio_comun(request, id):
         formulario = ModReservaEspacioComunForm(data= request.POST, instance= resEspacioComun)
         if formulario.is_valid():
             reserva = formulario.save()
-            messages.success(request,"Espacio común modificado correctamente")
+            messages.success(request,"Reserva modificada correctamente")
             residente = reserva.id_residente  # Esto te da acceso al objeto FichaResidente
             rut_residente = residente.rut
             descripcion = resEspacioComun.descripcion
