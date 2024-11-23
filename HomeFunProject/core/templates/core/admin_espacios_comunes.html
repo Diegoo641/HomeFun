@@ -251,7 +251,7 @@
                                         <td>{{ec.descripcion}}</td>
                                         <td>{{ec.ubicacion}}</td>
                                         <td>{{ec.estado_ec.descripcion}}</td>
-                                        {% if gc.total is not None %}
+                                        {% if ec.valor is not None %}
                                         <!-- El valor no es nulo -->
                                         <td>{{ec.valor}}</td>
                                         {% else %}
