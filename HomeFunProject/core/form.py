@@ -166,7 +166,7 @@ class CrearGastoComunForm(forms.ModelForm):
 class ModificarGastoComunForm(forms.ModelForm):
   class  Meta:
     model= GastoComun
-    fields=['total','consumo','estado_gc']
+    fields=['consumo','estado_gc']
 
 class ModificarDepartamentoForm(forms.ModelForm):
   class Meta:

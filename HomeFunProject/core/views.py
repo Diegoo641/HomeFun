@@ -1193,3 +1193,22 @@ def perfil(request):
             'mensaje': "Modificado correctamente"
         }
     return render(request, 'core/modificar_ficha_residente.html', datos)
+
+def calcularGasto(request, id):
+    gasto_comun = get_object_or_404(GastoComun, id_gc=id)
+    if request.method == 'POST':
+        # Aquí ya tenemos el objeto 'tipo' directamente desde la relación
+        tipo = gasto_comun.tipo  # Esto te da directamente la instancia de TipoGastoComun
+        print(tipo)
+        
+        # Realizar el cálculo del total
+        total_calculo = (tipo.monto * tipo.reajuste) * gasto_comun.consumo
+        gasto_comun.total = total_calculo
+        gasto_comun.save() 
+        
+        messages.success(request, "Tipo de gasto común activado")
+        return redirect(to="admin_gastos_comunes")
+    
+    return render(request, 'core/admin_gastos_comunes.html', {
+        'form': CrearGastoComunForm(instance=gasto_comun)
+    })
