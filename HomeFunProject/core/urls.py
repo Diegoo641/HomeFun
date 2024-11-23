@@ -6,8 +6,8 @@ from core.views import activarGastoComun, admin_departamento, agregarPagoMulta, 
     crear_multa,cancelarMulta,pagarMulta,eliminarMulta,admin_tipo_gasto_comun, admin_ficha_residentes, removerPagoMulta, res_espacios_comunes, visualizar_morosidad,\
     pagarDeuda,crear_tipo_gasto_comun,activarTipoGastoComun,desactivarTipoGastoComun, Multas, generar_multa,modificar_tipo_gasto_comun,\
     admin_ficha_residentes,modificar_ficha_residente,activarFichaResidente,desactivarFichaResidente,admin_tipo_multas,\
-    crear_tipo_multa, modificar_tipo_multa, activarTipoMulta, desactivarTipoMulta, agregarPago,removerPago,admin_gastos_comunes
-
+    crear_tipo_multa, modificar_tipo_multa, activarTipoMulta, desactivarTipoMulta, agregarPago,removerPago,admin_gastos_comunes,\
+    perfil
 
 urlpatterns = [
     path('', home, name="home"),
@@ -74,6 +74,8 @@ urlpatterns = [
     path('admin_departamento', admin_departamento, name="admin_departamento"),
     path('modificar_departamento/<id>/', modificar_departamento, name="modificar_departamento"),
     path('pagarGastoComun/<id>/',pagarGastoComun,name="pagarGastoComun"),
+    path('perfil', perfil, name="perfil"),
+
 
 
 

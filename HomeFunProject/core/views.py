@@ -1157,3 +1157,21 @@ def modificar_departamento(request, id):
         }
 
     return render(request, 'core/modificar_departamento.html', datos)
+
+def perfil(request):
+    rut_usuario = request.user.username
+    residente = FichaResidente.objects.get(rut=rut_usuario)
+    datos = {
+        'form': ModificarFichaResidenteForm(instance=residente)
+    }
+    if request.method == 'POST':
+        formulario = ModificarFichaResidenteForm(data= request.POST, instance= residente)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Multa modificada correctamente")
+            return redirect(to="panel_residente")
+        datos = {
+            'form': ModificarFichaResidenteForm(instance=residente),
+            'mensaje': "Modificado correctamente"
+        }
+    return render(request, 'core/modificar_ficha_residente.html', datos)

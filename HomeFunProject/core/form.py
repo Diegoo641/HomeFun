@@ -118,7 +118,12 @@ class ModificarFichaResidenteForm (forms.ModelForm):
    correo = forms.EmailField()
    class Meta:
     model = FichaResidente
-    fields=["nombre","apellido","correo","direccion","genero","comuna","estado_civil"]
+    fields=["nombre","rut","apellido","correo","direccion","genero","comuna","estado_civil"]
+    
+   def __init__(self, *args, **kwargs):
+      super().__init__(*args, **kwargs)
+      # Hacer el campo 'nro' no editable (solo de lectura)
+      self.fields["rut"].disabled = True
 
 
 class CrearTipoMultaForm(forms.ModelForm):
