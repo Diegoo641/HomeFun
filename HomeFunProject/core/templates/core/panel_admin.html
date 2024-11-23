@@ -28,7 +28,7 @@
         <link rel="stylesheet" href="{% static 'core/css/whatsapp.css' %}">
         <style>
             body {
-                padding-top: 70px; /* Ajusta este valor según la altura de tu navbar */
+                padding-top: 40px; /* Ajusta este valor según la altura de tu navbar */
             }
     
             /* Estilo para asegurar que el contenedor del gráfico sea fluido */
@@ -70,10 +70,10 @@
     <body>
 
         
-
+<br>
         <div class="container my-3 bg-dark text-white rounded-3">
             <div class="d-flex justify-content-between align-items-center">
-                <p class="text-light fs-3 mb-0 mx-auto text-center">Administración de espacios comunes</p>
+                <p class="text-light fs-4 mb-0 mx-auto text-center">Administración de espacios comunes</p>
                 <i class="fas fa-question-circle" style="color: white; font-size: 28px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#helpModal"></i>
             </div>
         </div>
@@ -174,7 +174,7 @@
                 <div class="col-md-4 offset-md-1">
                     <div class="card bg-primary text-white">
                         <div class="card-body">
-                            <h3 class="card-title">Residentes activos
+                            <h3 class="card-title fs-5">Residentes activos
                                 <button class="btn btn-primary btn-sm float-end" type="button" data-bs-toggle="modal" data-bs-target="#Activos">
                                     <i class="fa-solid fa-arrow-right"></i>
                                 </button>
@@ -189,7 +189,7 @@
                 <div class="col-md-4 offset-md-2">
                     <div class="card bg-primary text-white">
                         <div class="card-body">
-                            <h3 class="card-title">Residentes Morosos
+                            <h3 class="card-title fs-5">Residentes Morosos
                                 <button class="btn btn-primary btn-sm float-end" type="button" data-bs-toggle="modal" data-bs-target="#Morosos">
                                     <i class="fa-solid fa-arrow-right"></i>
                                 </button>
@@ -203,10 +203,10 @@
             <hr class="my-4">
 
             <!-- Contenedor para el gráfico de barras, con clase responsiva -->
-            <div class="row mt-5">
+            <div class="row mt-3">
                 <div class="col-12">
                     <div class="chart-container">
-                        <h3 class="text-center">Espacios comunes más utilizados 
+                        <h3 class="text-center fs-4">Espacios comunes más utilizados 
                             {% comment %} <i class="fas fa-question-circle help-icon" data-bs-toggle="modal" data-bs-target="#helpModal"></i> {% endcomment %}
                         </h3>
                         <canvas id="barChart"></canvas>
