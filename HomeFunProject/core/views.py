@@ -520,7 +520,7 @@ def modificar_multa(request, id):
         formulario = ModificarMultaForm(data= request.POST, instance= multa)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, "Multa modificada correctamente")
+            messages.success(request, "Datos modificados correctamente")
             return redirect(to="admin_multas")
         datos = {
             'form': ModificarMultaForm(instance=multa),
@@ -1197,7 +1197,7 @@ def perfil(request):
         formulario = ModificarFichaResidenteForm(data= request.POST, instance= residente)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, "Multa modificada correctamente")
+            messages.success(request, "Informacion modificada correctamente")
             return redirect(to="panel_residente")
         datos = {
             'form': ModificarFichaResidenteForm(instance=residente),
