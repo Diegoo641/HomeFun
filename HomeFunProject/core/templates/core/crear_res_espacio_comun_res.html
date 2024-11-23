@@ -17,24 +17,23 @@
 
     <title>Crear Reserva Espacio Comun</title>
 </head>
-<header>
-    {%block content %}
-    <div>
-        {% include "nav_bar.html " %}
-    </div>
-    {%endblock%}
-
-</header>
+<!-- NAV -->
+{% block content %}
+{% include 'nav_bar.html'%}
+{% endblock %}
+<!-- FIN NAV -->
 <style>
-    /* Estilo de fondo con la imagen */
     body {
-        background-image: url("{% static 'core/img/fondo4.jpg'%}");
+        background-image: url("{% static 'core/img/Condominio2.jpg'%}");
         background-repeat: no-repeat;
         background-size: cover;
-    }
+        padding-top: 50px; /* Ajusta este valor según la altura de tu navbar */
+        overflow-x: hidden;
+        
 
+        }
     .formulario form {
-        width: 100%;
+        width: 400%;
         max-width: 400px;
         /* Ajusta según sea necesario */
         margin: auto;
@@ -77,7 +76,6 @@
 <body>
     {% load crispy_forms_tags %}
     <div class="container">
-        <br><br><br><br>
         <div class="row">
             <div class="col-10 mx-auto">
                 <div class="card">
