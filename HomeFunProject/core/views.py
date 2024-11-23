@@ -49,7 +49,7 @@ def panel_admin(request):
     morosos = GastoComun.objects.filter(estado_gc=3).values('id_dpto__id_residente__rut').annotate(total_monto=Sum('total'))
     cant_morosos = morosos.count()
     reservas = (ReservaEspComun.objects
-            .filter(estado_reserva=3)
+            .filter(estado_reserva=1)
             .values('id_espacio_comun__nombre')
             .annotate(total_reservas=Count('id_reserva_esp_comun'))
             .order_by('-total_reservas')[:5])
@@ -67,6 +67,7 @@ def panel_admin(request):
        'labels': json.dumps(labels),
        'data': json.dumps(data),
     }
+    print(labels)
     return render(request, 'core/panel_admin.html',data)
 
 def panel_residente(request):
