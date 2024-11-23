@@ -251,7 +251,13 @@
                                         <td>{{ec.descripcion}}</td>
                                         <td>{{ec.ubicacion}}</td>
                                         <td>{{ec.estado_ec.descripcion}}</td>
+                                        {% if gc.total is not None %}
+                                        <!-- El valor no es nulo -->
                                         <td>{{ec.valor}}</td>
+                                        {% else %}
+                                        <!-- El valor es nulo -->
+                                        <td>0</td>
+                                        {% endif %}
                                         <td>{{ec.id_comunidad.nombre}}</td>
                                         <td>
                                             <div class="dropdown">
