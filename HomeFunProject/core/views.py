@@ -727,7 +727,7 @@ def modificar_tipo_multa(request, id):
         'form': ModificarTipoMultaForm(instance=tipo_multa)
     }
     if request.method == 'POST':
-        formulario = ModificarMultaForm(data= request.POST, instance= tipo_multa)
+        formulario = ModificarTipoMultaForm(data= request.POST, instance= tipo_multa)
         if formulario.is_valid():
             formulario.save()
             messages.success(request, "Multa modificada correctamente")
