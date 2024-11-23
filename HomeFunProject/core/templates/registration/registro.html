@@ -36,40 +36,59 @@
 
 </header>
 <style>
-        /* Estilo de fondo con la imagen */
-        body {
-            background-image: url("{% static 'core/img/fondo4.jpg'%}");
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
+    /* Estilo de fondo con la imagen */
+    body {
+        background-image: url("{% static 'core/img/fondo4.jpg'%}");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
     .formulario form {
         width: 100%;
-        max-width: 400px; /* Ajusta según sea necesario */
-        margin: auto; /* Centra el formulario horizontalmente */
+        max-width: 400px;
+        /* Ajusta según sea necesario */
+        margin: auto;
+        /* Centra el formulario horizontalmente */
         text-align: center;
     }
 
     .formulario input[type="text"],
-    .formulario input[type="email"],
+    .formulario input[type="number"],
     .formulario input[type="password"],
-    .formulario input[type="date"],
     .formulario select {
         width: 100%;
-        box-sizing: border-box; /* Asegura que el ancho incluya el relleno y el borde */
-        margin-bottom: 10px; /* Ajusta según sea necesario */
-        padding: 8px; /* Ajusta el relleno según sea necesario */
+        box-sizing: border-box;
+        /* Asegura que el ancho incluya el relleno y el borde */
+        margin-bottom: 10px;
+        /* Ajusta según sea necesario */
+        padding: 8px;
+        /* Ajusta el relleno según sea necesario */
     }
 
     .formulario input[type="submit"] {
-        width: 100%;
-        box-sizing: border-box;   
-        padding: 10px; /* Ajusta el relleno según sea necesario */
-        border-radius: 5px; /* Redondea las esquinas */
-        border: none; /* Elimina el borde para el botón */
-        background-color: #28a745; /* Color de fondo del botón */
-        color: white; /* Color del texto del botón */
-        cursor: pointer; /* Cambia el cursor al pasar el ratón */
+        width: 30%;
+        box-sizing: border-box;
+        padding: 10px;
+        /* Ajusta el relleno según sea necesario */
+        border-radius: 5px;
+        /* Redondea las esquinas */
+        border: none;
+        /* Elimina el borde para el botón */
+        background-color: #28a745;
+        /* Color de fondo del botón */
+        color: white;
+        /* Color del texto del botón */
+        cursor: pointer;
+        /* Cambia el cursor al pasar el ratón */
+
     }
+
+    .btn-custom {
+        width: 100px; /* Ajusta este valor según el tamaño deseado */
+        padding: 10px;
+        font-size: 16px;
+    }
+
 </style>
 <body>
 
