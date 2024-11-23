@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
         integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="{% static 'core/css/whatsapp.css' %}">
 </head>
 <!-- NAV -->
 {% block content %}
@@ -179,9 +180,16 @@
 
     <!-- BOTON AGREGAR TALLER -->
     <br>
-    <br><br>
-    <div class="container my-3 bg-dark text-white rounded-3">
-        <p class="text-md-center text-light fs-3">Departamento</p>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="container my-3 bg-dark text-white rounded-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <p class="text-light fs-3 mb-0 mx-auto text-center">Departamento
+                    </p>
+                    <i class="fas fa-question-circle" style="color: white; font-size: 28px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#helpModal"></i>
+                </div>
+            </div>
+        </div>
     </div>
     <br>
 
@@ -198,9 +206,9 @@
                                 style="width:100%;">
                                 <thead>
                                     <tr>
-                                        <th style="width:15%;">Nro</th>
-                                        <th style="width:15%;">Dueño</th>
-                                        <th style="width:15%;">Rut</th>
+                                        <th style="width:40%;">Nro</th>
+                                        <th style="width:20%;">Dueño</th>
+                                        <th style="width:10%;">Rut</th>
                                         <th style="width:10%;">Acciones</th>
                                     </tr>
                                 </thead>
@@ -250,6 +258,134 @@
         </div>
         <br>
 
+        <div id="whatsapp-button" class="whatsapp-float">
+            <a href="https://api.whatsapp.com/send?phone=56949052463&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Risi.cl." class="floatWapp" target="_blank">
+              <img src="{% static 'core/img/WhatsApp.svg.webp' %}" alt="Chatea con nosotros" class="whatsapp-icon">
+              
+            </a>
+            <button class="close-btn" onclick="closeWhatsAppButton()">×</button>
+          </div>  
+    
+    
+      <!-- Modal de ayuda -->
+      <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white"> <!-- Cambia bg-primary por el color que desees -->
+                    <h5 class="modal-title text-center" id="helpModalLabel">
+                        <i class="fa-solid fa-users-gear me-2"></i> Fun Ayuda - Descripcion de funcionalidad
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-5 ms-auto">
+                            <div class="card w-75">
+                                <div class="card-body">
+                                  {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                                  <p class="card-text">
+                                    <img src="{% static "core/img/CrearEspacioComunBTN.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ms-auto me-3">
+                            <div class="card w-90">
+                                <div class="card-body">
+                                  <h5 class="card-title">Descripcion Botón Solicitar Reserva</h5>
+                                  <p class="card-text">Al dar clic sobre este botón, el sistema abrirá una nueva ventana que contiene un formulario, el que permite ingresar los datos necesarios para solicitar una reserva de espacio común.</p>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-md-5 ms-auto">
+                            <div class="card w-75">
+                                <div class="card-body">
+                                  {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                                  <p class="card-text">
+                                    <img src="{% static "core/img/FormCrearEspacioComun.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ms-auto me-3">
+                            <div class="card w-90">
+                                <div class="card-body">
+                                  <h5 class="card-title">Descripcion Formulario para solicitar reserva de espacio común</h5>
+                                  <p class="card-text">Este fomurlario contiene los campos necesarios y obligatorios para soliictar la reserva de un espacio común, al no completar todos los campos, el formulario no permitirá generar la solicitud.</p>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-md-5 ms-auto">
+                            <div class="card w-75">
+                                <div class="card-body">
+                                  {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                                  <p class="card-text">
+                                    <img src="{% static "core/img/Exportables.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ms-auto me-3">
+                            <div class="card w-90">
+                                <div class="card-body">
+                                  <h5 class="card-title">Descripcion botones para exportar información</h5>
+                                  <p class="card-text">Al dar clic sobre uno de estos botones, el sistema descargará automaticamente un archivo según el botón precionado, la información que contendrá dicho archivo, será la misma que es visualizada en la tabla al momento de dar clic sobre el botón.</p>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-md-5 ms-auto">
+                            <div class="card w-75">
+                                <div class="card-body">
+                                  {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                                  <p class="card-text">
+                                    <img src="{% static "core/img/TablaEspacioComun.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ms-auto me-3">
+                            <div class="card w-90">
+                                <div class="card-body">
+                                  <h5 class="card-title">Descripcion Tabla de solicitudes</h5>
+                                  <p class="card-text">En esta tabla podrás ver todas las solicitudes que has realizado para hacer usos de los espacios comunes, considerando la opción de editar la solicitud o cancelarla.</p>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-md-5 ms-auto">
+                            <div class="card w-75">
+                                <div class="card-body">
+                                  {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
+                                  <p class="card-text">
+                                    <img src="{% static "core/img/AccionesTablaEspacios.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ms-auto me-3">
+                            <div class="card w-90">
+                                <div class="card-body">
+                                  <h5 class="card-title">Descripcion Tabla de solicitudes</h5>
+                                  <p class="card-text">En esta tabla podrás ver todas las solicitudes que has realizado para hacer usos de los espacios comunes, considerando la opción de editar la solicitud o cancelarla.</p>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <hr>
+                      
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
 
         {% comment %} <!-- Footer -->
         {% include 'Footer.html'%}
