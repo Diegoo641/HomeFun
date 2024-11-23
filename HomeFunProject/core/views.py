@@ -982,10 +982,11 @@ def modificar_res_espacio_comun_res(request, id):
 
 def crear_res_espacio_comun_res(request):
     datos = {
-        'form': CrearReservaEspacioComunResForm()
+        'form': CrearReservaEspacioComunResForm(user=request.user)  # Pasamos el usuario logueado al formulario
     }
+    
     if request.method == 'POST':
-        formulario = CrearReservaEspacioComunResForm(data=request.POST)
+        formulario = CrearReservaEspacioComunResForm(data=request.POST, user=request.user)  # Pasamos el usuario también aquí
         if formulario.is_valid():
             rut_usuario = request.user.username  # Asumiendo que el nombre de usuario es el RUT
             # Filtrar el residente usando el 'rut' del usuario

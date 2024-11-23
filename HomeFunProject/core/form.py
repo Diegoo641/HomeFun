@@ -83,6 +83,18 @@ class CrearReservaEspacioComunResForm(forms.ModelForm):
   class Meta:
     model = ReservaEspComun
     fields=['descripcion','fecha','hora','id_espacio_comun','id_residente','estado_reserva']
+  
+  def __init__(self, *args, **kwargs):
+        # Obtenemos el usuario del contexto
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        
+        # Si se pasa un usuario logueado, asignamos el valor de id_residente
+        if user:
+            residente = FichaResidente.objects.filter(rut=user.username).first()
+            if residente:
+                self.fields['id_residente'].initial = residente.id_residente  # Usamos el id del residente
+                self.fields['id_residente'].disabled = True  # Deshabilitamos el campo
 
 class CrearMultaForm(forms.ModelForm):
   fecha_ingreso = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
