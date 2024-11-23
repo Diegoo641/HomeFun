@@ -61,7 +61,7 @@ class CasaDepto(models.Model):
     id_dpto = models.AutoField(primary_key=True, verbose_name='ID del Departamento')
     nro = models.IntegerField(verbose_name='Número del Departamento')
     direccion = models.CharField(max_length=100, verbose_name='Dirección del Departamento')
-    id_residente = models.ForeignKey(FichaResidente, on_delete=models.PROTECT, verbose_name='Residente Asociado')
+    id_residente = models.ForeignKey(FichaResidente, on_delete=models.PROTECT,null=True,blank=True, verbose_name='Residente Asociado')
 
     def __str__(self):
         return f"Depto {self.nro}"
