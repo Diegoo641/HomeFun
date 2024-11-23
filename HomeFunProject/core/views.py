@@ -1197,7 +1197,7 @@ def perfil(request):
         formulario = ModificarFichaResidenteForm(data= request.POST, instance= residente)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, "Informacion modificada correctamente")
+            messages.success(request, "Información modificada correctamente")
             return redirect(to="panel_residente")
         datos = {
             'form': ModificarFichaResidenteForm(instance=residente),
