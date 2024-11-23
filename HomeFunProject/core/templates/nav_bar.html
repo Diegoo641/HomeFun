@@ -89,31 +89,10 @@
             <a class="nav-link ms-4" aria-current="page" href="{% url 'panel_admin' %}">  Panel de DashBoard</a>
           </li>
           <hr>
-          {% comment %} <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Administracion
-            </a>
-            <ul class="dropdown-menu dropdown-menu-dark">
-              <li><a class="dropdown-item" href="#">Ingresar producto</a></li>
-              <li><a class="dropdown-item" href="#">Ver producto</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="#">Ingresar colaborador</a></li>
-              <li><a class="dropdown-item" href="#">Ingresar administrador</a></li>
-              <li><a class="dropdown-item" href="#">Ver colaboradores</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="#">Ingresar servicio</a></li>
-              <li><a class="dropdown-item" href="#">Ver servicios</a></li>
-            </ul>
-          </li> {% endcomment %}
-
           {% elif not user.is_superuser and not user.is_staff %}
           <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link ms-4" href="{% url 'panel_residente' %}">  Panel de Residente</a>
+              <a class="nav-link active" href="{% url 'panel_residente' %}">  Panel de Residente</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{% url 'admin_res_espacios_comunes' %}">Reservar
