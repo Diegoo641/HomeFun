@@ -1045,7 +1045,6 @@ def consulta_estado_multa(request):
     rut_usuario = request.user.username  # Asumiendo que el nombre de usuario es el RUT
     # Filtrar los gastos comunes según el 'rut'
     residente = FichaResidente.objects.filter(rut=rut_usuario).first()
-    print(residente.rut)
 
     if residente:
         multa = Multa.objects.filter(id_dpto__id_residente__rut=residente.rut)
