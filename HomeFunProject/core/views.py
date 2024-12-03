@@ -126,7 +126,6 @@ def consulta_estado_cuenta(request):
     rut_usuario = request.user.username  # Asumiendo que el nombre de usuario es el RUT
     # Filtrar los gastos comunes según el 'rut'
     residente = FichaResidente.objects.filter(rut=rut_usuario).first()
-    print(residente.rut)
     controler = Controller()
 
     
