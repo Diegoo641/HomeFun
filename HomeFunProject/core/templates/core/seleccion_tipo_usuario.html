@@ -170,33 +170,42 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                {% if user.is_superuser %}
                 <div class="row">
                     <div class="col-md-5 ms-auto">
                         <div class="card w-75">
                             <div class="card-body">
-                              {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
-                              <p class="card-text">
-                                <img src="{% static "core/img/Noticias_comunidad.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
+                                <p class="card-text">
+                                    <img 
+                                        src="{% static 'core/img/Administrador.jpg' %}" 
+                                        alt="Descripción de la imagen" 
+                                        style="width: 100%; height: auto;"
+                                    />
+                                </p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 ms-auto me-3">
                         <div class="card w-90">
                             <div class="card-body">
-                              <h5 class="card-title">Descripcion Carrusel de noticias</h5>
-                              <p class="card-text">En esta sección, los administardores del sistemas permiten que visualices información importante para la comunidad a objeto que siempre tengas conocimiento de los acontencimientos de tu residencia.</p>
+                                <h5 class="card-title">Descripcion Carrusel de noticias</h5>
+                                <p class="card-text">
+                                    En esta sección, los administradores del sistema permiten que visualices información importante para la comunidad, a objeto de que siempre tengas conocimiento de los acontecimientos de tu residencia.
+                                </p>
                             </div>
                         </div>
                     </div>
-                  </div>
-                  <hr>
+                </div>
+            </div>
+
+                  {% else %}
                   <div class="row">
                     <div class="col-md-5 ms-auto">
                         <div class="card w-75">
                             <div class="card-body">
                               {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
                               <p class="card-text">
-                                <img src="{% static "core/img/Reservar_Espacios.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
+                                <img src="{% static "core/img/Residente.jpg" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
                             </div>
                         </div>
                     </div>
@@ -209,48 +218,9 @@
                         </div>
                     </div>
                   </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-md-5 ms-auto">
-                        <div class="card w-75">
-                            <div class="card-body">
-                              {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
-                              <p class="card-text">
-                                <img src="{% static "core/img/Ver_perfil.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 ms-auto me-3">
-                        <div class="card w-90">
-                            <div class="card-body">
-                              <h5 class="card-title">Descripcion Tarjeta Ver perfil</h5>
-                              <p class="card-text">Al dar clic sobre esta tarjeta en ver información, el sistema te dirigirá a la vista donde podrás visualizara los datos de tú perfil a objeto que puedas modificar cierta información relevante para tu reconocimiento frente a la comunidad.</p>
-                            </div>
-                        </div>
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-md-5 ms-auto">
-                        <div class="card w-75">
-                            <div class="card-body">
-                              {% comment %} <h5 class="card-title">Card title</h5> {% endcomment %}
-                              <p class="card-text">
-                                <img src="{% static "core/img/Pagar.png" %}" alt="Descripción de la imagen" class="img-fluid rounded shadow mx-auto d-block" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 ms-auto me-3">
-                        <div class="card w-90">
-                            <div class="card-body">
-                              <h5 class="card-title">Descripcion Tarjeta Pagas Gastos comunes</h5>
-                              <p class="card-text">Al dar clic sobre esta tarjeta en ver informació, el sistema te dirigirá a la vista donde podrás visualizar las deudas que tienes con respecto a gastos comunes o multas. También, descargar la información que ves por pantalla.</p>
-                            </div>
-                        </div>
-                    </div>
-                  </div>
-                  
-            </div>
+                </div>
+
+                  {% endif %}
             
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
