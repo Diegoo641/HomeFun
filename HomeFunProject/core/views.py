@@ -1052,33 +1052,32 @@ def consulta_estado_multa(request):
     else:
         multa = Multa.objects.none()
 
-   # Configurar Mercado Pago
-    sdk = mercadopago.SDK("TEST-799766335101209-102200-dc91acd07d20881aa5b98b60bf6e8129-2049276181")  # Reemplaza con tu token de acceso
-    preference_data = {
-        "purpose": "wallet_purchase",
-        "items": [
-            {
-                "title": "Gasto Común",
-                "quantity": 1,
-                "unit_price": 100,  # Asegúrate de que `total` sea un número válido
-            }
-        ]
-    }
+    controler = Controller()
 
-    # Crear preferencia en Mercado Pago
-    try:
-        preference_response = sdk.preference().create(preference_data)
-        preference_id = preference_response["response"]["id"]
-    except Exception as e:
-        preference_id = None
-        print(f"Error creando preferencia: {e}")
+
 
     datos = {
         'multa': multa,
         'seleccionados': seleccionados,
         'total': total,
-        'preference_id': preference_id,  # Pasar el ID de la preferencia al template
     }
+    preferencias = controler.pagar(datos['total'])
+
+    try:
+         url = ""
+         url = str(request)
+         aprovado="status=approved"
+         if(aprovado in url):
+             return redirect(to="panel_residente")
+         else:
+             print("No hay pago")
+         print("la url es : " , url)
+         preferencias = controler.pagar(total)
+         datos['preference_id']=preferencias["response"]["id"]
+         print(datos)
+         
+    except:
+         datos['mensaje'] = 'Error productos no encontrados'
 
     return render(request, 'core/consulta_estado_multa.html', datos)
 
@@ -1091,27 +1090,27 @@ from .models import CasaDepto, Multa
 def agregarPagoMulta(request, id):
     if request.method == 'POST':
         try:
-            # Obtener la multa específica
             multa = Multa.objects.get(id_multa=id)
-
-            # Obtener el monto desde el objeto relacionado
-            monto = multa.tipo.monto
-
-            # Obtener la lista actual de seleccionados desde la sesión
             seleccionados = request.session.get('seleccionados', [])
-
-            # Añadir la multa si no está ya en la lista
+            
             if id not in seleccionados:
                 seleccionados.append(id)
                 request.session['seleccionados'] = seleccionados
+                
+                total_actual = request.session.get('total', 0)
+                request.session['total'] = total_actual + multa.tipo.monto
 
-            # Actualizar el total en la sesión
-            total_actual = request.session.get('total', 0)
-            request.session['total'] = total_actual + monto
+                # Regenerar la preferencia con el nuevo total
+                controler = Controller()
+                preference = controler.pagar(request.session['total'])
 
-            return JsonResponse({'total': request.session['total']}, status=200)
-        except Multa.DoesNotExist:
-            return JsonResponse({'error': 'Multa no encontrada'}, status=404)
+                return JsonResponse({
+                    'total': request.session['total'],
+                    'preference_id': preference["response"]["id"]
+                }, status=200)
+            return JsonResponse({'error': 'Multa existente'}, status=400)
+        except GastoComun.DoesNotExist:
+            return JsonResponse({'error': 'Multa no encontrado'}, status=404)
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 
