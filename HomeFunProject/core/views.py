@@ -121,45 +121,6 @@ def admin_espacios_comunes(request):
     }
     return render(request, 'core/admin_espacios_comunes.html', datos)
 
-def consulta_estado_cuenta(request):
-    seleccionados_gc = request.session.get('seleccionados_gc', [])
-    rut_usuario = request.user.username  # Asumiendo que el nombre de usuario es el RUT
-    # Filtrar los gastos comunes según el 'rut'
-    residente = FichaResidente.objects.filter(rut=rut_usuario).first()
-    controler = Controller()
-
-    
-
-    if residente:
-        gasto_comun = GastoComun.objects.filter(id_dpto__id_residente__rut=residente.rut)
-        print(gasto_comun)
-    else:
-        gasto_comun = GastoComun.objects.none()
-
-    datos = {
-        'gasto_comun': gasto_comun,
-        'seleccionados_gc': seleccionados_gc,
-        'total_g': total_g,
-    }
-    preferencias = controler.pagar(datos['total_g'])
-
-    try:
-         url = ""
-         url = str(request)
-         aprovado="status=approved"
-         if(aprovado in url):
-             return redirect(to="panel_residente")
-         else:
-             print("No hay pago")
-         print("la url es : " , url)
-         preferencias = controler.pagar(total_g)
-         datos['preference_id']=preferencias["response"]["id"]
-         
-    except:
-         datos['mensaje'] = 'Error productos no encontrados'
-
-
-    return render(request, 'core/consulta_estado_cuenta.html', datos)
 
 @user_passes_test(es_superusuario_o_staff)
 def admin_res_espacios_comunes(request):
@@ -1039,7 +1000,45 @@ def crear_res_espacio_comun_res(request):
     return render(request, 'core/crear_res_espacio_comun_res.html', datos)
 
 
+def consulta_estado_cuenta(request):
+    seleccionados_gc = request.session.get('seleccionados_gc', [])
+    rut_usuario = request.user.username  # Asumiendo que el nombre de usuario es el RUT
+    # Filtrar los gastos comunes según el 'rut'
+    residente = FichaResidente.objects.filter(rut=rut_usuario).first()
+    controler = Controller()
 
+    
+
+    if residente:
+        gasto_comun = GastoComun.objects.filter(id_dpto__id_residente__rut=residente.rut)
+        print(gasto_comun)
+    else:
+        gasto_comun = GastoComun.objects.none()
+
+    datos = {
+        'gasto_comun': gasto_comun,
+        'seleccionados_gc': seleccionados_gc,
+        'total_g': total_g,
+    }
+    preferencias = controler.pagar(datos['total_g'])
+
+    try:
+         url = ""
+         url = str(request)
+         aprovado="status=approved"
+         if(aprovado in url):
+             return redirect(to="panel_residente")
+         else:
+             print("No hay pago")
+         print("la url es : " , url)
+         preferencias = controler.pagar(total_g)
+         datos['preference_id']=preferencias["response"]["id"]
+         
+    except:
+         datos['mensaje'] = 'Error productos no encontrados'
+
+
+    return render(request, 'core/consulta_estado_cuenta.html', datos)
 
 def consulta_estado_multa(request):
     seleccionados = request.session.get('seleccionados', [])
